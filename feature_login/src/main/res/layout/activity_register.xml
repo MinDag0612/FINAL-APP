@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background"
-    android:padding="@dimen/spacing_lg">
+    android:padding="@dimen/spacing_lg"
+    android:theme="@style/Base.Theme.Finalapp">
 
     <LinearLayout
-        android:id="@+id/form"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:gravity="center"
+        android:orientation="vertical">
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Chao mung tro lai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tạo tài khoản"
             android:textColor="@color/color_on_background"
             android:textSize="@dimen/text_size_heading"
             android:textStyle="bold" />
@@ -30,51 +26,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xs"
-            android:text="Dang nhap de tiep tuc quan li va tham gia su kien"
+            android:text="Quản lý sự kiện và đặt vé dễ dàng hơn bao giờ hết"
             android:textColor="@color/color_on_surface_variant" />
 
-        <com.google.android.material.button.MaterialButtonToggleGroup
-            android:id="@+id/group_role_toggle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:gravity="center"
-            app:selectionRequired="true"
-            app:singleSelection="true">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_role_attendee"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Người tham gia"
-                android:textAllCaps="false"
-                android:backgroundTint="@color/toggle_bg_selector"
-                android:textColor="@color/toggle_text_selector" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_role_organizer"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Nhà tổ chức"
-                android:textAllCaps="false"
-                android:backgroundTint="@color/toggle_bg_selector"
-                android:textColor="@color/toggle_text_selector" />
-
-        </com.google.android.material.button.MaterialButtonToggleGroup>
-
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_email"
             style="@style/Widget.Material3.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_lg"
+            android:layout_marginTop="@dimen/spacing_lg">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Họ và tên"
+                android:inputType="textPersonName" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/input_full_name"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
             app:endIconMode="clear_text">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/input_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Email"
@@ -82,7 +59,20 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/input_password"
+            style="@style/Widget.Material3.TextInputLayout.FilledBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            app:endIconMode="clear_text">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Số điện thoại"
+                android:inputType="phone" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.Material3.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,39 +82,48 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mat khau"
+                android:hint="Mật khẩu"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:id="@+id/tv_forgot_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:text="Quen mat khau"
-            android:textColor="@color/color_primary"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:text="Bạn là"
+            android:textColor="@color/color_on_background"
             android:textStyle="bold" />
 
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_role"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            app:singleSelection="true">
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_role_attendee"
+                style="@style/Widget.Material3.Chip.Input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Người tham gia" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_role_organizer"
+                style="@style/Widget.Material3.Chip.Input"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nhà tổ chức" />
+        </com.google.android.material.chip.ChipGroup>
+
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_submit_login"
+            android:id="@+id/btn_submit_register"
             style="@style/Widget.Material3.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_lg"
-            android:text="Dang nhap"
+            android:text="Tạo tài khoản"
             android:textAllCaps="false" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_login_with_google"
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_sm"
-            android:gravity="center"
-            android:text="Dang nhap voi google"
-            android:textAllCaps="false"
-            app:icon="@drawable/ic_google" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -136,18 +135,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chua co tai khoan"
+                android:text="Đã có tài khoản?"
                 android:textColor="@color/color_on_surface_variant" />
 
             <TextView
-                android:id="@+id/tv_go_to_sign_up"
+                android:id="@+id/tv_go_to_login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_xs"
-                android:text="Dang ki ngay"
+                android:text="Đăng nhập"
                 android:textColor="@color/color_primary"
                 android:textStyle="bold" />
         </LinearLayout>
-
     </LinearLayout>
 </ScrollView>

@@ -3,9 +3,12 @@
 
     <application>
         <activity
-            android:name=".presentation.LoginActivity"
-            android:theme="@style/Theme.Finalapp"
+            android:name=".presentation.RegisterActivity"
             android:exported="false" />
+        <activity
+            android:name=".presentation.LoginActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Finalapp" />
     </application>
 
 </manifest>

@@ -33,4 +33,9 @@
     <color name="color_on_success">#FFFFFF</color>
     <color name="color_warning">#FFA000</color>
     <color name="color_on_warning">#1D1B16</color>
+    
+    <color name="color_unchoosed_btn">#FFFFFFFF</color>
+    <color name="color_choosed_btn">#95a5a6</color>
+    <color name="color_text_unchoosed_btn">#000000</color>
+    <color name="color_text_choosed_btn">#FFFFFF</color>
 </resources>
