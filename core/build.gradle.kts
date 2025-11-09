@@ -30,9 +30,17 @@ android {
 
 dependencies {
 
+
     implementation(libs.appcompat)
     implementation(libs.material)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
+    implementation(libs.activity)
+    implementation(libs.constraintlayout)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+    api(platform("com.google.firebase:firebase-bom:34.5.0"))
+    api("com.google.firebase:firebase-analytics")
+    api("com.google.firebase:firebase-auth")
 }

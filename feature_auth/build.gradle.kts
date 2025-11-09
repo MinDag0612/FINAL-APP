@@ -1,20 +1,16 @@
 plugins {
-    alias(libs.plugins.android.application)
-    id("com.google.gms.google-services")
+    alias(libs.plugins.android.library)
 }
 
 android {
-    namespace = "com.FinalProject.mainActivity"
+    namespace = "com.FinalProject.feature_login"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.FinalProject.mainActivity"
         minSdk = 36
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -33,19 +29,15 @@ android {
 }
 
 dependencies {
-    implementation(project(":feature_auth"))
     implementation(project(":core"))
-
 
 
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.firebase.firestore)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation(platform("com.google.firebase:firebase-bom:34.5.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth")
 }

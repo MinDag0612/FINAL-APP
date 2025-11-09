@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "final_app"
 include(":app")
 include(":core")
-include(":feature_login")
+include(":feature_auth")

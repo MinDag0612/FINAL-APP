@@ -1,20 +1,36 @@
-final_app/
+
+project-root/
 │
-├── app/                     # Module chính (entry point)
-│   ├── src/main/java/...    # MainActivity, Navigation host
-│   ├── src/main/res/        # Resource gốc (theme, icon,...)
-│   └── build.gradle.kts
+├── app/                # Entry point của ứng dụng, chứa google-services.json
 │
-├── core/                    # Module chứa logic & utils dùng chung
-│   ├── src/main/java/...    # Network, Repository base, Model base,...
-│   └── build.gradle.kts
+── core/                           # Module dùng chung (base cho toàn app)
+│   ├── firebase/                   # Cấu hình và lớp tiện ích Firebase
+│   │   ├── FirebaseAuthHelper.java
+│   │   ├── FirebaseFirestoreHelper.java
+│   │   └── FirebaseStorageHelper.java
+│   │
+│   ├── model/                      # Các lớp dữ liệu dùng chung
+│   │   ├── User.java
+│   │   ├── Product.java
+│   │   └── Result.java
+│   │
+│   ├── utils/                      # Hàm tiện ích chung
+│   │   ├── Validator.java          # Hàm kiểm tra email, password,...
+│   │   ├── Logger.java             # Ghi log có định dạng
+│   │   └── DateFormatter.java
+│   │
+│   ├── constants/                  # Các giá trị cố định (key, message,...)
+│   │   └── AppConstants.java
+│   │
+│   ├── network/                    # Service hoặc API client nếu có backend riêng
+│   │   └── ApiClient.java
+│   │
+│   └── build.gradle                 # Chứa logic hoặc cấu hình dùng chung (Firebase, model, util,...)
 │
-├── feature_login/           # Module feature (VD: Đăng nhập)
-│   ├── src/main/java/...    # LoginActivity / Fragment
-│   ├── src/main/res/        # Layout + strings riêng của feature
-│   └── build.gradle.kts
-│
-└── settings.gradle.kts      # Liệt kê module
+└── feature_login/      # Một feature riêng biệt (ví dụ: Đăng nhập)
+    ├── data/           # Giao tiếp với Firebase hoặc các nguồn dữ liệu khác
+    ├── domain/         # Chứa logic nghiệp vụ (UseCase)
+    └── presentation/   # Giao diện, Activity, ViewModel,...
 
 ````````````````````````````````````````````````````````
 settings.gradle.kts
@@ -61,14 +77,10 @@ implementation(project(":feature_register"))
 
 Ví dụ: feature_login
 
-feature_login/
-├── src/main/java/com/example/feature_login/
-│   ├── data/                # Repository / API cho riêng feature
-│   ├── ui/                  # Activity / Fragment / ViewModel
-│   ├── di/                  # (tuỳ chọn) Cấu hình dependency injection
-│   └── LoginActivity.java
-│
-└── src/main/res/layout/     # layout_login.xml, string.xml, v.v.
+feature_login/      # Một feature riêng biệt (ví dụ: Đăng nhập)
+    ├── data/           # Giao tiếp với Firebase hoặc các nguồn dữ liệu khác
+    ├── domain/         # Chứa logic nghiệp vụ (UseCase)
+    └── presentation/
 ````````````````````````````````````````````````````````
 
 4. Cách gọi feature từ app
@@ -92,10 +104,9 @@ Constants (AppConfig,...)
 Ví dụ:
 
 core/
-└── src/main/java/com/example/core/
-    ├── network/ApiService.java
-    ├── utils/Logger.java
-    └── model/User.java
+└── firebase/
+    ├── FirebaseAuthHelper.java
+    └── ...
 ````````````````````````````````````````````````````````
 
 7. Chạy app chính
