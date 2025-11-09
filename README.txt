@@ -14,16 +14,6 @@ project-root/
 │   │   ├── Product.java
 │   │   └── Result.java
 │   │
-│   ├── utils/                      # Hàm tiện ích chung
-│   │   ├── Validator.java          # Hàm kiểm tra email, password,...
-│   │   ├── Logger.java             # Ghi log có định dạng
-│   │   └── DateFormatter.java
-│   │
-│   ├── constants/                  # Các giá trị cố định (key, message,...)
-│   │   └── AppConstants.java
-│   │
-│   ├── network/                    # Service hoặc API client nếu có backend riêng
-│   │   └── ApiClient.java
 │   │
 │   └── build.gradle                 # Chứa logic hoặc cấu hình dùng chung (Firebase, model, util,...)
 │

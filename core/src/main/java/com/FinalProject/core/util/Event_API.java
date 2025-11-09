@@ -2,6 +2,7 @@ package com.FinalProject.core.util;
 
 import android.util.Log;
 
+import com.FinalProject.core.constName.StoreField;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -23,8 +24,8 @@ public class Event_API {
     ) {
         Events eventData = new Events();
 
-        db.collection("User_Infor")
-                .whereEqualTo("email", emailUser)
+        db.collection(StoreField.USER_INFOR)
+                .whereEqualTo(StoreField.UserFields.EMAIL, emailUser)
                 .limit(1)
                 .get()
                 .addOnSuccessListener(result -> {
@@ -43,7 +44,7 @@ public class Event_API {
                         eventData.setEvent_type(eventType);
 
                         // Thêm vào Firestore
-                        db.collection("Events")
+                        db.collection(StoreField.EVENTS)
                                 .add(eventData.toMap())
                                 .addOnSuccessListener(ref -> {
                                     Log.d("Firestore", "Event created with ID: " + ref.getId());

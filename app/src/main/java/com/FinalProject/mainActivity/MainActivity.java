@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Seeder.runSeed();
+//        Seeder.runSeed();
 
         startActivity(new Intent(this, LoginActivity.class));
         finish();

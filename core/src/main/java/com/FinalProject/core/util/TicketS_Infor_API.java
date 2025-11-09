@@ -2,6 +2,7 @@ package com.FinalProject.core.util;
 
 import android.util.Log;
 
+import com.FinalProject.core.constName.StoreField;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,17 +28,17 @@ public class TicketS_Infor_API {
         newTicket.setTickets_price(ticketPrice);
         newTicket.setTickets_sold(ticketsSold);
 
-        db.collection("User_Infor")
-                .whereEqualTo("email", userEmail)
+        db.collection(StoreField.USER_INFOR)
+                .whereEqualTo(StoreField.UserFields.EMAIL, userEmail)
                 .get()
                 .continueWithTask(userResult -> {
                     if (userResult.isSuccessful() && !userResult.getResult().isEmpty()) {
                         String userId = userResult.getResult().getDocuments().get(0).getId();
 
                         // Trả về task tìm event của user
-                        return db.collection("Events")
-                                .whereEqualTo("organizer_uid", userId)
-                                .whereEqualTo("event_name", eventName)
+                        return db.collection(StoreField.EVENTS)
+                                .whereEqualTo(StoreField.EventFields.ORGANIZER_UID, userId)
+                                .whereEqualTo(StoreField.EventFields.EVENT_NAME, eventName)
                                 .get();
                     } else {
                         Log.w("Firestore", "User not found: " + userEmail);
@@ -48,8 +49,8 @@ public class TicketS_Infor_API {
                     if (eventResult.getResult() != null && !eventResult.getResult().isEmpty()) {
                         String eventId = eventResult.getResult().getDocuments().get(0).getId();
 
-                        DocumentReference eventsRef = db.collection("Events").document(eventId);
-                        CollectionReference ticketsRef = eventsRef.collection("Tickets_infor");
+                        DocumentReference eventsRef = db.collection(StoreField.EVENTS).document(eventId);
+                        CollectionReference ticketsRef = eventsRef.collection(StoreField.TICKETS_INFOR);
 
                         // Sử dụng eventName + ticketClass làm documentId để tránh trùng
                         String ticketInforId = eventName + " " + ticketClass;

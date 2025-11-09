@@ -2,6 +2,7 @@ package com.FinalProject.core.util;
 
 import android.util.Log;
 
+import com.FinalProject.core.constName.StoreField;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.FinalProject.core.model.TicketItem;
@@ -24,15 +25,15 @@ public class Order_API {
         AtomicReference<String> userRef = new AtomicReference<>();
         AtomicReference<String> eventRef = new AtomicReference<>();
 
-        db.collection("User_Infor")
-                .whereEqualTo("email", userEmail)
+        db.collection(StoreField.USER_INFOR)
+                .whereEqualTo(StoreField.UserFields.EMAIL, userEmail)
                 .get()
                 .continueWithTask(userResult -> {
                     if (userResult.isSuccessful() && !userResult.getResult().isEmpty()) {
                         userRef.set(userResult.getResult().getDocuments().get(0).getId());
 
-                        return db.collection("Events")
-                                .whereEqualTo("event_name", eventName)
+                        return db.collection(StoreField.EVENTS)
+                                .whereEqualTo(StoreField.EventFields.EVENT_NAME, eventName)
                                 .get();
                     } else {
                         Log.w("Firestore", "User not found: " + userEmail);
@@ -44,10 +45,10 @@ public class Order_API {
                         String eventId = eventResult.getResult().getDocuments().get(0).getId();
                         eventRef.set(eventId);
 
-                        return db.collection("Events")
+                        return db.collection(StoreField.EVENTS)
                                 .document(eventId)
-                                .collection("Tickets_infor")
-                                .whereEqualTo("tickets_class", ticketClass)
+                                .collection(StoreField.TICKETS_INFOR)
+                                .whereEqualTo(StoreField.TicketFields.TICKETS_CLASS, ticketClass)
                                 .get();
                     } else {
                         Log.w("Firestore", "Event not found: " + eventName);
@@ -58,7 +59,7 @@ public class Order_API {
                     if (ticketResult.isSuccessful() && !ticketResult.getResult().isEmpty()) {
                         QuerySnapshot querySnapshot = ticketResult.getResult();
                         String ticketId = querySnapshot.getDocuments().get(0).getId();
-                        int eachPrice = querySnapshot.getDocuments().get(0).getLong("tickets_price").intValue();
+                        int eachPrice = querySnapshot.getDocuments().get(0).getLong(StoreField.TicketFields.TICKETS_CLASS).intValue();
 
                         int totalPrice = orderQuantity * eachPrice;
                         String userId = userRef.get();
@@ -69,7 +70,7 @@ public class Order_API {
                         ticketItems.add(ticketItem);
 
                         Orders newOrder = new Orders(userId, totalPrice, false, ticketItems, paymentMethod);
-                        return db.collection("Orders")
+                        return db.collection(StoreField.ORDERS)
                                 .add(newOrder);
                     } else {
                         Log.w("Firestore", "Ticket info not found for event: " + eventName);

@@ -1,5 +1,6 @@
 package com.FinalProject.core.util;
 
+import com.FinalProject.core.constName.StoreField;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -14,7 +15,7 @@ public class UserInfor_API {
     // QUERY = "INSERT USER UID, USER_INFOR INTO USERS"
     // USER_INFOR = {fullname, email, phone, role}
     public static Task<Void> saveUserToFirestore(String uid, Map<String, Object> userInfor) {
-        return db.collection("User_Infor")
+        return db.collection(StoreField.USER_INFOR)
                 .document(uid)
                 .set(userInfor);
     }
@@ -22,8 +23,8 @@ public class UserInfor_API {
     // QUERY = "SELECT * FROM USERS WHERE email = "email"
     public static Task<DocumentSnapshot> getUserInforByEmail(String email){
         TaskCompletionSource<DocumentSnapshot> tcs = new TaskCompletionSource<>();
-        Query query = db.collection("User_Infor")
-                .whereEqualTo("email", email)
+        Query query = db.collection(StoreField.USER_INFOR)
+                .whereEqualTo(StoreField.UserFields.EMAIL, email)
                 .limit(1);
 
         query.get()
