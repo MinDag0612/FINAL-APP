@@ -78,6 +78,9 @@ Orders (collection)
  - Các class được định nghĩa sẳn (core/model)
  - Có hàm toMap() để lấy Map<> -> add và FireStore
  - Các query pha đặt trong core/util (nên đặt -- *_API --)
+ - Các table và tên fielddđược lưu trong -- core/constName/StoreFiled -- chỉ là luưu các tên để gọi
+
+-----
 
 ## 4. Luồng gọi cơ bản
 Presentation (tuoingw tac giao diện) --> Domain (use case, xử lí logic, nhũng cái ko thuộc DB)
@@ -89,4 +92,6 @@ Presentation (tuoingw tac giao diện) --> Domain (use case, xử lí logic, nh�
 
 ## 5. LƯU Ý
  - Các cơ chế BẤT ĐỒNG BỘ khong đc code dạng gán biến -> có thể gây lỗi nếu truy vấn chậm.
+
+
 
