@@ -7,6 +7,7 @@ public class StoreField {
     public static final String EVENTS = "Events";
     public static final String TICKETS_INFOR = "Tickets_infor";
     public static final String ORDERS = "Orders";
+    public static final String REVIEWS = "review";
 
     // 🔹 Field trong collection User_Infor
     public static class UserFields {
@@ -39,6 +40,13 @@ public class StoreField {
         public static final String IS_PAID = "is_paid";
         public static final String TICKET_ITEMS = "ticket_items";
         public static final String PAYMENT_METHOD = "payment_method";
+    }
+
+    public static class ReviewFields {
+        public static final String UID = "uid";
+        public static final String RATE = "rate";
+        public static final String COMMENT = "comment";
+        public static final String CREATED_AT = "created_at";
     }
 
 }
