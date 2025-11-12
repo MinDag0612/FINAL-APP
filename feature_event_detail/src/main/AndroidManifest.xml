@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <activity
+            android:name=".presentation.EventDetailActivity"
+            android:theme="@style/Theme.FeatureEventDetail"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.FinalProject.EVENT_DETAIL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+</manifest>

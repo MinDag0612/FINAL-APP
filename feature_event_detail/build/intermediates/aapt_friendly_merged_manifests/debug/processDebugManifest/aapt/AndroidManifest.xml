@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.FinalProject.feature_event_detail" >
+
+    <uses-sdk android:minSdkVersion="24" />
+
+    <application>
+        <activity
+            android:name="com.FinalProject.feature_event_detail.presentation.EventDetailActivity"
+            android:exported="true"
+            android:theme="@style/Theme.FeatureEventDetail" >
+            <intent-filter>
+                <action android:name="com.FinalProject.EVENT_DETAIL" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

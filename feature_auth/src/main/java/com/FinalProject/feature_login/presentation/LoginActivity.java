@@ -16,6 +16,8 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+
 public class LoginActivity extends AppCompatActivity {
     MaterialButton btn_role_organizer;
     MaterialButton btn_role_attendee;
@@ -110,6 +112,7 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess() {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    openEventDetailScreen();
                 }
 
                 @Override
@@ -118,5 +121,32 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    private void openEventDetailScreen() {
+        Intent detailIntent = new Intent("com.FinalProject.EVENT_DETAIL");
+        detailIntent.putExtra("extra_event_title", "TEDxYouth Saigon 2024");
+        detailIntent.putExtra("extra_event_schedule", "15.12.2024 • 18:30 - 22:00");
+        detailIntent.putExtra("extra_event_location", "Nhà hát Thành phố, Quận 1");
+        detailIntent.putExtra("extra_event_description",
+                "TEDxYouth Saigon 2024 mang đến 8 câu chuyện truyền cảm hứng từ những người trẻ tiên phong trong giáo dục, nghệ thuật và công nghệ.");
+        detailIntent.putExtra("extra_general_price", "690.000đ");
+        detailIntent.putExtra("extra_vip_price", "1.290.000đ");
+        detailIntent.putExtra("extra_vip_benefits",
+                "• Ghế ngồi hàng đầu\n• Phòng chờ riêng và đồ uống\n• Bộ quà tặng và gặp gỡ diễn giả");
+
+        ArrayList<String> tags = new ArrayList<>();
+        tags.add("Innovation");
+        tags.add("Youth");
+        tags.add("Offline");
+        detailIntent.putStringArrayListExtra("extra_tags", tags);
+
+        ArrayList<String> timeline = new ArrayList<>();
+        timeline.add("18:00 | Check-in & Welcome drink");
+        timeline.add("19:00 | Phiên TEDx Session 1");
+        timeline.add("21:00 | Networking VIP");
+        detailIntent.putStringArrayListExtra("extra_timeline", timeline);
+
+        startActivity(detailIntent);
     }
 }

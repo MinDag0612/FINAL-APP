@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_event_detail_name">Event Detail Feature</string>
+    <string name="event_detail_default_title">Event title</string>
+    <string name="event_detail_default_schedule">15.12.2024 • 18:30 - 22:00</string>
+    <string name="event_detail_default_location">Nhà hát Thành phố, Quận 1</string>
+    <string name="event_detail_default_description">TEDxYouth Saigon 2024 mang đến 8 câu chuyện truyền cảm hứng từ những người trẻ tiên phong trong giáo dục, nghệ thuật và công nghệ. Sự kiện kết hợp biểu diễn nghệ thuật, trải nghiệm thực tế và khu vực networking chuyên sâu.</string>
+    <string name="event_detail_vip_benefits">• Ghế ngồi hàng đầu\n• Phòng chờ riêng và đồ uống\n• Bộ quà tặng và gặp gỡ diễn giả</string>
+    <string name="event_detail_intro_title">Giới thiệu</string>
+    <string name="event_detail_timeline_title">Lịch trình</string>
+    <string name="event_detail_vip_title">Lợi ích vé VIP</string>
+    <string name="event_detail_cta">Chọn chỗ ngồi</string>
+    <string name="event_detail_chip_category_one">Innovation</string>
+    <string name="event_detail_chip_category_two">Youth</string>
+    <string name="event_detail_chip_category_three">Offline</string>
+</resources>

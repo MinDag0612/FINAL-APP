@@ -17,10 +17,13 @@ project-root/
 │   │
 │   └── build.gradle                 # Chứa logic hoặc cấu hình dùng chung (Firebase, model, util,...)
 │
-└── feature_login/      # Một feature riêng biệt (ví dụ: Đăng nhập)
+├── feature_login/      # Một feature riêng biệt (ví dụ: Đăng nhập)
     ├── data/           # Giao tiếp với Firebase hoặc các nguồn dữ liệu khác
     ├── domain/         # Chứa logic nghiệp vụ (UseCase)
     └── presentation/   # Giao diện, Activity, ViewModel,...
+
+└── feature_event_detail/   # Màn hình chi tiết sự kiện TEDxYouth mẫu
+    └── presentation/       # EventDetailActivity + layout activity_event_detail.xml
 
 ````````````````````````````````````````````````````````
 settings.gradle.kts
@@ -30,6 +33,7 @@ rootProject.name = "final_app"
 include(":app")
 include(":core")
 include(":feature_login")
+include(":feature_event_detail")
 
 ````````````````````````````````````````````````````````
 app/build.gradle.kts
@@ -80,6 +84,8 @@ Từ MainActivity trong module :app, bạn có thể mở feature bằng Intent:
 Intent intent = new Intent(this, com.example.feature_login.ui.LoginActivity.class);
 startActivity(intent);
 ````````````````````````````````````````````````````````
+
+Sau khi đăng nhập thành công, `LoginActivity` sẽ phát `Intent` với action `com.FinalProject.EVENT_DETAIL` nhằm mở màn hình `EventDetailActivity` của module `:feature_event_detail` (UI chi tiết sự kiện TEDxYouth mẫu).
 
 5. Module core
 
