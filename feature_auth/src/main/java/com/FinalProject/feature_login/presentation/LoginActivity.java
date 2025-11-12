@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.FinalProject.feature_home.presentation.HomeActivity;
 import com.FinalProject.feature_login.R;
 import com.FinalProject.feature_login.data.LoginRepositoryImpl;
 import com.FinalProject.feature_login.domain.LoginUseCase;
@@ -110,6 +111,8 @@ public class LoginActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess() {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
                 }
 
                 @Override

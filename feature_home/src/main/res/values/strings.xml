@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="home_greeting">Xin chào, Minh Anh</string>
+    <string name="home_subtitle_generic">Hôm nay có 12 sự kiện phù hợp với bạn</string>
+    <string name="home_subtitle_filtered">Đã chọn %1$d bộ lọc</string>
+    <string name="home_avatar_content_desc">Ảnh đại diện</string>
+    <string name="home_search_hint">Tìm kiếm concert, hội thảo, festival...</string>
+    <string name="home_button_view_ticket">Xem vé</string>
+    <string name="home_action_view_all">Mở danh sách sự kiện</string>
+    <string name="home_action_view_ticket">Mở vé gần đây</string>
+    <string name="home_event_image_content_desc">Hình ảnh sự kiện</string>
+    <string name="home_event_ticket_desc">Giá vé</string>
+    <string name="home_artist_content_desc">Thông tin nghệ sĩ theo dõi</string>
+</resources>

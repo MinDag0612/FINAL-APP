@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.FinalProject.feature_home" >
+
+    <uses-sdk android:minSdkVersion="24" />
+
+    <application>
+        <activity
+            android:name="com.FinalProject.feature_home.presentation.HomeActivity"
+            android:exported="false"
+            android:theme="@style/Theme.FeatureHome" />
+    </application>
+
+</manifest>
