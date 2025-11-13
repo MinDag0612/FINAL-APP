@@ -2,6 +2,7 @@ package com.FinalProject.feature_login.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.FinalProject.feature_home.presentation.HomeActivity;
 import com.FinalProject.feature_login.R;
 import com.FinalProject.feature_login.data.LoginRepositoryImpl;
 import com.FinalProject.feature_login.domain.LoginUseCase;
@@ -104,15 +106,30 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setBtn_submit_login() {
         btn_submit_login.setOnClickListener(v -> {
-            emailStr = email.getEditText().getText().toString();
-            passwordStr = password.getEditText().getText().toString();
+            emailStr = email.getEditText() != null
+                    ? email.getEditText().getText().toString().trim()
+                    : "";
+            passwordStr = password.getEditText() != null
+                    ? password.getEditText().getText().toString()
+                    : "";
             role = selectedRole;
+
+            if (TextUtils.isEmpty(emailStr) || TextUtils.isEmpty(passwordStr)) {
+                Toast.makeText(this, "Vui lòng nhập email và mật khẩu", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(role)) {
+                Toast.makeText(this, "Vui lòng chọn vai trò đăng nhập", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             loginUseCase.execute(emailStr, passwordStr, role, new LoginUseCase.LoginCallback() {
                 @Override
                 public void onSuccess() {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    openEventDetailScreen();
+                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                    finish();
                 }
 
                 @Override

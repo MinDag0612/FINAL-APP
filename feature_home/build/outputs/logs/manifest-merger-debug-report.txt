@@ -1,0 +1,26 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml:2:1-10:12
+INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml:2:1-10:12
+	package
+		INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml:2:11-69
+application
+ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml:4:5-9:19
+activity#com.FinalProject.feature_home.presentation.HomeActivity
+ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml:5:9-8:56
+	android:exported
+		ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml:7:13-37
+	android:theme
+		ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml:8:13-53
+	android:name
+		ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml:6:13-83
+uses-sdk
+INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml
+INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_home/src/main/AndroidManifest.xml
