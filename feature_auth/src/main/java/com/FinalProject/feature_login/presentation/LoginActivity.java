@@ -2,6 +2,7 @@ package com.FinalProject.feature_login.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -103,9 +104,23 @@ public class LoginActivity extends AppCompatActivity {
 
     private void setBtn_submit_login() {
         btn_submit_login.setOnClickListener(v -> {
-            emailStr = email.getEditText().getText().toString();
-            passwordStr = password.getEditText().getText().toString();
+            emailStr = email.getEditText() != null
+                    ? email.getEditText().getText().toString().trim()
+                    : "";
+            passwordStr = password.getEditText() != null
+                    ? password.getEditText().getText().toString()
+                    : "";
             role = selectedRole;
+
+            if (TextUtils.isEmpty(emailStr) || TextUtils.isEmpty(passwordStr)) {
+                Toast.makeText(this, "Vui lòng nhập email và mật khẩu", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (TextUtils.isEmpty(role)) {
+                Toast.makeText(this, "Vui lòng chọn vai trò đăng nhập", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
             loginUseCase.execute(emailStr, passwordStr, role, new LoginUseCase.LoginCallback() {
                 @Override

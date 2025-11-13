@@ -1,14 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="home_greeting">Xin chào, Minh Anh</string>
-    <string name="home_subtitle_generic">Hôm nay có 12 sự kiện phù hợp với bạn</string>
-    <string name="home_subtitle_filtered">Đã chọn %1$d bộ lọc</string>
+    <string name="home_greeting">Xin chào, Ticket lover</string>
+    <string name="home_greeting_named">Xin chào, %1$s</string>
+    <string name="home_subtitle_generic">Hãy khám phá những sự kiện hot nhất tuần này</string>
+    <string name="home_subtitle_filtered">Có %1$d sự kiện thuộc chủ đề bạn chọn</string>
     <string name="home_avatar_content_desc">Ảnh đại diện</string>
     <string name="home_search_hint">Tìm kiếm concert, hội thảo, festival...</string>
+    <string name="home_featured_tag">Featured show</string>
+    <string name="home_button_book_now">Đặt vé ngay</string>
     <string name="home_button_view_ticket">Xem vé</string>
     <string name="home_action_view_all">Mở danh sách sự kiện</string>
     <string name="home_action_view_ticket">Mở vé gần đây</string>
     <string name="home_event_image_content_desc">Hình ảnh sự kiện</string>
     <string name="home_event_ticket_desc">Giá vé</string>
     <string name="home_artist_content_desc">Thông tin nghệ sĩ theo dõi</string>
+    <string name="home_events_for_you">Sự kiện dành cho bạn</string>
+    <string name="home_no_event">Chưa có sự kiện</string>
+    <string name="home_artists_following">Nghệ sĩ bạn đang theo dõi</string>
+    <string name="home_recent_ticket_title">Vé đã mua gần đây</string>
+    <string name="home_artist_event_count">%1$d sự kiện</string>
+    <string name="home_price_pending">Đang cập nhật giá</string>
+    <string name="home_date_pending">Đang cập nhật thời gian</string>
+    <string name="home_error_loading">Không thể tải dữ liệu: %1$s</string>
+    <string name="home_refresh_success">Đã cập nhật danh sách sự kiện</string>
 </resources>
