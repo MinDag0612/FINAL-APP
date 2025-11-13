@@ -1,49 +1,55 @@
 package com.FinalProject.feature_home.data;
 
 import androidx.annotation.NonNull;
-
 import com.FinalProject.core.constName.StoreField;
+import com.FinalProject.core.util.Event_API;
+import com.FinalProject.core.util.Order_API;
 import com.FinalProject.core.util.UserInfor_API;
-import com.FinalProject.feature_home.model.HomeArtist;
-import com.FinalProject.feature_home.model.HomeContent;
-import com.FinalProject.feature_home.model.HomeEvent;
-import com.FinalProject.feature_home.model.HomeUser;
-import com.FinalProject.feature_home.model.RecentTicketInfo;
+import com.FinalProject.feature_home.model.*;
 import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class HomeRepository {
+
+    private final FirebaseAuth auth;
+    private final FirebaseFirestore firestore;
+    private final EventRepository eventRepo;
 
     public interface HomeDataCallback {
         void onSuccess(HomeContent content);
         void onError(String message);
     }
 
-    private final FirebaseAuth auth;
-    private final FirebaseFirestore firestore;
-
-    public HomeRepository() {
-        this(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance());
+    @NonNull
+    private List<Map<String, Object>> extractTicketItems(DocumentSnapshot order) {
+        Object rawList = order.get("tickets_list");
+        if (!(rawList instanceof List)) {
+            return Collections.emptyList();
+        }
+        List<?> list = (List<?>) rawList;
+        List<Map<String, Object>> result = new ArrayList<>();
+        for (Object item : list) {
+            if (item instanceof Map) {
+                //noinspection unchecked
+                result.add(new HashMap<>((Map<String, Object>) item));
+            }
+        }
+        return result;
     }
 
-    public HomeRepository(FirebaseAuth auth, FirebaseFirestore firestore) {
+    public HomeRepository() {
+        this(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance(), new EventRepository());
+    }
+
+    public HomeRepository(FirebaseAuth auth, FirebaseFirestore firestore, EventRepository eventRepo) {
         this.auth = auth;
         this.firestore = firestore;
+        this.eventRepo = eventRepo;
     }
 
     public void loadHomeContent(HomeDataCallback callback) {
@@ -59,9 +65,7 @@ public class HomeRepository {
                 .addOnFailureListener(e -> callback.onError(e.getMessage()));
     }
 
-    private void handleUserSnapshot(DocumentSnapshot userSnapshot,
-                                    String email,
-                                    HomeDataCallback callback) {
+    private void handleUserSnapshot(DocumentSnapshot userSnapshot, String email, HomeDataCallback callback) {
         if (userSnapshot == null || !userSnapshot.exists()) {
             callback.onError("Không tìm thấy thông tin người dùng.");
             return;
@@ -74,92 +78,16 @@ public class HomeRepository {
                 userSnapshot.getString(StoreField.UserFields.ROLE)
         );
 
-        firestore.collection(StoreField.EVENTS)
-                .orderBy("event_start", Query.Direction.ASCENDING)
-                .limit(10)
-                .get()
+        Event_API.getEventASC(10)
                 .addOnSuccessListener(eventsSnapshot ->
-                        buildHomeContent(userId, homeUser, eventsSnapshot, callback))
+                        eventRepo.buildEvents(eventsSnapshot)
+                                .addOnSuccessListener(events -> fetchRecentTicket(userId, homeUser, events, callback))
+                                .addOnFailureListener(e -> callback.onError(e.getMessage())))
                 .addOnFailureListener(e -> callback.onError(e.getMessage()));
     }
 
-    private void buildHomeContent(String userId,
-                                  HomeUser homeUser,
-                                  QuerySnapshot eventsSnapshot,
-                                  HomeDataCallback callback) {
-        buildEvents(eventsSnapshot)
-                .addOnSuccessListener(events -> fetchRecentTicket(userId, homeUser, events, callback))
-                .addOnFailureListener(e -> callback.onError(e.getMessage()));
-    }
-
-    private Task<List<HomeEvent>> buildEvents(QuerySnapshot snapshot) {
-        if (snapshot == null || snapshot.isEmpty()) {
-            return Tasks.forResult(Collections.emptyList());
-        }
-        List<Task<HomeEvent>> eventTasks = new ArrayList<>();
-        for (QueryDocumentSnapshot document : snapshot) {
-            eventTasks.add(mapEvent(document));
-        }
-        return Tasks.whenAllSuccess(eventTasks)
-                .continueWith(task -> {
-                    List<HomeEvent> mappedEvents = new ArrayList<>();
-                    List<?> result = task.getResult();
-                    if (result != null) {
-                        for (Object item : result) {
-                            if (item instanceof HomeEvent) {
-                                mappedEvents.add((HomeEvent) item);
-                            }
-                        }
-                    }
-                    return mappedEvents;
-                });
-    }
-
-    private Task<HomeEvent> mapEvent(DocumentSnapshot documentSnapshot) {
-        String id = documentSnapshot.getId();
-        String name = documentSnapshot.getString(StoreField.EventFields.EVENT_NAME);
-        String description = documentSnapshot.getString("event_descrip");
-        String location = documentSnapshot.getString(StoreField.EventFields.EVENT_LOCATION);
-        String eventType = documentSnapshot.getString("event_type");
-        String startTime = documentSnapshot.getString("event_start");
-        String cast = documentSnapshot.getString("cast");
-
-        HomeEvent event = new HomeEvent(
-                id,
-                name != null ? name : "Sự kiện đặc biệt",
-                description != null ? description : "",
-                location != null ? location : "Đang cập nhật",
-                eventType != null ? eventType : "Khác",
-                startTime,
-                cast
-        );
-
-        return documentSnapshot.getReference()
-                .collection(StoreField.TICKETS_INFOR)
-                .orderBy(StoreField.TicketFields.TICKETS_PRICE, Query.Direction.ASCENDING)
-                .limit(1)
-                .get()
-                .continueWith(task -> {
-                    if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
-                        DocumentSnapshot ticketDoc = task.getResult().getDocuments().get(0);
-                        Long price = ticketDoc.getLong(StoreField.TicketFields.TICKETS_PRICE);
-                        if (price != null) {
-                            event.setStartingPrice(price);
-                        }
-                    }
-                    return event;
-                });
-    }
-
-    private void fetchRecentTicket(String userId,
-                                   HomeUser user,
-                                   List<HomeEvent> events,
-                                   HomeDataCallback callback) {
-
-        firestore.collection(StoreField.ORDERS)
-                .whereEqualTo(StoreField.OrderFields.USER_ID, userId)
-                .limit(1)
-                .get()
+    private void fetchRecentTicket(String userId, HomeUser user, List<HomeEvent> events, HomeDataCallback callback) {
+        Order_API.getOrdersByUserId(userId)
                 .addOnSuccessListener(orderSnapshot -> {
                     RecentTicketInfo ticketInfo = mapRecentTicket(orderSnapshot);
                     List<HomeArtist> artists = buildArtists(events);
@@ -194,23 +122,6 @@ public class HomeRepository {
                 : "Đang xử lý thanh toán";
 
         return new RecentTicketInfo(title, subtitle, true);
-    }
-
-    @NonNull
-    private List<Map<String, Object>> extractTicketItems(DocumentSnapshot order) {
-        Object rawList = order.get("tickets_list");
-        if (!(rawList instanceof List)) {
-            return Collections.emptyList();
-        }
-        List<?> list = (List<?>) rawList;
-        List<Map<String, Object>> result = new ArrayList<>();
-        for (Object item : list) {
-            if (item instanceof Map) {
-                //noinspection unchecked
-                result.add(new HashMap<>((Map<String, Object>) item));
-            }
-        }
-        return result;
     }
 
     private List<HomeArtist> buildArtists(List<HomeEvent> events) {
@@ -251,4 +162,6 @@ public class HomeRepository {
         java.text.NumberFormat formatter = java.text.NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
         return formatter.format(amount);
     }
+
+
 }

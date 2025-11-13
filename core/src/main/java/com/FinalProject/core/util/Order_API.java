@@ -3,6 +3,7 @@ package com.FinalProject.core.util;
 import android.util.Log;
 
 import com.FinalProject.core.constName.StoreField;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.FinalProject.core.model.TicketItem;
@@ -81,6 +82,12 @@ public class Order_API {
                     Log.d("Firestore", "Order added successfully");
                 })
                 .addOnFailureListener(e -> Log.e("Firestore", "Error adding order", e));
+    }
+
+    public static Task<QuerySnapshot> getOrdersByUserId(String userId){
+        return db.collection(StoreField.ORDERS)
+                .whereEqualTo(StoreField.OrderFields.USER_ID, userId)
+                .get();
     }
 
 }
