@@ -72,3 +72,11 @@ public class EventRepository {
                 });
     }
 }
+
+/*
+* 👉 File này chỉ phụ trách việc:
+
+chuyển QuerySnapshot → List<HomeEvent>
+
+lấy vé cho từng event
+ */
