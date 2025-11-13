@@ -1,5 +1,7 @@
 package com.FinalProject.feature_home.data;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import com.FinalProject.core.constName.StoreField;
 import com.FinalProject.core.util.Event_API;
@@ -81,7 +83,14 @@ public class HomeRepository {
         Event_API.getEventASC(10)
                 .addOnSuccessListener(eventsSnapshot ->
                         eventRepo.buildEvents(eventsSnapshot)
-                                .addOnSuccessListener(events -> fetchRecentTicket(userId, homeUser, events, callback))
+                                .addOnSuccessListener(events -> {
+                                            fetchRecentTicket(userId, homeUser, events, callback);
+                                            for (HomeEvent e : events){
+                                                Log.d("TAG", "handleUserSnapshot: "+e.getName());
+                                            }
+                                            Log.d("TAG", "NUMBERS OF EVENTS: "+ events.size());
+                                        }
+                                )
                                 .addOnFailureListener(e -> callback.onError(e.getMessage())))
                 .addOnFailureListener(e -> callback.onError(e.getMessage()));
     }
