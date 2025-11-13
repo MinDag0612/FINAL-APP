@@ -3,133 +3,99 @@ package com.FinalProject.core.util;
 import android.util.Log;
 
 import com.FinalProject.core.constName.StoreField;
-import com.FinalProject.core.model.Orders;
-import com.FinalProject.core.model.TicketItem;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
+import com.google.firebase.firestore.DocumentSnapshot;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Seeder giúp tạo dữ liệu mẫu trên Firestore để demo app.
+ * Việc ghi dữ liệu sử dụng documentId cố định nhằm hạn chế trùng lặp khi run nhiều lần.
+ */
 public class Seeder {
 
     private static final String TAG = "Seeder";
-    private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private static final String ORGANIZER_ID = "seed_user_organizer";
-    private static final String ATTENDEE_ID = "seed_user_attendee";
-    private static final String EVENT_ID = "seed_event_live_concert";
-    private static final String ORDER_ID = "seed_order_recent";
+    private static final String SAMPLE_EVENT_ID = "seed_tedxyouth_2024";
+    private static final String ORGANIZER_EMAIL = "tonminhdang9@gmail.com";
+    private static final String REVIEWER_EMAIL = "523h0011@student.tdtu.edu.vn";
 
-    public static void runSeed(){
-        seedUsers();
-        seedEvent();
-        seedTickets();
-        seedOrder();
-        seedReview();
+    public static void runSeed() {
+        UserInfor_API.getUserInforByEmail(ORGANIZER_EMAIL)
+                .addOnSuccessListener(snapshot -> seedEvent(snapshot.getId()))
+                .addOnFailureListener(e -> Log.w(TAG, "Organizer seed skipped: " + e.getMessage()));
     }
 
-    private static void seedUsers() {
-        upsertUser(
-                ORGANIZER_ID,
-                "Tôn Minh Đăng",
-                "0901234567",
-                "tonminhdang9@gmail.com",
-                "organizer"
-        );
+    private static void seedEvent(String organizerUid) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+        DocumentReference eventRef = db.collection(StoreField.EVENTS).document(SAMPLE_EVENT_ID);
 
-        upsertUser(
-                ATTENDEE_ID,
-                "Minh Anh",
-                "0934567890",
-                "523h0011@student.tdtu.edu.vn",
-                "attendee"
-        );
-    }
+        Map<String, Object> eventData = new HashMap<>();
+        eventData.put(StoreField.EventFields.EVENT_NAME, "TEDxYouth Saigon 2024");
+        eventData.put("event_descrip", "8 câu chuyện truyền cảm hứng từ những người trẻ tiên phong trong giáo dục, nghệ thuật và công nghệ.");
+        eventData.put("event_start", "2024-12-15T18:30:00Z");
+        eventData.put("event_end", "2024-12-15T22:00:00Z");
+        eventData.put("event_type", "Innovation");
+        eventData.put("cast", "Bích Phương, CTO VNG");
+        eventData.put(StoreField.EventFields.EVENT_LOCATION, "Nhà hát Thành phố, Quận 1");
+        eventData.put(StoreField.EventFields.ORGANIZER_UID, organizerUid);
+        eventData.put("cover_image", "");
 
-    private static void upsertUser(String documentId, String fullName, String phone, String email, String role) {
-        Map<String, Object> data = new HashMap<>();
-        data.put(StoreField.UserFields.FULLNAME, fullName);
-        data.put(StoreField.UserFields.PHONE, phone);
-        data.put(StoreField.UserFields.EMAIL, email);
-        data.put(StoreField.UserFields.ROLE, role);
-
-        db.collection(StoreField.USER_INFOR)
-                .document(documentId)
-                .set(data, SetOptions.merge())
-                .addOnSuccessListener(unused -> Log.d(TAG, "Seeded user: " + email))
-                .addOnFailureListener(e -> Log.e(TAG, "Failed to seed user: " + email, e));
-    }
-
-    private static void seedEvent() {
-        Map<String, Object> event = new HashMap<>();
-        event.put(StoreField.EventFields.EVENT_NAME, "Live Concert Sơn Tùng");
-        event.put("event_descrip", "Đêm nhạc đặc biệt tại Hà Nội");
-        event.put("event_start", "2025-12-10T19:00:00Z");
-        event.put("event_end", "2025-12-10T22:00:00Z");
-        event.put("cast", "Sơn Tùng M-TP");
-        event.put("location", "SVĐ Mỹ Đình");
-        event.put("event_type", "Music");
-        event.put(StoreField.EventFields.ORGANIZER_UID, ORGANIZER_ID);
-
-        db.collection(StoreField.EVENTS)
-                .document(EVENT_ID)
-                .set(event, SetOptions.merge())
-                .addOnSuccessListener(unused -> Log.d(TAG, "Seeded event"))
+        eventRef.set(eventData, SetOptions.merge())
+                .addOnSuccessListener(unused -> {
+                    seedTickets(eventRef);
+                    seedReviews(eventRef);
+                })
                 .addOnFailureListener(e -> Log.e(TAG, "Failed to seed event", e));
     }
 
-    private static void seedTickets() {
-        Map<String, Object> vipTicket = new HashMap<>();
-        vipTicket.put(StoreField.TicketFields.TICKETS_CLASS, "VIP");
-        vipTicket.put(StoreField.TicketFields.TICKETS_QUANTITY, 200);
-        vipTicket.put(StoreField.TicketFields.TICKETS_PRICE, 800000);
-        vipTicket.put(StoreField.TicketFields.TICKETS_SOLD, 150);
+    private static void seedTickets(DocumentReference eventRef) {
+        Map<String, Object> general = buildTicket("Ghế phổ thông", 690_000, 200, 150);
+        Map<String, Object> vip = buildTicket("Ghế VIP", 1_290_000, 80, 60);
+        Map<String, Object> premium = buildTicket("Ghế Premium", 1_890_000, 40, 20);
 
-        Map<String, Object> standardTicket = new HashMap<>();
-        standardTicket.put(StoreField.TicketFields.TICKETS_CLASS, "Standard");
-        standardTicket.put(StoreField.TicketFields.TICKETS_QUANTITY, 400);
-        standardTicket.put(StoreField.TicketFields.TICKETS_PRICE, 350000);
-        standardTicket.put(StoreField.TicketFields.TICKETS_SOLD, 240);
-
-        db.collection(StoreField.EVENTS)
-                .document(EVENT_ID)
-                .collection(StoreField.TICKETS_INFOR)
-                .document("VIP")
-                .set(vipTicket, SetOptions.merge())
-                .addOnFailureListener(e -> Log.e(TAG, "Failed to seed VIP ticket", e));
-
-        db.collection(StoreField.EVENTS)
-                .document(EVENT_ID)
-                .collection(StoreField.TICKETS_INFOR)
-                .document("Standard")
-                .set(standardTicket, SetOptions.merge())
-                .addOnFailureListener(e -> Log.e(TAG, "Failed to seed Standard ticket", e));
+        eventRef.collection(StoreField.TICKETS_INFOR)
+                .document("general")
+                .set(general, SetOptions.merge());
+        eventRef.collection(StoreField.TICKETS_INFOR)
+                .document("vip")
+                .set(vip, SetOptions.merge());
+        eventRef.collection(StoreField.TICKETS_INFOR)
+                .document("premium")
+                .set(premium, SetOptions.merge());
     }
 
-    private static void seedOrder() {
-        TicketItem ticketItem = new TicketItem("VIP", 2);
-        Orders order = new Orders(
-                ATTENDEE_ID,
-                1600000,
-                true,
-                Collections.singletonList(ticketItem),
-                "https://example.com/qr/seed"
-        );
-
-        db.collection(StoreField.ORDERS)
-                .document(ORDER_ID)
-                .set(order.toMap(), SetOptions.merge())
-                .addOnSuccessListener(unused -> Log.d(TAG, "Seeded order"))
-                .addOnFailureListener(e -> Log.e(TAG, "Failed to seed order", e));
+    private static Map<String, Object> buildTicket(String label, long price, int quantity, int sold) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(StoreField.TicketFields.TICKETS_CLASS, label);
+        map.put(StoreField.TicketFields.TICKETS_PRICE, price);
+        map.put(StoreField.TicketFields.TICKETS_QUANTITY, quantity);
+        map.put(StoreField.TicketFields.TICKETS_SOLD, sold);
+        return map;
     }
 
-    private static void seedReview() {
-        Review_API.addReview(
-                "Live Concert Sơn Tùng",
-                "523h0011@student.tdtu.edu.vn",
-                5,
-                "Sự kiện rất vui!"
-        );
+    private static void seedReviews(DocumentReference eventRef) {
+        UserInfor_API.getUserInforByEmail(REVIEWER_EMAIL)
+                .addOnSuccessListener(snapshot -> writeReview(eventRef, snapshot, "Một tối truyền cảm hứng, networking chất lượng."))
+                .addOnFailureListener(e -> Log.w(TAG, "Reviewer seed skipped: " + e.getMessage()));
+    }
+
+    private static void writeReview(DocumentReference eventRef, DocumentSnapshot userSnapshot, String comment) {
+        if (userSnapshot == null || !userSnapshot.exists()) {
+            return;
+        }
+        Map<String, Object> review = new HashMap<>();
+        review.put(StoreField.ReviewFields.UID, userSnapshot.getId());
+        review.put(StoreField.ReviewFields.RATE, 5);
+        review.put(StoreField.ReviewFields.COMMENT, comment);
+        review.put(StoreField.ReviewFields.CREATED_AT, FieldValue.serverTimestamp());
+
+        eventRef.collection(StoreField.REVIEWS)
+                .document("seed_review_" + userSnapshot.getId())
+                .set(review, SetOptions.merge())
+                .addOnFailureListener(e -> Log.e(TAG, "Failed to seed review", e));
     }
 }

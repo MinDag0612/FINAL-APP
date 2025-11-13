@@ -1,5 +1,6 @@
 package com.FinalProject.feature_home.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.FinalProject.feature_event_detail.presentation.EventDetailNavigator;
 import com.FinalProject.feature_home.R;
 import com.FinalProject.feature_home.data.HomeRepository;
 import com.FinalProject.feature_home.domain.GetHomeContentUseCase;
@@ -116,8 +118,13 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
     private void setupListeners() {
         swipeRefreshLayout.setOnRefreshListener(this::loadHomeContent);
 
-        btnFeaturedAction.setOnClickListener(v ->
-                Toast.makeText(this, R.string.home_button_book_now, Toast.LENGTH_SHORT).show());
+        btnFeaturedAction.setOnClickListener(v -> {
+            if (!allEvents.isEmpty()) {
+                openEventDetail(allEvents.get(0));
+            } else {
+                Toast.makeText(this, R.string.home_button_book_now, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         btnRecentTicket.setOnClickListener(v ->
                 Toast.makeText(this, R.string.home_action_view_ticket, Toast.LENGTH_SHORT).show());
@@ -290,6 +297,21 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
 
     @Override
     public void onEventClick(HomeEvent event) {
-        Toast.makeText(this, event.getName(), Toast.LENGTH_SHORT).show();
+        openEventDetail(event);
+    }
+
+    private void openEventDetail(HomeEvent event) {
+        if (event == null) {
+            return;
+        }
+        Intent intent = EventDetailNavigator.createIntent(
+                this,
+                event.getId(),
+                event.getName(),
+                event.getLocation(),
+                formatDate(event.getStartTimeIso()),
+                event.getStartingPrice()
+        );
+        startActivity(intent);
     }
 }

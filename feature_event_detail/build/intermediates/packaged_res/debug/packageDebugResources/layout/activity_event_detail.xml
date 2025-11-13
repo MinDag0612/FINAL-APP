@@ -1,191 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/color_background">
 
-    <LinearLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/color_background">
 
-        <ImageView
-            android:id="@+id/img_event_cover"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_event_detail"
+            style="@style/Widget.Material3.Toolbar"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:contentDescription="@string/event_detail_default_title"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_event_placeholder" />
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/color_background"
+            app:navigationIcon="@drawable/ic_chevron_left"
+            app:title="@string/feature_event_detail_name"
+            app:titleTextColor="@color/color_on_background" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_event_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:padding="@dimen/spacing_lg"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
+            android:id="@+id/layout_event_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="@dimen/spacing_lg">
-
-            <TextView
-                android:id="@+id/tv_event_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/event_detail_default_title"
-                android:textColor="@color/color_on_background"
-                android:textSize="24sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_event_schedule"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/event_detail_default_schedule"
-                android:textColor="@color/color_primary"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_event_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xs"
-                android:text="@string/event_detail_default_location"
-                android:textColor="@color/color_on_surface_variant" />
-
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_tags"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                app:singleLine="true">
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_tag_one"
-                    style="@style/Widget.Material3.Chip.Suggestion"
-                    android:text="@string/event_detail_chip_category_one" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_tag_two"
-                    style="@style/Widget.Material3.Chip.Suggestion"
-                    android:text="@string/event_detail_chip_category_two" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_tag_three"
-                    style="@style/Widget.Material3.Chip.Suggestion"
-                    android:text="@string/event_detail_chip_category_three" />
-            </com.google.android.material.chip.ChipGroup>
+            android:paddingBottom="@dimen/spacing_xxl">
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_lg"
-                app:cardCornerRadius="@dimen/corner_radius_md">
+                app:cardCornerRadius="@dimen/corner_radius_lg"
+                app:cardUseCompatPadding="true"
+                app:strokeColor="@color/color_outline_variant"
+                app:strokeWidth="1dp">
 
-                <LinearLayout
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:padding="@dimen/spacing_md">
+                    android:layout_height="240dp">
+
+                    <ImageView
+                        android:id="@+id/img_event_cover"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:contentDescription="@string/feature_event_detail_name"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bg_event_placeholder" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bg_header_scrim" />
 
                     <LinearLayout
-                        android:layout_width="0dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_gravity="bottom"
+                        android:orientation="vertical"
+                        android:padding="@dimen/spacing_lg">
 
                         <TextView
-                            android:id="@+id/tv_general_ticket_label"
+                            android:id="@+id/tv_event_type"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Ghế phổ thông"
-                            android:textColor="@color/color_on_background"
+                            android:background="@drawable/bg_rating_chip"
+                            android:paddingHorizontal="@dimen/spacing_sm"
+                            android:paddingVertical="@dimen/spacing_xs"
+                            android:text="Innovation"
+                            android:textColor="@color/color_primary"
+                            android:textSize="12sp"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_general_ticket_price"
+                            android:id="@+id/tv_event_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_xs"
-                            android:text="690.000đ"
-                            android:textColor="@color/color_on_surface_variant" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
-
-                        <TextView
-                            android:id="@+id/tv_vip_ticket_label"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ghế VIP"
-                            android:textColor="@color/color_on_background"
+                            android:layout_marginTop="@dimen/spacing_sm"
+                            android:text="@string/event_detail_default_title"
+                            android:textColor="@color/color_on_primary"
+                            android:textSize="@dimen/text_size_heading"
                             android:textStyle="bold" />
 
                         <TextView
-                            android:id="@+id/tv_vip_ticket_price"
+                            android:id="@+id/tv_event_schedule"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_xs"
-                            android:text="1.290.000đ"
-                            android:textColor="@color/color_on_surface_variant" />
+                            android:text="@string/event_detail_default_schedule"
+                            android:textColor="@color/color_on_primary"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/tv_event_location"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:drawablePadding="@dimen/spacing_xs"
+                            android:drawableStart="@drawable/ic_location"
+                            android:text="@string/event_detail_default_location"
+                            android:textColor="@color/color_on_primary" />
                     </LinearLayout>
-                </LinearLayout>
+                </FrameLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <TextView
-                android:id="@+id/tv_intro_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xl"
-                android:text="@string/event_detail_intro_title"
-                android:textColor="@color/color_on_background"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tv_event_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_sm"
-                android:text="@string/event_detail_default_description"
-                android:textColor="@color/color_on_surface_variant" />
-
-            <TextView
-                android:id="@+id/tv_timeline_heading"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xl"
-                android:text="@string/event_detail_timeline_title"
-                android:textColor="@color/color_on_background"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
             <LinearLayout
-                android:id="@+id/container_timeline"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_md"
-                android:orientation="vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
-                <include
-                    android:id="@+id/view_timeline_one"
-                    layout="@layout/view_timeline_item" />
+                <TextView
+                    android:id="@+id/tv_event_rating_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_rating_chip"
+                    android:paddingHorizontal="@dimen/spacing_md"
+                    android:paddingVertical="@dimen/spacing_xs"
+                    android:text="4.8"
+                    android:textColor="@color/color_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-                <include
-                    android:id="@+id/view_timeline_two"
-                    layout="@layout/view_timeline_item" />
-
-                <include
-                    android:id="@+id/view_timeline_three"
-                    layout="@layout/view_timeline_item" />
+                <TextView
+                    android:id="@+id/tv_event_rating_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_sm"
+                    android:text="@string/event_detail_review_count_placeholder"
+                    android:textColor="@color/color_on_surface_variant" />
             </LinearLayout>
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xl"
-                app:cardCornerRadius="@dimen/corner_radius_md">
+                app:cardCornerRadius="@dimen/corner_radius_md"
+                app:strokeColor="@color/color_outline_variant"
+                app:strokeWidth="1dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -193,32 +152,161 @@
                     android:orientation="vertical"
                     android:padding="@dimen/spacing_md">
 
-                    <TextView
-                        android:id="@+id/tv_vip_benefit_title"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/event_detail_vip_title"
-                        android:textColor="@color/color_on_background"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/tv_vip_benefit_list"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/spacing_xs"
-                        android:text="@string/event_detail_vip_benefits"
-                        android:textColor="@color/color_on_surface_variant" />
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_clock" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/spacing_sm"
+                            android:text="@string/event_detail_schedule_title"
+                            android:textColor="@color/color_on_background"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_event_cast"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_sm"
+                        android:drawablePadding="@dimen/spacing_xs"
+                        android:drawableStart="@drawable/ic_people"
+                        android:textColor="@color/color_on_surface_variant"
+                        android:visibility="gone" />
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_tags"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:chipSpacingHorizontal="@dimen/spacing_sm"
+                app:chipSpacingVertical="@dimen/spacing_sm" />
+
+            <TextView
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_detail_ticket_section" />
+
+            <LinearLayout
+                android:id="@+id/layout_ticket_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tv_ticket_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_detail_ticket_empty"
+                android:textColor="@color/color_on_surface_variant"
+                android:visibility="gone" />
+
+            <TextView
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_detail_intro_title" />
+
+            <TextView
+                android:id="@+id/tv_event_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/event_detail_default_description"
+                android:textColor="@color/color_on_surface_variant" />
+
+            <TextView
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_detail_timeline_title" />
+
+            <LinearLayout
+                android:id="@+id/layout_timeline_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tv_timeline_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_detail_timeline_empty"
+                android:textColor="@color/color_on_surface_variant"
+                android:visibility="gone" />
+
+            <TextView
+                style="@style/TextAppearance.Material3.TitleMedium"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_detail_reviews_title" />
+
+            <LinearLayout
+                android:id="@+id/layout_reviews_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tv_reviews_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/event_detail_reviews_empty"
+                android:textColor="@color/color_on_surface_variant"
+                android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_choose_seat"
                 style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_xl"
+                android:layout_marginTop="@dimen/spacing_md"
                 android:text="@string/event_detail_cta"
                 android:textAllCaps="false" />
         </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <LinearLayout
+        android:id="@+id/layout_event_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/color_surface"
+        android:elevation="4dp"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/tv_event_error_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_error"
+            android:textStyle="bold" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_event_retry"
+            style="@style/Widget.Material3.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="@string/event_detail_retry" />
     </LinearLayout>
-</ScrollView>
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress_event_detail"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

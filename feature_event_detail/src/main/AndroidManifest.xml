@@ -4,13 +4,7 @@
     <application>
         <activity
             android:name=".presentation.EventDetailActivity"
-            android:theme="@style/Theme.FeatureEventDetail"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="com.FinalProject.EVENT_DETAIL" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
+            android:exported="false"
+            android:theme="@style/Theme.FeatureEventDetail" />
     </application>
 </manifest>
