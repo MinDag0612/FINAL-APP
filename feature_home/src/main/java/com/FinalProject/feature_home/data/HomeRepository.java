@@ -1,26 +1,30 @@
 package com.FinalProject.feature_home.data;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
+
 import com.FinalProject.core.constName.StoreField;
-import com.FinalProject.core.util.Event_API;
-import com.FinalProject.core.util.Order_API;
-import com.FinalProject.core.util.UserInfor_API;
-import com.FinalProject.feature_home.model.*;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
+import com.FinalProject.feature_home.model.HomeArtist;
+import com.FinalProject.feature_home.model.HomeContent;
+import com.FinalProject.feature_home.model.HomeEvent;
+import com.FinalProject.feature_home.model.HomeUser;
+import com.FinalProject.feature_home.model.RecentTicketInfo;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
-import java.util.*;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 public class HomeRepository {
 
-    private final FirebaseAuth auth;
-    private final FirebaseFirestore firestore;
+    private final HomeApi api;
     private final EventRepository eventRepo;
+    private final NumberFormat currencyFormat;
 
     public interface HomeDataCallback {
         void onSuccess(HomeContent content);
@@ -45,24 +49,24 @@ public class HomeRepository {
     }
 
     public HomeRepository() {
-        this(FirebaseAuth.getInstance(), FirebaseFirestore.getInstance(), new EventRepository());
+        this(new FirebaseHomeApi(), null);
     }
 
-    public HomeRepository(FirebaseAuth auth, FirebaseFirestore firestore, EventRepository eventRepo) {
-        this.auth = auth;
-        this.firestore = firestore;
-        this.eventRepo = eventRepo;
+    public HomeRepository(HomeApi api, EventRepository eventRepo) {
+        this.api = api;
+        this.eventRepo = eventRepo != null ? eventRepo : new EventRepository(api);
+        this.currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     }
 
     public void loadHomeContent(HomeDataCallback callback) {
-        FirebaseUser currentUser = auth.getCurrentUser();
+        FirebaseUser currentUser = api.getCurrentUser();
         if (currentUser == null || currentUser.getEmail() == null) {
             callback.onError("Bạn chưa đăng nhập.");
             return;
         }
 
         String email = currentUser.getEmail();
-        UserInfor_API.getUserInforByEmail(email)
+        api.getUserInfo(email)
                 .addOnSuccessListener(userSnapshot -> handleUserSnapshot(userSnapshot, email, callback))
                 .addOnFailureListener(e -> callback.onError(e.getMessage()));
     }
@@ -80,23 +84,17 @@ public class HomeRepository {
                 userSnapshot.getString(StoreField.UserFields.ROLE)
         );
 
-        Event_API.getEventASC(10)
+        api.getLatestEvents(10)
                 .addOnSuccessListener(eventsSnapshot ->
                         eventRepo.buildEvents(eventsSnapshot)
-                                .addOnSuccessListener(events -> {
-                                            fetchRecentTicket(userId, homeUser, events, callback);
-                                            for (HomeEvent e : events){
-                                                Log.d("TAG", "handleUserSnapshot: "+e.getName());
-                                            }
-                                            Log.d("TAG", "NUMBERS OF EVENTS: "+ events.size());
-                                        }
-                                )
+                                .addOnSuccessListener(events ->
+                                        fetchRecentTicket(userId, homeUser, events, callback))
                                 .addOnFailureListener(e -> callback.onError(e.getMessage())))
                 .addOnFailureListener(e -> callback.onError(e.getMessage()));
     }
 
     private void fetchRecentTicket(String userId, HomeUser user, List<HomeEvent> events, HomeDataCallback callback) {
-        Order_API.getOrdersByUserId(userId)
+        api.getOrdersByUserId(userId)
                 .addOnSuccessListener(orderSnapshot -> {
                     RecentTicketInfo ticketInfo = mapRecentTicket(orderSnapshot);
                     List<HomeArtist> artists = buildArtists(events);
@@ -127,7 +125,7 @@ public class HomeRepository {
                 ? "Vé vừa đặt"
                 : String.format(Locale.getDefault(), "%s x%s", ticketId, quantity);
         String subtitle = totalPrice > 0
-                ? currencyFormat(totalPrice)
+                ? currencyFormat.format(totalPrice)
                 : "Đang xử lý thanh toán";
 
         return new RecentTicketInfo(title, subtitle, true);
@@ -166,11 +164,4 @@ public class HomeRepository {
     private String stringValue(Object value) {
         return value != null ? value.toString() : "";
     }
-
-    private String currencyFormat(long amount) {
-        java.text.NumberFormat formatter = java.text.NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-        return formatter.format(amount);
-    }
-
-
 }

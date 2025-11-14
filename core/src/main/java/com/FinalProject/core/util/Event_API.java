@@ -65,9 +65,10 @@ public class Event_API {
     }
 
     public static Task<QuerySnapshot> getEventASC(int limit){
+        int fetchLimit = limit > 0 ? limit : 10;
         return db.collection(StoreField.EVENTS)
                 .orderBy("event_start", Query.Direction.ASCENDING)
-                .limit(10)
+                .limit(fetchLimit)
                 .get();
     }
 

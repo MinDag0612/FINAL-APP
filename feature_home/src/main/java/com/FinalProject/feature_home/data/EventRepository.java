@@ -1,7 +1,6 @@
 package com.FinalProject.feature_home.data;
 
 import com.FinalProject.core.constName.StoreField;
-import com.FinalProject.core.util.TicketS_Infor_API;
 import com.FinalProject.feature_home.model.HomeEvent;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.Tasks;
@@ -13,7 +12,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Mapper chuyển dữ liệu Firestore -> HomeEvent, mọi truy vấn vé thông qua {@link HomeApi}.
+ */
 public class EventRepository {
+
+    private final HomeApi api;
+
+    public EventRepository(HomeApi api) {
+        this.api = api;
+    }
 
     public Task<List<HomeEvent>> buildEvents(QuerySnapshot snapshot) {
         if (snapshot == null || snapshot.isEmpty()) {
@@ -40,7 +48,7 @@ public class EventRepository {
                 });
     }
 
-    public Task<HomeEvent> mapEvent(DocumentSnapshot documentSnapshot) {
+    private Task<HomeEvent> mapEvent(DocumentSnapshot documentSnapshot) {
         String id = documentSnapshot.getId();
         String name = documentSnapshot.getString(StoreField.EventFields.EVENT_NAME);
         String description = documentSnapshot.getString("event_descrip");
@@ -59,7 +67,7 @@ public class EventRepository {
                 cast
         );
 
-        return TicketS_Infor_API.getTicketInforByEventId(id)
+        return api.getTicketsForEvent(id)
                 .continueWith(task -> {
                     if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
                         DocumentSnapshot ticketDoc = task.getResult().getDocuments().get(0);
@@ -72,11 +80,3 @@ public class EventRepository {
                 });
     }
 }
-
-/*
-* 👉 File này chỉ phụ trách việc:
-
-chuyển QuerySnapshot → List<HomeEvent>
-
-lấy vé cho từng event
- */

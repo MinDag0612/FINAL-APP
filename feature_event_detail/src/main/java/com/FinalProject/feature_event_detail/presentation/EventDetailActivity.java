@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.FinalProject.feature_event_detail.R;
 import com.FinalProject.feature_event_detail.data.EventDetailRepository;
 import com.FinalProject.feature_event_detail.data.MockEventDetailFactory;
+import com.FinalProject.feature_event_detail.domain.GetEventDetailUseCase;
 import com.FinalProject.feature_event_detail.model.EventDetail;
 import com.FinalProject.feature_event_detail.model.ReviewDisplayItem;
 import com.FinalProject.feature_event_detail.model.TicketTier;
@@ -74,7 +75,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private MaterialButton btnChooseSeat;
 
     private final NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
-    private EventDetailRepository repository;
+    private GetEventDetailUseCase getEventDetailUseCase;
     private LayoutInflater inflater;
     private String eventId;
     private boolean hasBoundRemoteData = false;
@@ -86,7 +87,7 @@ public class EventDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_event_detail);
 
-        repository = new EventDetailRepository();
+        getEventDetailUseCase = new GetEventDetailUseCase(new EventDetailRepository());
         inflater = LayoutInflater.from(this);
 
         bindViews();
@@ -172,7 +173,7 @@ public class EventDetailActivity extends AppCompatActivity {
             return;
         }
         showLoading(true);
-        repository.getEventDetail(eventId, new EventDetailRepository.Callback() {
+        getEventDetailUseCase.execute(eventId, new GetEventDetailUseCase.Callback() {
             @Override
             public void onSuccess(EventDetail detail) {
                 showLoading(false);

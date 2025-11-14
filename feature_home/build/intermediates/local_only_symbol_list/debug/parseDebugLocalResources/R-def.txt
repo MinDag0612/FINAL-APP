@@ -69,11 +69,10 @@ id img_home_avatar
 id input_home_search
 id iv_event_badge
 id layout_home_container
-id main_scroll
 id rv_artists
 id rv_events
+id scroll_home
 id swipe_home
-id top_bar
 id tv_artist_initial
 id tv_artist_name
 id tv_artist_subtitle

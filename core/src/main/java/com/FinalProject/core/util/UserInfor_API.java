@@ -39,4 +39,10 @@ public class UserInfor_API {
                 .addOnFailureListener(tcs::setException);
         return tcs.getTask();
     }
+
+    public static Task<DocumentSnapshot> getUserInforById(String userId) {
+        return db.collection(StoreField.USER_INFOR)
+                .document(userId)
+                .get();
+    }
 }
