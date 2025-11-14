@@ -67,9 +67,11 @@ int id img_home_avatar 0x0
 int id input_home_search 0x0
 int id iv_event_badge 0x0
 int id layout_home_container 0x0
+int id main_scroll 0x0
 int id rv_artists 0x0
 int id rv_events 0x0
 int id swipe_home 0x0
+int id top_bar 0x0
 int id tv_artist_initial 0x0
 int id tv_artist_name 0x0
 int id tv_artist_subtitle 0x0

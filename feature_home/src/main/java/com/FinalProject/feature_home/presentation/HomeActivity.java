@@ -29,6 +29,7 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -70,6 +71,10 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
 
     private GetHomeContentUseCase getHomeContentUseCase;
 
+    private TextInputEditText homeSearch;
+
+    List<HomeEvent> filteredEvents = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.Theme_FeatureHome);
@@ -82,6 +87,7 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         setupRecyclerViews();
         setupListeners();
         loadHomeContent();
+        setHomeSearch();
     }
 
     private void initViews() {
@@ -103,6 +109,7 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         rvArtists = findViewById(R.id.rv_artists);
         imgAvatar = findViewById(R.id.img_home_avatar);
         tvAvatarInitial = findViewById(R.id.tv_home_avatar_initial);
+        homeSearch = findViewById(R.id.input_home_search);
     }
 
     private void setupRecyclerViews() {
@@ -313,5 +320,9 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
                 event.getStartingPrice()
         );
         startActivity(intent);
+    }
+
+    public void setHomeSearch(){
+        new HomeSearch(homeSearch, allEvents, eventAdapter).setupSearchListener();
     }
 }

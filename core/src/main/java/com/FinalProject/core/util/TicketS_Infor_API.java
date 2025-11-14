@@ -3,10 +3,14 @@ package com.FinalProject.core.util;
 import android.util.Log;
 
 import com.FinalProject.core.constName.StoreField;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.FinalProject.core.model.TicketInfor;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class TicketS_Infor_API {
 
@@ -66,6 +70,14 @@ public class TicketS_Infor_API {
                     Log.d("Firestore", "Ticket added successfully");
                 })
                 .addOnFailureListener(e -> Log.e("Firestore", "Error adding ticket", e));
+    }
+
+    public static Task<QuerySnapshot> getTicketInforByEventId(String eventId) {
+        return db.collection(StoreField.EVENTS)
+                .document(eventId)
+                .collection(StoreField.TICKETS_INFOR)
+                .orderBy(StoreField.TicketFields.TICKETS_PRICE, Query.Direction.ASCENDING)
+                .get();
     }
 
 }

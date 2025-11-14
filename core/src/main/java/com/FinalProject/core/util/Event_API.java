@@ -3,11 +3,14 @@ package com.FinalProject.core.util;
 import android.util.Log;
 
 import com.FinalProject.core.constName.StoreField;
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.FinalProject.core.model.Events;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class Event_API {
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -59,6 +62,13 @@ public class Event_API {
                 .addOnFailureListener(e -> {
                     Log.e("Firestore", "Error fetching user", e);
                 });
+    }
+
+    public static Task<QuerySnapshot> getEventASC(int limit){
+        return db.collection(StoreField.EVENTS)
+                .orderBy("event_start", Query.Direction.ASCENDING)
+                .limit(10)
+                .get();
     }
 
 
