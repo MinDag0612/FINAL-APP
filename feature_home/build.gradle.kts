@@ -31,6 +31,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":feature_event_detail"))
+    implementation(project(":feature_profile"))
 
     implementation(libs.appcompat)
     implementation(libs.material)
