@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="profile_title">Hồ sơ</string>
+    <string name="profile_subtitle">Quản lý thông tin cá nhân và cài đặt.</string>
+    <string name="profile_contact_section">Thông tin liên hệ</string>
+    <string name="profile_name_label">Họ và tên</string>
+    <string name="profile_phone_label">Số điện thoại</string>
+    <string name="profile_email_label">Email</string>
+    <string name="profile_role_label">Vai trò</string>
+    <string name="profile_save_changes">Lưu thay đổi</string>
+    <string name="profile_logout">Đăng xuất</string>
+    <string name="profile_loading">Đang tải dữ liệu...</string>
+    <string name="profile_update_success">Đã cập nhật thông tin.</string>
+    <string name="profile_update_error">Không thể cập nhật thông tin.</string>
+    <string name="profile_empty_state">Không tìm thấy thông tin người dùng.</string>
+    <string name="profile_error_unknown">Đã xảy ra lỗi, vui lòng thử lại.</string>
+    <string name="profile_phone_error">Số điện thoại phải có ít nhất 9 ký tự.</string>
+    <string name="profile_required_field">Trường này bắt buộc.</string>
+    <string name="profile_logout_message">Bạn đã đăng xuất.</string>
+    <string name="profile_no_changes">Không có thay đổi để lưu.</string>
+</resources>

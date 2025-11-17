@@ -3,9 +3,11 @@ package com.FinalProject.core.util;
 import com.FinalProject.core.constName.StoreField;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.Map;
 
@@ -44,5 +46,17 @@ public class UserInfor_API {
         return db.collection(StoreField.USER_INFOR)
                 .document(userId)
                 .get();
+    }
+
+    public static Task<Void> updateUserInfor(String uid, Map<String, Object> updates) {
+        if (uid == null) {
+            return Tasks.forException(new IllegalArgumentException("User id is null"));
+        }
+        if (updates == null || updates.isEmpty()) {
+            return Tasks.forResult(null);
+        }
+        return db.collection(StoreField.USER_INFOR)
+                .document(uid)
+                .set(updates, SetOptions.merge());
     }
 }

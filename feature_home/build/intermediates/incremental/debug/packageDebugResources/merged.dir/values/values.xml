@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="color_background">#F9F9FC</color>
+    <color name="color_choosed_btn">#95a5a6</color>
+    <color name="color_error">#B3261E</color>
+    <color name="color_error_container">#F9DEDC</color>
+    <color name="color_on_background">#1B1B1F</color>
+    <color name="color_on_error">#FFFFFF</color>
+    <color name="color_on_error_container">#370B0A</color>
+    <color name="color_on_primary">#FFFFFF</color>
+    <color name="color_on_primary_container">#21005D</color>
+    <color name="color_on_secondary">#FFFFFF</color>
+    <color name="color_on_secondary_container">#1D192B</color>
+    <color name="color_on_success">#FFFFFF</color>
+    <color name="color_on_surface">#1B1B1F</color>
+    <color name="color_on_surface_variant">#49454F</color>
+    <color name="color_on_tertiary">#FFFFFF</color>
+    <color name="color_on_tertiary_container">#31111D</color>
+    <color name="color_on_warning">#1D1B16</color>
+    <color name="color_outline">#79747E</color>
+    <color name="color_outline_variant">#CAC4D0</color>
+    <color name="color_primary">#6750A4</color>
+    <color name="color_primary_container">#EADDFF</color>
+    <color name="color_secondary">#625B71</color>
+    <color name="color_secondary_container">#E8DEF8</color>
+    <color name="color_success">#2E7D32</color>
+    <color name="color_surface">#FFFBFE</color>
+    <color name="color_surface_variant">#E7E0EB</color>
+    <color name="color_tertiary">#7D5260</color>
+    <color name="color_tertiary_container">#FFD8E4</color>
+    <color name="color_text_choosed_btn">#FFFFFF</color>
+    <color name="color_text_unchoosed_btn">#000000</color>
+    <color name="color_unchoosed_btn">#FFFFFFFF</color>
+    <color name="color_warning">#FFA000</color>
+    <dimen name="corner_radius_lg">28dp</dimen>
+    <dimen name="corner_radius_md">20dp</dimen>
+    <dimen name="corner_radius_sm">12dp</dimen>
+    <dimen name="elevation_card">6dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_xxl">48dp</dimen>
+    <dimen name="text_size_body">14sp</dimen>
+    <dimen name="text_size_heading">28sp</dimen>
+    <dimen name="text_size_subheading">18sp</dimen>
+    <string name="home_action_view_all">Mở danh sách sự kiện</string>
+    <string name="home_action_view_ticket">Mở vé gần đây</string>
+    <string name="home_artist_content_desc">Thông tin nghệ sĩ theo dõi</string>
+    <string name="home_artist_event_count">%1$d sự kiện</string>
+    <string name="home_artists_following">Nghệ sĩ bạn đang theo dõi</string>
+    <string name="home_avatar_content_desc">Ảnh đại diện</string>
+    <string name="home_button_book_now">Đặt vé ngay</string>
+    <string name="home_button_view_ticket">Xem vé</string>
+    <string name="home_date_pending">Đang cập nhật thời gian</string>
+    <string name="home_error_loading">Không thể tải dữ liệu: %1$s</string>
+    <string name="home_event_image_content_desc">Hình ảnh sự kiện</string>
+    <string name="home_event_ticket_desc">Giá vé</string>
+    <string name="home_events_for_you">Sự kiện dành cho bạn</string>
+    <string name="home_featured_tag">Featured show</string>
+    <string name="home_greeting">Xin chào, Ticket lover</string>
+    <string name="home_greeting_named">Xin chào, %1$s</string>
+    <string name="home_no_event">Chưa có sự kiện</string>
+    <string name="home_price_pending">Đang cập nhật giá</string>
+    <string name="home_recent_ticket_title">Vé đã mua gần đây</string>
+    <string name="home_refresh_success">Đã cập nhật danh sách sự kiện</string>
+    <string name="home_search_hint">Tìm kiếm concert, hội thảo, festival...</string>
+    <string name="home_subtitle_filtered">Có %1$d sự kiện thuộc chủ đề bạn chọn</string>
+    <string name="home_subtitle_generic">Hãy khám phá những sự kiện hot nhất tuần này</string>
+    <style name="ShapeAppearanceOverlay.Material3.Corner.Full" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+    <style name="Theme.FeatureHome" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <item name="colorPrimaryContainer">@color/color_primary_container</item>
+        <item name="colorOnPrimaryContainer">@color/color_on_primary_container</item>
+
+        <item name="colorSecondary">@color/color_secondary</item>
+        <item name="colorOnSecondary">@color/color_on_secondary</item>
+        <item name="colorSecondaryContainer">@color/color_secondary_container</item>
+        <item name="colorOnSecondaryContainer">@color/color_on_secondary_container</item>
+
+        <item name="colorTertiary">@color/color_tertiary</item>
+        <item name="colorOnTertiary">@color/color_on_tertiary</item>
+
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowTranslucentStatus">false</item>
+    </style>
+</resources>
