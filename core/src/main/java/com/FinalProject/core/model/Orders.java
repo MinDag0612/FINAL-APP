@@ -3,6 +3,7 @@ package com.FinalProject.core.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Orders {
     private String user_id;
@@ -72,7 +73,7 @@ public class Orders {
         if (tickets_list != null) {
             List<Map<String, Object>> ticketsMapList = tickets_list.stream()
                     .map(TicketItem::toMap)
-                    .toList();
+                    .collect(Collectors.toList());
             map.put("tickets_list", ticketsMapList);
         }
 

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="feature_review_event_name">Đánh giá sự kiện</string>
+    <string name="review_event_toolbar_title">Đánh giá &amp; phản hồi</string>
+    <string name="review_event_loading_message">Đang tải thông tin sự kiện...</string>
+    <string name="review_event_label_rating">Chất lượng chương trình</string>
+    <string name="review_event_label_comment">Chia sẻ cảm nhận của bạn</string>
+    <string name="review_event_comment_hint">Hãy kể về khoảnh khắc bạn ấn tượng nhất...</string>
+    <string name="review_event_comment_counter">Tối thiểu 10 ký tự</string>
+    <string name="review_event_submit">Gửi đánh giá</string>
+    <string name="review_event_submitting">Đang gửi...</string>
+    <string name="review_event_success">Cảm ơn bạn! Đánh giá đã được ghi nhận.</string>
+    <string name="review_event_already_submitted">Bạn đã gửi đánh giá cho sự kiện này.</string>
+    <string name="review_event_missing_event_id">Thiếu thông tin sự kiện để đánh giá.</string>
+    <string name="review_event_rating_placeholder">Chọn số sao từ 1 - 5</string>
+    <string name="review_event_error_invalid_rating">Vui lòng chọn số sao trước khi gửi.</string>
+    <string name="review_event_error_comment_short">Vui lòng nhập nhận xét tối thiểu 10 ký tự.</string>
+    <string name="review_event_section_event">Thông tin sự kiện</string>
+    <string name="review_event_section_feedback">Trải nghiệm của bạn</string>
+    <string name="review_event_label_schedule">Thời gian</string>
+    <string name="review_event_label_location">Địa điểm</string>
+</resources>
