@@ -23,6 +23,7 @@ import com.FinalProject.feature_event_detail.model.EventDetail;
 import com.FinalProject.feature_event_detail.model.ReviewDisplayItem;
 import com.FinalProject.feature_event_detail.model.TicketTier;
 import com.FinalProject.feature_event_detail.model.TimelineItem;
+import com.FinalProject.feature_review_event.presentation.ReviewEventNavigator;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
@@ -73,6 +74,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private LinearLayout timelineContainer;
     private LinearLayout reviewsContainer;
     private MaterialButton btnChooseSeat;
+    private MaterialButton btnWriteReview;
 
     private final NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     private GetEventDetailUseCase getEventDetailUseCase;
@@ -121,10 +123,12 @@ public class EventDetailActivity extends AppCompatActivity {
         tvTimelineEmpty = findViewById(R.id.tv_timeline_empty);
         tvReviewsEmpty = findViewById(R.id.tv_reviews_empty);
         btnChooseSeat = findViewById(R.id.btn_choose_seat);
+        btnWriteReview = findViewById(R.id.btn_write_review);
 
         btnRetry.setOnClickListener(v -> loadEventDetail());
         btnChooseSeat.setOnClickListener(v ->
                 Toast.makeText(this, R.string.event_detail_cta, Toast.LENGTH_SHORT).show());
+        btnWriteReview.setOnClickListener(v -> openReviewScreen());
     }
 
     private void configureToolbar() {
@@ -192,6 +196,28 @@ public class EventDetailActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void openReviewScreen() {
+        if (TextUtils.isEmpty(eventId)) {
+            Toast.makeText(this, R.string.event_detail_missing_id, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String title = valueOf(tvEventTitle);
+        String schedule = valueOf(tvEventSchedule);
+        String location = valueOf(tvEventLocation);
+        Intent intent = ReviewEventNavigator.createIntent(
+                this,
+                eventId,
+                title,
+                schedule,
+                location
+        );
+        startActivity(intent);
+    }
+
+    private String valueOf(TextView view) {
+        return view != null ? view.getText().toString() : null;
     }
 
     private void bindDetail(EventDetail detail) {

@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/feature_event_detail" />
             <option value="$PROJECT_DIR$/feature_home" />
             <option value="$PROJECT_DIR$/feature_profile" />
+            <option value="$PROJECT_DIR$/feature_review_event" />
           </set>
         </option>
       </GradleProjectSettings>
