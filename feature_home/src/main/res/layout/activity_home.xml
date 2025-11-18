@@ -159,7 +159,7 @@
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@drawable/ic_calendar"
-                            android:tint="@color/color_on_primary" />
+                            app:tint="@color/color_on_primary" />
 
                         <TextView
                             android:id="@+id/tv_featured_date"
@@ -181,7 +181,7 @@
                             android:layout_width="16dp"
                             android:layout_height="16dp"
                             android:src="@drawable/ic_location"
-                            android:tint="@color/color_on_primary" />
+                            app:tint="@color/color_on_primary" />
 
                         <TextView
                             android:id="@+id/tv_featured_location"

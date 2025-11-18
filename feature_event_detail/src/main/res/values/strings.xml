@@ -13,6 +13,7 @@
     <string name="event_detail_timeline_empty">Lịch trình sẽ được cập nhật sớm.</string>
     <string name="event_detail_reviews_title">Trải nghiệm từ người tham dự</string>
     <string name="event_detail_reviews_empty">Chưa có đánh giá nào.</string>
+    <string name="event_detail_write_review">Viết đánh giá cho sự kiện</string>
     <string name="event_detail_review_count_placeholder">0 đánh giá</string>
     <string name="event_detail_review_count">%1$d đánh giá</string>
     <string name="event_detail_cta_with_price">Đặt vé từ %1$s</string>
