@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":feature_review_event"))
 
     implementation(libs.appcompat)
     implementation(libs.material)

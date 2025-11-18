@@ -24,6 +24,7 @@ import com.FinalProject.feature_home.model.HomeUser;
 import com.FinalProject.feature_home.model.RecentTicketInfo;
 import com.FinalProject.feature_home.presentation.adapter.HomeArtistAdapter;
 import com.FinalProject.feature_home.presentation.adapter.HomeEventAdapter;
+import com.FinalProject.feature_profile.presentation.ProfileNavigator;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -135,6 +136,10 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
 
         btnRecentTicket.setOnClickListener(v ->
                 Toast.makeText(this, R.string.home_action_view_ticket, Toast.LENGTH_SHORT).show());
+
+        View.OnClickListener profileClickListener = v -> openProfileScreen();
+        imgAvatar.setOnClickListener(profileClickListener);
+        tvAvatarInitial.setOnClickListener(profileClickListener);
     }
 
     private void loadHomeContent() {
@@ -289,6 +294,10 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
     private void showError(String message) {
         String errorText = getString(R.string.home_error_loading, message);
         Snackbar.make(findViewById(R.id.layout_home_container), errorText, Snackbar.LENGTH_LONG).show();
+    }
+
+    private void openProfileScreen() {
+        startActivity(ProfileNavigator.createIntent(this));
     }
 
     private String formatDate(String raw) {
