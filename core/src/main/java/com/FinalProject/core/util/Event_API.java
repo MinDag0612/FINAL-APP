@@ -5,6 +5,7 @@ import android.util.Log;
 import com.FinalProject.core.constName.StoreField;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -72,7 +73,10 @@ public class Event_API {
                 .get();
     }
 
-
+    public static Task<DocumentReference> addNewEvent(Events eventData){
+        return db.collection(StoreField.EVENTS)
+                .add(eventData.toMap());
+    }
 
 
 }

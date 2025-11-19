@@ -1,26 +1,26 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml:2:1-10:12
-INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml:2:1-10:12
+ADDED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:2:1-10:12
+INJECTED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:2:1-10:12
 	package
-		INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml
+		INJECTED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml:2:11-69
+		ADDED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:2:11-69
 application
-ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml:4:5-9:19
+ADDED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:4:5-9:19
 activity#com.FinalProject.feature_event_detail.presentation.EventDetailActivity
-ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml:5:9-8:63
+ADDED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:5:9-8:63
 	android:exported
-		ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml:7:13-37
+		ADDED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:7:13-37
 	android:theme
-		ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml:8:13-60
+		ADDED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:8:13-60
 	android:name
-		ADDED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml:6:13-61
+		ADDED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:6:13-61
 uses-sdk
-INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml
-INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml
+INJECTED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml
+INJECTED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml
+		INJECTED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/zitqan/Documents/Mobile/FINAL-APP/feature_event_detail/src/main/AndroidManifest.xml
+		INJECTED from D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml

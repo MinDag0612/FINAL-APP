@@ -8,7 +8,7 @@ import com.google.firebase.auth.AuthResult;
 public class LoginUseCase {
 
     public interface LoginCallback {
-        void onSuccess();
+        void onSuccess(String uid);
         void onFailure(String message);
     }
     private final LoginRepositoryImpl repo;
@@ -29,6 +29,8 @@ public class LoginUseCase {
         Task<AuthResult> task = repo.login(email, password, role);
         task.addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
+                String uid = task1.getResult().getUser().getUid();
+
                 repo.getUserInforByEmail(email)
                         .addOnSuccessListener(queryDocumentSnapshots -> {
                             if (!queryDocumentSnapshots.exists()) {
@@ -42,7 +44,7 @@ public class LoginUseCase {
                                 if (!roleDb.equalsIgnoreCase(role)) {
                                     callback.onFailure("Role not match. Please check your role again");
                                 } else {
-                                    callback.onSuccess();
+                                    callback.onSuccess(uid);
                                 }
                             }
                         })
