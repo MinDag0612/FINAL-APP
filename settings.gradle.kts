@@ -23,5 +23,6 @@ rootProject.name = "final_app"
 include(":app")
 include(":core")
 include(":feature_auth")
-include(":feature_home")
+include(":feature_home_attendee")
 include(":feature_event_detail")
+include(":feature_home_organizer")

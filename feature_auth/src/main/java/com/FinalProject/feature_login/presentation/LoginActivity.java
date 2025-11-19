@@ -11,12 +11,14 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.FinalProject.feature_home.presentation.HomeActivity;
+import com.FinalProject.feature_home_organizer.presentation.HomeOrganizerActivity;
 import com.FinalProject.feature_login.R;
 import com.FinalProject.feature_login.data.LoginRepositoryImpl;
 import com.FinalProject.feature_login.domain.LoginUseCase;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputLayout;
+
 
 import java.util.ArrayList;
 
@@ -126,10 +128,22 @@ public class LoginActivity extends AppCompatActivity {
 
             loginUseCase.execute(emailStr, passwordStr, role, new LoginUseCase.LoginCallback() {
                 @Override
-                public void onSuccess() {
+                public void onSuccess(String uid) {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, HomeActivity.class));
-                    finish();
+                    getSharedPreferences("APP_PREFS", MODE_PRIVATE)
+                            .edit()
+                            .putString("UID", uid)
+                            .apply();
+
+                    if (role.equals("organizer")) {
+                        startActivity(new Intent(LoginActivity.this, HomeOrganizerActivity.class));
+                        finish();
+                    }
+                    else if (role.equals("attendee")){
+                        startActivity(new Intent(LoginActivity.this, HomeActivity.class));
+                        finish();
+                    }
+
                 }
 
                 @Override

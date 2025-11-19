@@ -30,7 +30,8 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":feature_home"))
+    implementation(project(":feature_home_attendee"))
+    implementation(project(":feature_home_organizer"))
 
 
     implementation(libs.appcompat)

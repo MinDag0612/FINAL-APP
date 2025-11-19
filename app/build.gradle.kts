@@ -10,7 +10,7 @@ android {
     defaultConfig {
         applicationId = "com.FinalProject.mainActivity"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -34,8 +34,10 @@ android {
 
 dependencies {
     implementation(project(":feature_auth"))
-    implementation(project(":feature_home"))
+    implementation(project(":feature_home_attendee"))
     implementation(project(":core"))
+    implementation(project(":feature_home_organizer"))
+
 
     implementation(libs.appcompat)
     implementation(libs.material)
