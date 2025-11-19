@@ -1,5 +1,8 @@
 package com.FinalProject.core.model;
 
+import androidx.annotation.NonNull;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -100,5 +103,31 @@ public class Events {
         map.put("event_type", event_type);
         map.put("organizer_uid", uid);
         return map;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "Events{" +
+                "event_name='" + event_name + '\'' + ",\n"
+                + "event_descrip='" + event_descrip + '\'' + ",\n"
+                + "event_start='" + event_start + '\'' + ",\n"
+                + "event_end='" + event_end + '\'' + ",\n"
+                + "cast='" + cast + '\'' + ",\n"
+                + "location='" + location + '\'' + ",\n"
+                + "event_type='" + event_type + '\'' + ",\n"
+                + "uid='" + uid + '\'';
+
+
+    }
+
+    public static ArrayList<String> getEventType(){
+        ArrayList<String> arrEvent = new ArrayList<>();
+        arrEvent.add("Concert");
+        arrEvent.add("Music");
+        arrEvent.add("Sport");
+        arrEvent.add("Innovation");
+        arrEvent.add("Other");
+        return arrEvent;
     }
 }
