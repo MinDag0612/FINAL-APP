@@ -16,4 +16,12 @@ public class LoginRepositoryImpl {
     public Task<DocumentSnapshot> getUserInforByEmail(String email) {
         return UserInfor_API.getUserInforByEmail(email);
     }
+
+    public Task<Void> sendResetPassword(String email) {
+        return FirebaseAuthHelper.resetPassword(email);
+    }
+
+    public Task<Boolean> checkEmailExists(String email) {
+        return FirebaseAuthHelper.checkEmailExists(email);
+    }
 }
