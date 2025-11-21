@@ -3,12 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.FinalProject.feature_home_organizer"
+    namespace = "com.FinalProject.feature_create_event"
     compileSdk = 36
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
     }
@@ -22,6 +21,7 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
@@ -29,14 +29,12 @@ android {
 }
 
 dependencies {
-
     implementation(project(":core"))
-    implementation(project(":feature_create_event_organizer"))
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation(libs.firebase.firestore)
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

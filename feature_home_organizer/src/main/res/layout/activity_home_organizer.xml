@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:theme="@style/Theme.Finalapp">
+    android:theme="@style/Theme.Finalapp"
+    android:background="@drawable/ic_homepage">
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/spacing_lg">
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_home_overlay_light" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:scrollbars="vertical"
+        android:scrollbarStyle="outsideOverlay"
+        android:clipToPadding="false"
+        android:paddingStart="@dimen/spacing_lg"
+        android:paddingEnd="@dimen/spacing_lg"
+        android:paddingTop="@dimen/spacing_xl"
+        android:paddingBottom="@dimen/spacing_xxl"
+        android:background="@android:color/transparent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
 
         <TextView
             android:layout_width="wrap_content"
@@ -28,13 +47,123 @@
             android:text="Theo dõi hiệu suất bán vé theo thời gian thực"
             android:textColor="@color/color_on_surface_variant" />
 
-        <android.widget.GridLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_lg"
+            app:cardCornerRadius="20dp"
+            app:cardUseCompatPadding="true"
+            app:cardElevation="0dp"
+            app:strokeColor="@android:color/transparent"
+            android:foreground="?attr/selectableItemBackground"
+            android:maxWidth="@dimen/home_max_width">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:padding="@dimen/spacing_lg"
+                android:background="@drawable/bg_home_organizer_header">
+
+                <LinearLayout
+                    android:id="@+id/layout_hero_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Xin chào, Organizer!"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:text="Đẩy mạnh bán vé, kiểm tra check-in và cập nhật KPI hằng ngày."
+                            android:textColor="#F0ECFF" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_md"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_chip_light"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:paddingTop="6dp"
+                                android:paddingBottom="6dp"
+                                android:text="KPI hôm nay: 120 vé"
+                                android:textColor="@color/color_on_background"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/spacing_sm"
+                                android:background="@drawable/bg_chip_outline"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:paddingTop="6dp"
+                                android:paddingBottom="6dp"
+                                android:text="3 sự kiện đang chạy"
+                                android:textColor="@android:color/white"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_create_event"
+                            style="@style/Widget.Material3.Button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_md"
+                            android:text="Tạo sự kiện mới"
+                            android:textAllCaps="false" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_calendar_playstore" />
+                </LinearLayout>
+            </FrameLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:text="Hiệu suất nhanh"
+            android:textColor="@color/color_on_background"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <android.widget.GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
             android:alignmentMode="alignMargins"
             android:columnCount="2"
-            android:columnOrderPreserved="false">
+            android:columnOrderPreserved="false"
+            android:maxWidth="@dimen/home_max_width"
+            android:layout_gravity="center_horizontal">
 
             <include
                 android:id="@+id/card_revenue"
@@ -81,7 +210,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_md"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:maxWidth="@dimen/home_max_width"
+            android:layout_gravity="center_horizontal">
 
             <include
                 android:id="@+id/card_event_1"
@@ -106,34 +237,53 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_md"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:maxWidth="@dimen/home_max_width"
+            android:layout_gravity="center_horizontal">
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_create_event"
+                android:id="@+id/btn_quick_create_event"
                 style="@style/Widget.Material3.Button"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/spacing_sm"
-                android:layout_weight="1"
-                android:text="Tạo sự kiện"
+                android:text="Tạo sự kiện mới"
                 android:textAllCaps="false" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_view_reports"
-                style="@style/Widget.Material3.Button.OutlinedButton"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Báo cáo"
-                android:textAllCaps="false" />
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_view_reports"
+                    style="@style/Widget.Material3.Button"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/spacing_sm"
+                    android:layout_weight="1"
+                    android:text="Báo cáo tổng quan"
+                    android:textAllCaps="false" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_manage_collaborators"
+                    style="@style/Widget.Material3.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Team check-in"
+                    android:textAllCaps="false" />
+            </LinearLayout>
         </LinearLayout>
 
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_lg"
-            app:cardCornerRadius="@dimen/corner_radius_md">
+            app:cardCornerRadius="@dimen/corner_radius_md"
+            android:maxWidth="@dimen/home_max_width"
+            android:layout_gravity="center_horizontal">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -156,7 +306,7 @@
                     android:textColor="@color/color_on_surface_variant" />
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_manage_collaborators"
+                    android:id="@+id/btn_manage_collaborators_secondary"
                     style="@style/Widget.Material3.Button.TonalButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -166,4 +316,5 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
-</ScrollView>
+    </androidx.core.widget.NestedScrollView>
+</FrameLayout>

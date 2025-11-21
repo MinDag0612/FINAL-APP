@@ -1,4 +1,4 @@
-package com.FinalProject.feature_home_organizer.presentation;
+package com.FinalProject.feature_create_event.presentation;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -11,20 +11,15 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.FinalProject.feature_home_organizer.R;
-import com.FinalProject.feature_home_organizer.domain.CreateEventUseCase;
+import com.FinalProject.feature_create_event.R;
+import com.FinalProject.feature_create_event.domain.CreateEventUseCase;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.FinalProject.core.model.Events;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-
 
 public class CreateEventActivity extends AppCompatActivity {
 
@@ -35,9 +30,9 @@ public class CreateEventActivity extends AppCompatActivity {
     TextInputEditText etEventDescription;
     TextInputEditText etEventLocation;
     TextInputEditText etEventCast;
-
+    TextInputEditText etTicketPrice;
+    TextInputEditText etTicketQuantity;
     MaterialButton submitBtn;
-
     ImageButton btnBack;
 
     CreateEventUseCase createEventUseCase = new CreateEventUseCase();
@@ -53,10 +48,9 @@ public class CreateEventActivity extends AppCompatActivity {
         setBtnBack();
         setEventType();
         setSubmitBtn();
-
     }
 
-    private void init(){
+    private void init() {
         etStartTime = findViewById(R.id.et_event_start_time);
         etEndTime = findViewById(R.id.et_event_end_time);
         btnBack = findViewById(R.id.btn_back);
@@ -66,21 +60,21 @@ public class CreateEventActivity extends AppCompatActivity {
         etEventDescription = findViewById(R.id.et_event_description);
         etEventLocation = findViewById(R.id.et_event_location);
         etEventCast = findViewById(R.id.et_event_cast);
+        etTicketPrice = findViewById(R.id.et_ticket_price);
+        etTicketQuantity = findViewById(R.id.et_ticket_quantity);
         submitBtn = findViewById(R.id.btn_create_event);
     }
 
-    private void setEtStartEndTime(){
+    private void setEtStartEndTime() {
         etStartTime.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            // 👉 Date Picker
             DatePickerDialog datePicker = new DatePickerDialog(
                     this,
                     (dateView, y, m, d) -> {
-                        // Sau khi chọn ngày → bật TimePicker
                         int hour = calendar.get(Calendar.HOUR_OF_DAY);
                         int minute = calendar.get(Calendar.MINUTE);
 
@@ -113,11 +107,9 @@ public class CreateEventActivity extends AppCompatActivity {
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            // 👉 Date Picker
             DatePickerDialog datePicker = new DatePickerDialog(
                     this,
                     (dateView, y, m, d) -> {
-                        // Sau khi chọn ngày → bật TimePicker
                         int hour = calendar.get(Calendar.HOUR_OF_DAY);
                         int minute = calendar.get(Calendar.MINUTE);
 
@@ -145,10 +137,8 @@ public class CreateEventActivity extends AppCompatActivity {
         });
     }
 
-    private void setBtnBack(){
-        btnBack.setOnClickListener(v -> {
-            onBackPressed();
-        });
+    private void setBtnBack() {
+        btnBack.setOnClickListener(v -> onBackPressed());
     }
 
     public void setEventType() {
@@ -162,7 +152,7 @@ public class CreateEventActivity extends AppCompatActivity {
         eventType.setAdapter(adapter);
     }
 
-    private void setSubmitBtn(){
+    private void setSubmitBtn() {
         submitBtn.setOnClickListener(v -> {
             String eventName = etEventName.getText().toString().trim();
             String eventDescription = etEventDescription.getText().toString().trim();
@@ -170,13 +160,34 @@ public class CreateEventActivity extends AppCompatActivity {
             String eventEnd = etEndTime.getText().toString().trim();
             String eventLocation = etEventLocation.getText().toString().trim();
             String eventCast = etEventCast.getText().toString().trim();
-
             String eventTypeStr = eventType.getText().toString().trim();
+            String priceStr = etTicketPrice.getText().toString().trim();
+            String quantityStr = etTicketQuantity.getText().toString().trim();
             String uid = getSharedPreferences("APP_PREFS", MODE_PRIVATE)
                     .getString("UID", null);
 
-            if (eventName.isEmpty() || eventDescription.isEmpty() || eventStart.isEmpty() || eventEnd.isEmpty() || eventLocation.isEmpty()){
-                Toast.makeText(this, "Please fill all fields", Toast.LENGTH_SHORT).show();
+            if (eventName.isEmpty() || eventDescription.isEmpty() || eventStart.isEmpty() || eventEnd.isEmpty() || eventLocation.isEmpty()
+                    || priceStr.isEmpty() || quantityStr.isEmpty()) {
+                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (eventTypeStr.isEmpty()) {
+                eventTypeStr = "Other";
+            }
+
+            int ticketPrice;
+            int ticketQuantity;
+            try {
+                ticketPrice = Integer.parseInt(priceStr);
+                ticketQuantity = Integer.parseInt(quantityStr);
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Giá vé và số lượng phải là số", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if (ticketPrice <= 0 || ticketQuantity <= 0) {
+                Toast.makeText(this, "Giá vé và số lượng phải > 0", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -185,28 +196,35 @@ public class CreateEventActivity extends AppCompatActivity {
                     eventDescription,
                     eventStart,
                     eventEnd,
-                    eventLocation,
                     eventCast,
+                    eventLocation,
                     eventTypeStr,
-                    uid
+                    uid,
+                    ticketPrice
             );
 
             Log.d("CreateEventActivity", "setSubmitBtn: " + newEvent.toString());
 
-            createEventUseCase.excute(newEvent, new CreateEventUseCase.CreateEventCallback(){
+            com.FinalProject.core.model.TicketInfor defaultTicket = new com.FinalProject.core.model.TicketInfor(
+                    "Vé chuẩn",
+                    ticketQuantity,
+                    0,
+                    ticketPrice
+            );
+
+            createEventUseCase.execute(newEvent, defaultTicket, new CreateEventUseCase.CreateEventCallback() {
                 @Override
                 public void onSuccess() {
+                    Toast.makeText(CreateEventActivity.this, "Tạo sự kiện thành công", Toast.LENGTH_SHORT).show();
                     finish();
-                    Toast.makeText(CreateEventActivity.this, "Create event successful", Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onFailure(String message) {
                     Log.d("CreateEventActivity", "onError: " + message);
+                    Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
-
             });
-            finish();
         });
     }
 }
