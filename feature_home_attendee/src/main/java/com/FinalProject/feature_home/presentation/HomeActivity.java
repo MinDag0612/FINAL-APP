@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
+import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.FinalProject.feature_event_detail.presentation.EventDetailNavigator;
 import com.FinalProject.feature_home.R;
@@ -117,10 +118,20 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         eventAdapter = new HomeEventAdapter(this);
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
         rvEvents.setAdapter(eventAdapter);
+        rvEvents.setHasFixedSize(true);
+        rvEvents.setItemViewCacheSize(10);
+        if (rvEvents.getItemAnimator() instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) rvEvents.getItemAnimator()).setSupportsChangeAnimations(false);
+        }
 
         artistAdapter = new HomeArtistAdapter();
         rvArtists.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         rvArtists.setAdapter(artistAdapter);
+        rvArtists.setHasFixedSize(true);
+        rvArtists.setItemViewCacheSize(10);
+        if (rvArtists.getItemAnimator() instanceof SimpleItemAnimator) {
+            ((SimpleItemAnimator) rvArtists.getItemAnimator()).setSupportsChangeAnimations(false);
+        }
     }
 
     private void setupListeners() {
