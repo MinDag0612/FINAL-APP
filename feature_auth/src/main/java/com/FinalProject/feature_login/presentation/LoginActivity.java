@@ -3,6 +3,7 @@ package com.FinalProject.feature_login.presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,6 +19,7 @@ import com.FinalProject.feature_login.domain.LoginUseCase;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.android.material.textfield.TextInputEditText;
 
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     String passwordStr;
     String role;
     TextView tv_to_signup;
+    TextView tv_forgot_password;
     LoginUseCase loginUseCase;
     LoginRepositoryImpl logionRepo;
 
@@ -64,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
         btn_submit_login = findViewById(R.id.btn_submit_login);
         btn_login_with_google = findViewById(R.id.btn_login_with_google);
         tv_to_signup = findViewById(R.id.tv_go_to_sign_up);
+        tv_forgot_password = findViewById(R.id.tv_forgot_password);
     }
 
     private void getDataFromSignUp(){
@@ -104,6 +108,11 @@ public class LoginActivity extends AppCompatActivity {
         tv_to_signup.setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterActivity.class));
         });
+
+        if (tv_forgot_password != null) {
+            tv_forgot_password.setOnClickListener(v ->
+                    startActivity(new Intent(this, ForgotPasswordActivity.class)));
+        }
     }
 
     private void setBtn_submit_login() {
@@ -152,6 +161,36 @@ public class LoginActivity extends AppCompatActivity {
                 }
             });
         });
+    }
+
+    private void showResetPasswordDialog() {
+        LayoutInflater inflater = LayoutInflater.from(this);
+        android.view.View dialogView = inflater.inflate(R.layout.dialog_reset_email, null);
+        TextInputLayout tilEmail = dialogView.findViewById(R.id.reset_email_input_layout);
+        TextInputEditText input = dialogView.findViewById(R.id.reset_email_edit);
+
+        if (input != null && email != null && email.getEditText() != null) {
+            input.setText(email.getEditText().getText());
+        }
+
+        new androidx.appcompat.app.AlertDialog.Builder(this)
+                .setTitle("Đặt lại mật khẩu")
+                .setMessage("Nhập email để nhận link đặt lại mật khẩu.")
+                .setView(dialogView)
+                .setPositiveButton("Gửi", (dialog, which) -> {
+                    String emailStr = input != null ? input.getText().toString().trim() : "";
+                    if (TextUtils.isEmpty(emailStr)) {
+                        Toast.makeText(this, "Vui lòng nhập email", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    logionRepo.sendResetPassword(emailStr)
+                            .addOnSuccessListener(unused ->
+                                    Toast.makeText(this, "Đã gửi link đặt lại mật khẩu tới email.", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e ->
+                                    Toast.makeText(this, "Gửi thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
     }
 
     private void openEventDetailScreen() {

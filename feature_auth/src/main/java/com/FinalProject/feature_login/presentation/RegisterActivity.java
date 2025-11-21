@@ -3,6 +3,7 @@ package com.FinalProject.feature_login.presentation;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     String phoneNumberStr;
     String passwordStr;
     TextView btn_login;
+    ImageButton btn_back;
     RegisterUserUseCase regisreUseCase;
     RegisterRepositoryImpl repo;
 
@@ -55,10 +57,16 @@ public class RegisterActivity extends AppCompatActivity {
         password = findViewById(R.id.register_password);
         btn_submit_register = findViewById(R.id.btn_submit_register);
         btn_login = findViewById(R.id.tv_go_to_login);
+        btn_back = findViewById(R.id.btn_register_back);
 
         repo = new RegisterRepositoryImpl();
         regisreUseCase = new RegisterUserUseCase(repo);
         chip_group_role = findViewById(R.id.chip_group_role);
+
+        if (btn_back != null) {
+            btn_back.setOnClickListener(v ->
+                    getOnBackPressedDispatcher().onBackPressed());
+        }
     }
 
     private void setChip_group_role() {
