@@ -16,8 +16,6 @@ import com.FinalProject.feature_home_organizer.presentation.HomeOrganizerActivit
 import com.FinalProject.feature_login.R;
 import com.FinalProject.feature_login.data.LoginRepositoryImpl;
 import com.FinalProject.feature_login.domain.LoginUseCase;
-import com.google.android.material.button.MaterialButton;
-import com.google.android.material.button.MaterialButtonToggleGroup;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -25,17 +23,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.util.ArrayList;
 
 public class LoginActivity extends AppCompatActivity {
-    MaterialButton btn_role_organizer;
-    MaterialButton btn_role_attendee;
     TextInputLayout email;
     TextInputLayout password;
     Button btn_submit_login;
     Button btn_login_with_google;
-    MaterialButtonToggleGroup btn_group;
-    String selectedRole = "";
     String emailStr;
     String passwordStr;
-    String role;
     TextView tv_to_signup;
     TextView tv_forgot_password;
     LoginUseCase loginUseCase;
@@ -50,7 +43,6 @@ public class LoginActivity extends AppCompatActivity {
         loginUseCase = new LoginUseCase(logionRepo);
 
         initViews();
-        setBtn_role();
         setBtn_submit_login();
         setTv_to_signup();
         getDataFromSignUp();
@@ -59,9 +51,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private void initViews() {
-        btn_group = findViewById(R.id.group_role_toggle);
-        btn_role_organizer = findViewById(R.id.btn_role_organizer);
-        btn_role_attendee = findViewById(R.id.btn_role_attendee);
         email = findViewById(R.id.input_email);
         password = findViewById(R.id.input_password);
         btn_submit_login = findViewById(R.id.btn_submit_login);
@@ -77,31 +66,7 @@ public class LoginActivity extends AppCompatActivity {
             String password = intent.getStringExtra("password");
             this.email.getEditText().setText(email);
             this.password.getEditText().setText(password);
-
-            String role = intent.getStringExtra("role");
-            if (role == null){
-                return;
-            }
-            if (role.equals("organizer")){
-                btn_role_organizer.setChecked(true);
-            }
-            if (role.equals("attendee")){
-                btn_role_attendee.setChecked(true);
-            }
         }
-    }
-
-    private void setBtn_role() {
-        btn_group.addOnButtonCheckedListener((group, checkedId, isChecked) -> {
-            if (isChecked) {
-                if (checkedId == R.id.btn_role_organizer) {
-                    selectedRole = "organizer";
-                }
-                if (checkedId == R.id.btn_role_attendee) {
-                    selectedRole = "attendee";
-                }
-            }
-        });
     }
 
     private void setTv_to_signup(){
@@ -123,32 +88,27 @@ public class LoginActivity extends AppCompatActivity {
             passwordStr = password.getEditText() != null
                     ? password.getEditText().getText().toString()
                     : "";
-            role = selectedRole;
 
             if (TextUtils.isEmpty(emailStr) || TextUtils.isEmpty(passwordStr)) {
                 Toast.makeText(this, "Vui lòng nhập email và mật khẩu", Toast.LENGTH_SHORT).show();
                 return;
             }
 
-            if (TextUtils.isEmpty(role)) {
-                Toast.makeText(this, "Vui lòng chọn vai trò đăng nhập", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            loginUseCase.execute(emailStr, passwordStr, role, new LoginUseCase.LoginCallback() {
+            loginUseCase.execute(emailStr, passwordStr, new LoginUseCase.LoginCallback() {
                 @Override
-                public void onSuccess(String uid) {
+                public void onSuccess(String uid, String role) {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
                     getSharedPreferences("APP_PREFS", MODE_PRIVATE)
                             .edit()
                             .putString("UID", uid)
+                            .putString("ROLE", role)
                             .apply();
 
-                    if (role.equals("organizer")) {
+                    if ("organizer".equalsIgnoreCase(role)) {
                         startActivity(new Intent(LoginActivity.this, HomeOrganizerActivity.class));
                         finish();
                     }
-                    else if (role.equals("attendee")){
+                    else {
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();
                     }

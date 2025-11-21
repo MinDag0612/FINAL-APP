@@ -9,12 +9,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 
 public class LoginRepositoryImpl {
 
-    public Task<AuthResult> login(String email, String password, String role) {
+    public Task<AuthResult> login(String email, String password) {
         return FirebaseAuthHelper.login(email, password);
     }
 
     public Task<DocumentSnapshot> getUserInforByEmail(String email) {
         return UserInfor_API.getUserInforByEmail(email);
+    }
+
+    public Task<DocumentSnapshot> getUserInforById(String uid) {
+        return UserInfor_API.getUserInforById(uid);
     }
 
     public Task<Void> sendResetPassword(String email) {

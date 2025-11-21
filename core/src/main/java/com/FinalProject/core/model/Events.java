@@ -15,12 +15,13 @@ public class Events {
     private String location = null;
     private String event_type = null;
     private String uid = null;
+    private int base_price = 0;
 
     public Events() {}
 
     // ⚙️ Constructor đầy đủ
     public Events(String event_name, String event_descrip, String event_start,
-                 String event_end, String cast, String location, String event_type, String uid) {
+                 String event_end, String cast, String location, String event_type, String uid, int base_price) {
         this.event_name = event_name;
         this.event_descrip = event_descrip;
         this.event_start = event_start;
@@ -29,6 +30,7 @@ public class Events {
         this.location = location;
         this.event_type = event_type;
         this.uid = uid;
+        this.base_price = base_price;
     }
 
     // 🧩 Getter & Setter
@@ -92,6 +94,14 @@ public class Events {
         this.uid = uid;
     }
 
+    public int getBase_price() {
+        return base_price;
+    }
+
+    public void setBase_price(int base_price) {
+        this.base_price = base_price;
+    }
+
     public Map<String, Object> toMap() {
         Map<String, Object> map = new HashMap<>();
         map.put("event_name", event_name);
@@ -99,9 +109,13 @@ public class Events {
         map.put("event_start", event_start);
         map.put("event_end", event_end);
         map.put("cast", cast);
+        // Lưu cả key cũ và mới để không làm hỏng data đọc ở nơi khác
         map.put("location", location);
+        map.put("event_location", location);
         map.put("event_type", event_type);
         map.put("organizer_uid", uid);
+        map.put("base_price", base_price);
+        map.put("min_price", base_price);
         return map;
     }
 
@@ -116,6 +130,7 @@ public class Events {
                 + "cast='" + cast + '\'' + ",\n"
                 + "location='" + location + '\'' + ",\n"
                 + "event_type='" + event_type + '\'' + ",\n"
+                + "base_price='" + base_price + '\'' + ",\n"
                 + "uid='" + uid + '\'';
 
 

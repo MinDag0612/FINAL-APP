@@ -60,38 +60,12 @@
                         android:text="Đăng nhập để tiếp tục quản lý và tham gia sự kiện"
                         android:textColor="@color/color_on_surface_variant" />
 
-                    <com.google.android.material.button.MaterialButtonToggleGroup
-                        android:id="@+id/group_role_toggle"
+                    <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:gravity="center"
-                        app:selectionRequired="true"
-                        app:singleSelection="true">
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_role_attendee"
-                            style="@style/Widget.Material3.Button.OutlinedButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Người tham gia"
-                            android:textAllCaps="false"
-                            android:backgroundTint="@color/toggle_bg_selector"
-                            android:textColor="@color/toggle_text_selector" />
-
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btn_role_organizer"
-                            style="@style/Widget.Material3.Button.OutlinedButton"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="Nhà tổ chức"
-                            android:textAllCaps="false"
-                            android:backgroundTint="@color/toggle_bg_selector"
-                            android:textColor="@color/toggle_text_selector" />
-
-                    </com.google.android.material.button.MaterialButtonToggleGroup>
+                        android:layout_marginTop="@dimen/spacing_md"
+                        android:text="Hệ thống tự nhận diện vai trò đã đăng ký và dẫn bạn đến màn hình phù hợp."
+                        android:textColor="@color/color_on_surface_variant" />
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:id="@+id/input_email"

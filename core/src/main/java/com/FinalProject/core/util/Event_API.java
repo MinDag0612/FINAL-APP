@@ -78,5 +78,25 @@ public class Event_API {
                 .add(eventData.toMap());
     }
 
+    public static Task<Void> addEventWithTicket(Events eventData, com.FinalProject.core.model.TicketInfor ticketInfor){
+        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
+
+        db.collection(StoreField.EVENTS)
+                .add(eventData.toMap())
+                .addOnSuccessListener(ref -> {
+                    if (ticketInfor == null) {
+                        tcs.setResult(null);
+                        return;
+                    }
+                    ref.collection(StoreField.TICKETS_INFOR)
+                            .add(ticketInfor.toMap())
+                            .addOnSuccessListener(ticketRef -> tcs.setResult(null))
+                            .addOnFailureListener(tcs::setException);
+                })
+                .addOnFailureListener(tcs::setException);
+
+        return tcs.getTask();
+    }
+
 
 }

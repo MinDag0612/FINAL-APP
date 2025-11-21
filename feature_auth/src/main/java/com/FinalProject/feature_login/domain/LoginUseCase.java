@@ -8,7 +8,7 @@ import com.google.firebase.auth.AuthResult;
 public class LoginUseCase {
 
     public interface LoginCallback {
-        void onSuccess(String uid);
+        void onSuccess(String uid, String role);
         void onFailure(String message);
     }
     private final LoginRepositoryImpl repo;
@@ -17,21 +17,17 @@ public class LoginUseCase {
         this.repo = repo;
     }
 
-    public void execute(String email, String password, String role, LoginCallback callback) {
+    public void execute(String email, String password, LoginCallback callback) {
         if (email == null || email.trim().isEmpty() || password == null || password.isEmpty()){
             callback.onFailure("Email or password is empty");
             return;
         }
-        if (role == null || role.trim().isEmpty()) {
-            callback.onFailure("Role is empty");
-            return;
-        }
-        Task<AuthResult> task = repo.login(email, password, role);
+        Task<AuthResult> task = repo.login(email, password);
         task.addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
                 String uid = task1.getResult().getUser().getUid();
 
-                repo.getUserInforByEmail(email)
+                repo.getUserInforById(uid)
                         .addOnSuccessListener(queryDocumentSnapshots -> {
                             if (!queryDocumentSnapshots.exists()) {
                                 callback.onFailure("User not found");
@@ -41,11 +37,7 @@ public class LoginUseCase {
                                     callback.onFailure("User role missing in database");
                                     return;
                                 }
-                                if (!roleDb.equalsIgnoreCase(role)) {
-                                    callback.onFailure("Role not match. Please check your role again");
-                                } else {
-                                    callback.onSuccess(uid);
-                                }
+                                callback.onSuccess(uid, roleDb);
                             }
                         })
                         .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
