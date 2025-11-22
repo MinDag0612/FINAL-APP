@@ -9,8 +9,8 @@ android {
 
     defaultConfig {
         applicationId = "com.FinalProject.mainActivity"
-        minSdk = 24
-        targetSdk = 34
+        minSdk = 36
+        targetSdk = 36
         versionCode = 1
         versionName = "1.0"
 
@@ -34,17 +34,25 @@ android {
 
 dependencies {
     implementation(project(":feature_auth"))
-    implementation(project(":feature_home"))
+    implementation(project(":feature_booking"))
     implementation(project(":core"))
 
-    implementation(libs.appcompat)
-    implementation(libs.material)
-    implementation(libs.activity)
-    implementation(libs.constraintlayout)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.ext.junit)
-    androidTestImplementation(libs.espresso.core)
-    implementation(platform("com.google.firebase:firebase-bom:34.5.0"))
-    implementation("com.google.firebase:firebase-analytics")
-    implementation("com.google.firebase:firebase-auth")
+    // AndroidX cơ bản (KHÔNG dùng compose ở đây để tránh yêu cầu plugin/feature)
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("com.google.android.material:material:1.12.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.fragment:fragment:1.8.3")
+    implementation("androidx.activity:activity:1.9.2")
+
+    // Navigation (Java-friendly, non-KTX)
+    implementation("androidx.navigation:navigation-fragment:2.8.3")
+    implementation("androidx.navigation:navigation-ui:2.8.3")
+
+    // GridLayout AndroidX (cho app:layout_columnWeight trong fragment_seat_selection)
+    implementation("androidx.gridlayout:gridlayout:1.0.0")
+
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.2.1")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+
 }

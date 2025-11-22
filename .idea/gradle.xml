@@ -13,10 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/feature_auth" />
-            <option value="$PROJECT_DIR$/feature_event_detail" />
-            <option value="$PROJECT_DIR$/feature_home" />
-            <option value="$PROJECT_DIR$/feature_profile" />
-            <option value="$PROJECT_DIR$/feature_review_event" />
+            <option value="$PROJECT_DIR$/feature_booking" />
           </set>
         </option>
       </GradleProjectSettings>

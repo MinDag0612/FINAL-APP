@@ -27,3 +27,5 @@ include(":feature_home")
 include(":feature_event_detail")
 include(":feature_profile")
 include(":feature_review_event")
+include(":feature_booking")
+

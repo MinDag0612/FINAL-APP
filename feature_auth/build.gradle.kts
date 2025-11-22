@@ -7,7 +7,7 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        minSdk = 24
+        minSdk = 36
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -30,7 +30,6 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":feature_home"))
 
 
     implementation(libs.appcompat)
