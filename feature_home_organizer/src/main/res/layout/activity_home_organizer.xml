@@ -214,14 +214,29 @@
             android:maxWidth="@dimen/home_max_width"
             android:layout_gravity="center_horizontal">
 
-            <include
-                android:id="@+id/card_event_1"
-                layout="@layout/view_organizer_event_card" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_active_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never" />
 
-            <include
-                android:id="@+id/card_event_2"
-                layout="@layout/view_organizer_event_card"
-                android:layout_marginTop="@dimen/spacing_md" />
+            <TextView
+                android:id="@+id/tv_empty_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:gravity="center"
+                android:text="Chưa có sự kiện nào"
+                android:textColor="@color/color_on_surface_variant"
+                android:visibility="gone" />
+
+            <com.google.android.material.progressindicator.CircularProgressIndicator
+                android:id="@+id/progress_events"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView

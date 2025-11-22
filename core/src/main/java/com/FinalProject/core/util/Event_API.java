@@ -3,15 +3,19 @@ package com.FinalProject.core.util;
 import android.util.Log;
 
 import com.FinalProject.core.constName.StoreField;
+import com.FinalProject.core.constName.StoreField;
+import com.FinalProject.core.model.Events;
+import com.FinalProject.core.model.TicketInfor;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.FinalProject.core.model.Events;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 public class Event_API {
     private static final FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -73,9 +77,65 @@ public class Event_API {
                 .get();
     }
 
+    public static Task<QuerySnapshot> getEventsByOrganizer(String organizerUid, int limit){
+        int fetchLimit = limit > 0 ? limit : 20;
+        return db.collection(StoreField.EVENTS)
+                .whereEqualTo(StoreField.EventFields.ORGANIZER_UID, organizerUid)
+                .limit(fetchLimit)
+                .get();
+    }
+
     public static Task<DocumentReference> addNewEvent(Events eventData){
         return db.collection(StoreField.EVENTS)
                 .add(eventData.toMap());
+    }
+
+    public static Task<DocumentSnapshot> getEventById(String eventId) {
+        return db.collection(StoreField.EVENTS)
+                .document(eventId)
+                .get();
+    }
+
+    public static Task<QuerySnapshot> getTicketsForEvent(String eventId, int limit) {
+        int fetchLimit = limit > 0 ? limit : 1;
+        return db.collection(StoreField.EVENTS)
+                .document(eventId)
+                .collection(StoreField.TICKETS_INFOR)
+                .limit(fetchLimit)
+                .get();
+    }
+
+    public static Task<Void> updateEventWithTicket(String eventId, Events eventData, TicketInfor ticketInfor) {
+        TaskCompletionSource<Void> tcs = new TaskCompletionSource<>();
+        DocumentReference eventRef = db.collection(StoreField.EVENTS).document(eventId);
+
+        eventRef.set(eventData.toMap(), SetOptions.merge())
+                .addOnSuccessListener(unused -> {
+                    if (ticketInfor == null) {
+                        tcs.setResult(null);
+                        return;
+                    }
+                    eventRef.collection(StoreField.TICKETS_INFOR)
+                            .limit(1)
+                            .get()
+                            .addOnSuccessListener(snapshot -> {
+                                if (snapshot != null && !snapshot.isEmpty()) {
+                                    DocumentReference ticketRef = snapshot.getDocuments().get(0).getReference();
+                                    ticketRef.set(ticketInfor.toMap(), SetOptions.merge())
+                                            .addOnSuccessListener(unused2 -> tcs.setResult(null))
+                                            .addOnFailureListener(tcs::setException);
+                                } else {
+                                    eventRef.collection(StoreField.TICKETS_INFOR)
+                                            .add(ticketInfor.toMap())
+                                            .addOnSuccessListener(unused2 -> tcs.setResult(null))
+                                            .addOnFailureListener(tcs::setException);
+                                }
+                            })
+                            .addOnFailureListener(tcs::setException);
+                })
+                .addOnFailureListener(tcs::setException);
+
+        return tcs.getTask();
     }
 
     public static Task<Void> addEventWithTicket(Events eventData, com.FinalProject.core.model.TicketInfor ticketInfor){
