@@ -45,7 +45,11 @@
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            android:clipToPadding="false"
+            android:overScrollMode="never"
+            android:paddingTop="@dimen/spacing_md"
+            android:paddingBottom="@dimen/spacing_xxl">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -56,9 +60,12 @@
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:layout_marginTop="@dimen/spacing_lg"
                     app:cardCornerRadius="@dimen/corner_radius_md"
-                    app:cardElevation="@dimen/elevation_card">
+                    app:cardElevation="@dimen/elevation_card"
+                    app:cardBackgroundColor="@color/color_surface"
+                    app:strokeColor="@color/color_outline_variant"
+                    app:strokeWidth="1dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -268,8 +275,8 @@
                     style="@style/Widget.Material3.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
                     android:layout_marginTop="@dimen/spacing_xl"
+                    android:layout_marginBottom="@dimen/spacing_xxl"
                     android:paddingVertical="12dp"
                     android:text="Hoàn tất và tạo sự kiện"
                     android:textAllCaps="false" />
