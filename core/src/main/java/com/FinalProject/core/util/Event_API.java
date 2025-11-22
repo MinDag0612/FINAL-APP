@@ -97,11 +97,16 @@ public class Event_API {
     }
 
     public static Task<QuerySnapshot> getTicketsForEvent(String eventId, int limit) {
-        int fetchLimit = limit > 0 ? limit : 1;
+        if (limit > 0) {
+            return db.collection(StoreField.EVENTS)
+                    .document(eventId)
+                    .collection(StoreField.TICKETS_INFOR)
+                    .limit(limit)
+                    .get();
+        }
         return db.collection(StoreField.EVENTS)
                 .document(eventId)
                 .collection(StoreField.TICKETS_INFOR)
-                .limit(fetchLimit)
                 .get();
     }
 
