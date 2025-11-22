@@ -16,6 +16,8 @@ import com.FinalProject.feature_home_organizer.presentation.HomeOrganizerActivit
 import com.FinalProject.feature_login.R;
 import com.FinalProject.feature_login.data.LoginRepositoryImpl;
 import com.FinalProject.feature_login.domain.LoginUseCase;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -103,6 +105,7 @@ public class LoginActivity extends AppCompatActivity {
                             .putString("UID", uid)
                             .putString("ROLE", role)
                             .apply();
+                    saveFcmToken(uid);
 
                     if ("organizer".equalsIgnoreCase(role)) {
                         startActivity(new Intent(LoginActivity.this, HomeOrganizerActivity.class));
@@ -178,5 +181,15 @@ public class LoginActivity extends AppCompatActivity {
         detailIntent.putStringArrayListExtra("extra_timeline", timeline);
 
         startActivity(detailIntent);
+    }
+
+    private void saveFcmToken(String uid) {
+        FirebaseMessaging.getInstance().getToken()
+                .addOnSuccessListener(token -> {
+                    FirebaseFirestore.getInstance()
+                            .collection("User_Infor")
+                            .document(uid)
+                            .update("fcm_token", token);
+                });
     }
 }

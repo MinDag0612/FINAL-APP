@@ -3,14 +3,31 @@ plugins {
 }
 
 android {
-    namespace = "com.FinalProject.feature_home_organizer"
+    namespace = "com.FinalProject.feature_attendee_manager_organizer"
     compileSdk = 36
 
     defaultConfig {
         minSdk = 24
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+    }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
+    buildTypes {
+        debug {
+            buildConfigField("String", "FCM_SERVER_KEY", "\"${project.findProperty("FCM_SERVER_KEY") ?: ""}\"")
+        }
+        release {
+            isMinifyEnabled = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+            buildConfigField("String", "FCM_SERVER_KEY", "\"${project.findProperty("FCM_SERVER_KEY") ?: ""}\"")
+        }
     }
 
     buildTypes {
@@ -29,15 +46,15 @@ android {
 }
 
 dependencies {
-
     implementation(project(":core"))
-    implementation(project(":feature_create_event_organizer"))
-    implementation(project(":feature_attendee_manager_organizer"))
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.recyclerview)
     implementation(libs.firebase.firestore)
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
