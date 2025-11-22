@@ -14,6 +14,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.FinalProject.feature_create_event.R;
 import com.FinalProject.feature_create_event.domain.CreateEventUseCase;
+import com.FinalProject.feature_create_event.domain.LoadEventForEditUseCase;
+import com.FinalProject.feature_create_event.domain.UpdateEventUseCase;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.FinalProject.core.model.Events;
@@ -35,7 +37,12 @@ public class CreateEventActivity extends AppCompatActivity {
     MaterialButton submitBtn;
     ImageButton btnBack;
 
+    String eventId = null;
+    boolean isEditMode = false;
+
     CreateEventUseCase createEventUseCase = new CreateEventUseCase();
+    UpdateEventUseCase updateEventUseCase = new UpdateEventUseCase();
+    LoadEventForEditUseCase loadEventForEditUseCase = new LoadEventForEditUseCase();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,10 +50,17 @@ public class CreateEventActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_create_event);
 
+        eventId = getIntent().getStringExtra("EXTRA_EVENT_ID");
+        isEditMode = eventId != null && !eventId.isEmpty();
+
         init();
         setEtStartEndTime();
         setBtnBack();
         setEventType();
+        if (isEditMode) {
+            submitBtn.setText("Lưu thay đổi");
+            loadEventData();
+        }
         setSubmitBtn();
     }
 
@@ -212,19 +226,69 @@ public class CreateEventActivity extends AppCompatActivity {
                     ticketPrice
             );
 
-            createEventUseCase.execute(newEvent, defaultTicket, new CreateEventUseCase.CreateEventCallback() {
-                @Override
-                public void onSuccess() {
-                    Toast.makeText(CreateEventActivity.this, "Tạo sự kiện thành công", Toast.LENGTH_SHORT).show();
-                    finish();
-                }
+            if (!isEditMode) {
+                createEventUseCase.execute(newEvent, defaultTicket, new CreateEventUseCase.CreateEventCallback() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(CreateEventActivity.this, "Tạo sự kiện thành công", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
 
-                @Override
-                public void onFailure(String message) {
-                    Log.d("CreateEventActivity", "onError: " + message);
-                    Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                    @Override
+                    public void onFailure(String message) {
+                        Log.d("CreateEventActivity", "onError: " + message);
+                        Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                updateEventUseCase.execute(eventId, newEvent, defaultTicket, new UpdateEventUseCase.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Toast.makeText(CreateEventActivity.this, "Lưu sự kiện thành công", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(String message) {
+                        Log.d("CreateEventActivity", "update error: " + message);
+                        Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+
+    private void loadEventData() {
+        loadEventForEditUseCase.execute(eventId, new LoadEventForEditUseCase.Callback() {
+            @Override
+            public void onSuccess(com.FinalProject.feature_create_event.data.EventEditorRepository.EventWithTicket data) {
+                Events e = data.event;
+                if (e != null) {
+                    etEventName.setText(e.getEvent_name());
+                    etEventDescription.setText(e.getEvent_descrip());
+                    etStartTime.setText(e.getEvent_start());
+                    etEndTime.setText(e.getEvent_end());
+                    etEventLocation.setText(e.getLocation());
+                    etEventCast.setText(e.getCast());
+                    eventType.setText(e.getEvent_type(), false);
+                    if (e.getBase_price() > 0) {
+                        etTicketPrice.setText(String.valueOf(e.getBase_price()));
+                    }
                 }
-            });
+                if (data.ticket != null) {
+                    if (data.ticket.getTickets_price() > 0) {
+                        etTicketPrice.setText(String.valueOf(data.ticket.getTickets_price()));
+                    }
+                    if (data.ticket.getTickets_quantity() > 0) {
+                        etTicketQuantity.setText(String.valueOf(data.ticket.getTickets_quantity()));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(String message) {
+                Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }
