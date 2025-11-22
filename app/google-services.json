@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "318073536795",
+    "project_id": "finalapp-6a396",
+    "storage_bucket": "finalapp-6a396.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318073536795:android:a3354406cd6417646313be",
+        "android_client_info": {
+          "package_name": "com.FinalProject.mainActivity"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8WTxtirqvdxwK1TePYFcYvpXSUNgEZAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:318073536795:android:85e7971c451620496313be",
+        "android_client_info": {
+          "package_name": "com.minden.myapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8WTxtirqvdxwK1TePYFcYvpXSUNgEZAU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

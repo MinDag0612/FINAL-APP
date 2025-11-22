@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:background="@color/color_background"
+    android:padding="@dimen/spacing_md">
+
+    <!-- Tiêu đề (optional) -->
+    <TextView
+        android:id="@+id/tv_tickets_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Vé của tôi"
+        android:textStyle="bold"
+        android:textSize="20sp"
+        android:textColor="@color/color_on_background"
+        android:paddingBottom="@dimen/spacing_sm" />
+
+    <!-- Nhóm filter: Upcoming / History / Shared -->
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group_ticket_filters"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_ticket_upcoming"
+            style="@style/Widget.Material3.Chip.Assist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sắp diễn ra"
+            android:checked="true" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_ticket_history"
+            style="@style/Widget.Material3.Chip.Assist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lịch sử" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_ticket_shared"
+            style="@style/Widget.Material3.Chip.Assist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Được chia sẻ" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <!-- Khoảng cách nhỏ -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/spacing_sm" />
+
+    <!-- Danh sách vé Upcoming -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tickets_upcoming"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/spacing_md"
+        android:overScrollMode="never"
+        tools:listitem="@layout/view_ticket_card" />
+
+    <!-- Danh sách vé History -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_tickets_history"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clipToPadding="false"
+        android:paddingBottom="@dimen/spacing_md"
+        android:overScrollMode="never"
+        android:visibility="gone"
+        tools:listitem="@layout/view_ticket_card" />
+
+    <!-- Empty state -->
+    <TextView
+        android:id="@+id/tv_empty_tickets"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="@dimen/spacing_md"
+        android:text="Bạn chưa có vé nào.\nHãy đặt vé để xem lại tại đây."
+        android:textAlignment="center"
+        android:textColor="@color/color_on_surface_variant"
+        android:visibility="gone" />
+
+</LinearLayout>

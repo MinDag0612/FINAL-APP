@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_booking"
+    app:startDestination="@id/eventDetailFragment">
+
+    <fragment
+        android:id="@+id/eventDetailFragment"
+        android:name="com.FinalProject.feature_booking.presentation.EventDetailFragment"
+        android:label="Chi tiết sự kiện">
+        <argument android:name="eventId"     app:argType="string" android:defaultValue=""/>
+        <argument android:name="eventTitle"  app:argType="string" android:defaultValue="Sự kiện"/>
+        <argument android:name="showId"      app:argType="string" android:defaultValue=""/>
+        <action
+            android:id="@+id/action_eventDetail_to_seatSelection"
+            app:destination="@id/seatSelectionFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/seatSelectionFragment"
+        android:name="com.FinalProject.feature_booking.presentation.SeatSelectionFragment"
+        android:label="Chọn ghế">
+        <argument android:name="eventId"     app:argType="string" android:defaultValue=""/>
+        <argument android:name="eventTitle"  app:argType="string" android:defaultValue="Sự kiện"/>
+        <argument android:name="showId"      app:argType="string" android:defaultValue=""/>
+        <action
+            android:id="@+id/action_seatSelection_to_checkout"
+            app:destination="@id/checkoutFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/checkoutFragment"
+        android:name="com.FinalProject.feature_booking.presentation.CheckoutFragment"
+        android:label="Thanh toán">
+        <argument android:name="eventId"        app:argType="string" android:defaultValue=""/>
+        <argument android:name="showId"         app:argType="string" android:defaultValue=""/>
+        <argument android:name="eventTitle"     app:argType="string" android:defaultValue="Sự kiện"/>
+        <argument android:name="selectedSeats"  app:argType="string[]"/>
+        <argument android:name="totalPrice"     app:argType="long"/>
+        <action
+            android:id="@+id/action_checkout_to_myTickets"
+            app:destination="@id/myTicketsFragment"
+            app:popUpTo="@id/checkoutFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/myTicketsFragment"
+        android:name="com.FinalProject.feature_booking.presentation.MyTicketsFragment"
+        android:label="Vé của tôi">
+        <argument android:name="ticketId"   app:argType="string" android:defaultValue=""/>
+        <argument android:name="eventTitle" app:argType="string" android:defaultValue="Sự kiện"/>
+        <argument android:name="showId"     app:argType="string" android:defaultValue=""/>
+        <argument android:name="seats"      app:argType="string[]"/>
+        <argument android:name="totalPaid"  app:argType="long"/>
+    </fragment>
+    <fragment
+        android:id="@+id/ticketDetailFragment"
+        android:name="com.FinalProject.feature_booking.presentation.TicketDetailFragment"
+        android:label="Ticket">
+        <argument android:name="ticket_event_title"    app:argType="string" />
+        <argument android:name="ticket_selected_seats" app:argType="string[]" />
+        <argument android:name="ticket_total_price"    app:argType="integer" />
+        <argument android:name="ticket_payment_method" app:argType="string" />
+    </fragment>
+    <argument android:name="qrUri" app:argType="string" android:defaultValue=""/>
+    <fragment
+        android:id="@+id/scanTicketFragment"
+        android:name="com.FinalProject.feature_booking.scan.ScanTicketFragment"
+        android:label="Quét vé" >
+        <action
+            android:id="@+id/action_scanTicketFragment_to_scanResultFragment"
+            app:destination="@id/scanResultFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scanResultFragment"
+        android:name="com.FinalProject.feature_booking.scan.ScanResultFragment"
+        android:label="Kết quả quét" />
+
+
+</navigation>

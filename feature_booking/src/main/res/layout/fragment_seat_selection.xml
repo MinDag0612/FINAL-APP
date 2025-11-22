@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_lg">
+
+        <!-- Event header -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_event_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_md"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="2dp"
+            app:strokeWidth="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_md">
+
+                <TextView
+                    android:id="@+id/tv_seat_event_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tên sự kiện"
+                    android:textAppearance="@style/TextAppearance.Material3.TitleLarge"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_seat_subtitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="Thứ Bảy, 20.12.2025 • 19:00"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+                <TextView
+                    android:id="@+id/tv_seat_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="Nhà hát TDTU, TP.HCM"
+                    android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Legend loại vé + giá -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_zone_prices"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/spacing_md"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="?attr/colorOutline">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_md">
+
+                <!-- 3 cột: mỗi cột có hint & price thẳng hàng -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <!-- Premium -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!-- Hàng A: Premium (hint) -->
+                        <TextView
+                            android:id="@+id/tv_zone_hint"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hàng A: Premium"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <!-- Giá Premium -->
+                        <TextView
+                            android:id="@+id/tv_price_premium"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="1.890.000 ₫"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                            android:textColor="?attr/colorPrimary"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- VIP -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_zone_hint_vip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hàng B: VIP"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <TextView
+                            android:id="@+id/tv_price_vip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="1.290.000 ₫"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                            android:textColor="?attr/colorPrimary"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- General -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_zone_hint_general"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Hàng C–D: General"
+                            android:textAppearance="@style/TextAppearance.Material3.BodySmall"
+                            android:textColor="?attr/colorOnSurfaceVariant" />
+
+                        <TextView
+                            android:id="@+id/tv_price_general"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="690.000 ₫"
+                            android:textAppearance="@style/TextAppearance.Material3.BodyMedium"
+                            android:textColor="?attr/colorPrimary"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Legend trạng thái ghế (căn vào giữa) -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:paddingStart="@dimen/spacing_lg"
+            android:paddingEnd="@dimen/spacing_lg"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/bg_seat_selected" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xs"
+                    android:text="Đã chọn"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/bg_seat_available" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xs"
+                    android:text="Còn trống"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
+                    android:background="@drawable/bg_seat_reserved" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/spacing_xs"
+                    android:text="Đã đặt"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Stage + Seat map -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="?attr/colorOutline">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_md">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="0dp"
+                    app:strokeWidth="0dp"
+                    android:backgroundTint="?attr/colorSurfaceVariant">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="SÂN KHẤU"
+                        android:textStyle="bold"
+                        android:textAllCaps="true" />
+                </com.google.android.material.card.MaterialCardView>
+
+                <androidx.gridlayout.widget.GridLayout
+                    android:id="@+id/grid_seats"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_md"
+                    app:alignmentMode="alignMargins"
+                    app:columnCount="6"
+                    app:columnOrderPreserved="false"
+                    app:rowCount="4">
+
+                    <!-- Row A -->
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_a1" android:tag="A1"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_a2" android:tag="A2"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_a3" android:tag="A3"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/aisle_gap"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_a4" android:tag="A4"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_a5" android:tag="A5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_a6" android:tag="A6"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+
+                    <!-- Row B -->
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_b1" android:tag="B1"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_b2" android:tag="B2"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_b3" android:tag="B3"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/aisle_gap"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_b4" android:tag="B4"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_b5" android:tag="B5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_b6" android:tag="B6"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+
+                    <!-- Row C -->
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_c1" android:tag="C1"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_c2" android:tag="C2"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_c3" android:tag="C3"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/aisle_gap"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_c4" android:tag="C4"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_c5" android:tag="C5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_c6" android:tag="C6"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+
+                    <!-- Row D -->
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_d1" android:tag="D1"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_d2" android:tag="D2"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_d3" android:tag="D3"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/aisle_gap"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_d4" android:tag="D4"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_d5" android:tag="D5"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+                    <include layout="@layout/view_seat_button" android:id="@+id/seat_d6" android:tag="D6"
+                        android:layout_width="0dp" android:layout_height="wrap_content"
+                        app:layout_columnWeight="1"/>
+
+                </androidx.gridlayout.widget.GridLayout>
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <!-- Summary -->
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            app:cardCornerRadius="14dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="?attr/colorOutline">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/spacing_md">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tóm tắt lựa chọn"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_selected_seats"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_xs"
+                    android:text="Chưa chọn ghế" />
+
+                <TextView
+                    android:id="@+id/tv_total_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_sm"
+                    android:text="Tổng tiền: 0 ₫"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_proceed_checkout"
+            style="@style/App_Button_Primary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_lg"
+            android:enabled="false"
+            android:text="Tiếp tục" />
+
+    </LinearLayout>
+</ScrollView>

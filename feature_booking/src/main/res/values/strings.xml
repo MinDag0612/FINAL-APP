@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">EventSphere</string>
+    <string name="label_feature_coming_soon">Tính năng đang được phát triển</string>
+    <string name="label_total_revenue">Tổng doanh thu</string>
+    <string name="label_tickets_sold">Vé đã bán</string>
+    <string name="label_active_promotions">Ưu đãi đang chạy</string>
+    <string name="label_manage_team">Phân quyền cộng tác viên</string>
+    <string name="label_create_event">Tạo sự kiện mới</string>
+    <string name="label_view_reports">Xem báo cáo chi tiết</string>
+    <string name="label_manage_attendees">Danh sách khách tham gia</string>
+    <string name="seat_selection_limit">Bạn chỉ có thể chọn tối đa %1$d ghế</string>
+    <string name="seat_selection_empty">Chưa chọn ghế</string>
+    <string name="seat_selection_summary">Ghế: %1$s</string>
+    <string name="seat_selection_total_price">Tổng tiền: %1$s</string>
+    <string name="checkout_payment_methods">Phương thức thanh toán</string>
+    <string name="checkout_ticket_quantity">Số lượng vé: %1$d</string>
+    <string name="ticket_download">Tải vé điện tử</string>
+    <string name="ticket_share">Chia sẻ vé</string>
+    <string name="ticket_payment_method_template">Thanh toán: %1$s</string>
+    <string name="ticket_total_price_template">Tổng tiền: %1$s</string>
+    <string name="qr_code">Mã QR</string>
+    <string name="pay_with_card">Thanh toán thẻ ngân hàng</string>
+    <string name="card_number">Số thẻ</string>
+    <string name="exp_mm_yy">MM/YY</string>
+    <string name="cvc">CVC</string>
+    <string name="pay">Thanh toán</string>
+    <string name="cancel">Hủy</string>
+</resources>

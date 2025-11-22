@@ -1,0 +1,97 @@
+users (collection)
+ ├── {uid} (document)
+ │     full_name: "Nguyen Van A"
+ │     phone_number: "0901234567"
+ │     email: "a@gmail.com"
+ │     role: "organizer"  // hoặc "user"
+
+Sample:
+tonminhdang9@gmail.com
+pass01
+
+523h0011@student.tdtu.edu.vn
+pass01
+----------------------------------------------
+events (collection)
+ └── {event_id} (document)
+      ├── event_name: "Live Concert Sơn Tùng"
+      ├── ...
+      ├── organizer_uid: "..."
+      │
+      ├── tickets_infor (subcollection)
+      │     ├── {tickets_infor_id}
+      │     │     ├── tickets_class: "VIP"
+      │     │     ├── tickets_quantity: 200
+      │     │     ├── tickets_sold: 150
+      │     │     └── tickets_price: 800000
+      │
+      └── reviews (subcollection)
+            ├── {review_id}
+            │     ├── uid: "user456"
+            │     ├── rate: 4.5
+            │     ├── comment: "Sự kiện rất vui!"
+            │     └── created_at: <timestamp>
+----------------------------------------------
+Orders (collection)
+ └── {orderId} (document)
+      ├── user_id: "user_12345"
+      ├── total_price: 1200000
+      ├── payment_status: "paid"
+      ├── qr_code: "https://..."
+      └── tickets_list (array of maps)
+            ├── [0] (map)
+            │     ├── tickets_infor_id: "TC001A"
+            │     ├── quantity: 2
+            │     └── price_each: 600000
+            └── [1] (map)
+                  ├── tickets_infor_id: "TC001B"
+                  ├── quantity: 2
+                  └── price_each: 200000
+
+
+### Ghi chú:
+
+- `User_Infor`: lưu thông tin người dùng.
+- `Events`: lưu thông tin sự kiện do người dùng tạo (`uid` liên kết User_Infor).
+- `Tickets_infor`: subcollection trong `Events` chứa thông tin vé cho từng sự kiện.
+- `Orders`: lưu thông tin đơn đặt vé của người dùng.
+- `TicketItem` là đối tượng con trong `Orders`, chứa `ticketId` và `quantity`.
+
+---
+
+## 2. Cơ chế cơ bản của Firebase trong project
+
+- **Firestore** được dùng làm database NoSQL.
+- Các thao tác cơ bản:
+  - **Add**: thêm document mới (`collection.add(object.toMap())`).
+  - **Set**: ghi đè hoặc tạo mới (`document.set(object.toMap())`).
+  - **Query**: tìm kiếm document (`collection.whereEqualTo("field", value).get()`).
+  - **Subcollection**: dùng để nhóm dữ liệu liên quan (vd: `Tickets_infor` trong `Events`).
+- **Khóa duy nhất**: Firestore không enforce unique ngoài `documentId`. Nếu cần unique, có thể dùng:
+  - `documentId` dựa trên giá trị duy nhất (email, tên event + loại vé).
+  - Query kiểm tra trước khi thêm để tránh trùng lặp.
+
+---
+
+## 3. Các Class chính và cách dùng
+
+ - Các class được định nghĩa sẳn (core/model)
+ - Có hàm toMap() để lấy Map<> -> add và FireStore
+ - Các query pha đặt trong core/util (nên đặt -- *_API --)
+ - Các table và tên fielddđược lưu trong -- core/constName/StoreFiled -- chỉ là luưu các tên để gọi
+
+-----
+
+## 4. Luồng gọi cơ bản
+Presentation (tuoingw tac giao diện) --> Domain (use case, xử lí logic, nhũng cái ko thuộc DB)
+--> data (repo gọi API và định nghĩa ra vào các hàm) --> core/util (API)
+
+        ##-------------------------------------------##
+            Presentation --> Use case --> repo --> API
+        ##-------------------------------------------##
+
+## 5. LƯU Ý
+ - Các cơ chế BẤT ĐỒNG BỘ khong đc code dạng gán biến -> có thể gây lỗi nếu truy vấn chậm.
+
+
+

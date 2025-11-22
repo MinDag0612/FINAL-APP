@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_sm">8dp</dimen>
+    <dimen name="spacing_md">16dp</dimen>
+    <dimen name="spacing_lg">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_xxl">48dp</dimen>
+    <dimen name="corner_radius_sm">12dp</dimen>
+    <dimen name="corner_radius_md">20dp</dimen>
+    <dimen name="corner_radius_lg">28dp</dimen>
+    <dimen name="elevation_card">6dp</dimen>
+    <dimen name="text_size_heading">28sp</dimen>
+    <dimen name="text_size_subheading">18sp</dimen>
+    <dimen name="text_size_body">14sp</dimen>
+    <dimen name="seat_height">40dp</dimen>
+    <dimen name="seat_corner">12dp</dimen>
+    <dimen name="seat_stroke">1dp</dimen>
+    <dimen name="seat_gap">6dp</dimen>
+    <dimen name="aisle_gap">12dp</dimen>
+</resources>
