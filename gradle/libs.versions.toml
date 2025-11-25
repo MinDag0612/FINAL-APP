@@ -24,6 +24,7 @@ navigationFragment = "2.9.6"
 androidxNavigationFragment = "2.4.2"
 
 [libraries]
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
 activity-v193 = { module = "androidx.activity:activity", version.ref = "activityVersion" }
 com-google-firebase-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
