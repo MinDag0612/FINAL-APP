@@ -4,10 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.FinalProject.core.constName.StoreField;
+import com.FinalProject.core.model.TicketInfor;
 import com.FinalProject.core.util.Event_API;
 import com.FinalProject.core.util.Order_API;
 import com.FinalProject.core.util.TicketS_Infor_API;
-import com.FinalProject.feature_booking.model.TicketType;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -105,7 +105,7 @@ public class BookingRepository {
     }
 
     // --------------------------------------------------------------------------------------------
-    //  TicketType cho UI (BookingActivity / EventDetail / SeatSelection)
+    //  TicketInfor cho UI (BookingActivity / EventDetail / SeatSelection)
     // --------------------------------------------------------------------------------------------
 
     /**
@@ -118,37 +118,25 @@ public class BookingRepository {
      *  - SeatSelectionFragment dùng typeId để suy ra zone (GENERAL/VIP/PREMIUM)
      *    dựa trên tên như "STD", "GENERAL", "VIP", "VVIP"/"PREMIUM"... (tuỳ logic bạn build).
      */
-    public Task<List<TicketType>> getTicketTypesForEvent(@NonNull String eventId) {
-        return getTicketInfos(eventId).continueWith(task -> {
-            if (!task.isSuccessful() || task.getResult() == null) {
-                Exception e = task.getException();
-                if (e != null) throw e;
-                throw new IllegalStateException("Không tải được tickets_infor");
-            }
+    public Task<List<TicketInfor>> getTicketTypesForEvent(@NonNull String eventId) {
+        // Dùng core API để lấy subcollection Tickets_infor cho event
+        return TicketS_Infor_API.getTicketInforByEventId(eventId)
+                .continueWith(task -> {
+                    List<TicketInfor> result = new ArrayList<>();
+                    if (!task.isSuccessful() || task.getResult() == null) {
+                        return result;
+                    }
 
-            QuerySnapshot snap = task.getResult();
-            List<TicketType> list = new ArrayList<>();
-
-            for (DocumentSnapshot doc : snap.getDocuments()) {
-                String cls      = doc.getString(StoreField.TicketFields.TICKETS_CLASS);
-                Long priceLong  = doc.getLong(StoreField.TicketFields.TICKETS_PRICE);
-                Long qtyLong    = doc.getLong(StoreField.TicketFields.TICKETS_QUANTITY);
-                Long soldLong   = doc.getLong(StoreField.TicketFields.TICKETS_SOLD);
-
-                if (cls == null || priceLong == null) continue;
-
-                long totalQty = qtyLong != null ? qtyLong : 0L;
-                long soldQty  = soldLong != null ? soldLong : 0L;
-                long left     = Math.max(0L, totalQty - soldQty);
-
-                // typeId = tickets_class (STD/VIP/VVIP/...)
-                // displayName = tickets_class (có thể đổi sang title đẹp nếu muốn)
-                list.add(new TicketType(cls, cls, priceLong, totalQty, left));
-            }
-
-            return list;
-        });
+                    for (DocumentSnapshot doc : task.getResult().getDocuments()) {
+                        TicketInfor info = doc.toObject(TicketInfor.class);
+                        if (info != null) {
+                            result.add(info);
+                        }
+                    }
+                    return result;
+                });
     }
+
 
     // --------------------------------------------------------------------------------------------
     //  Orders – tạo đơn vé

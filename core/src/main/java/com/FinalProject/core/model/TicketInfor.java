@@ -4,10 +4,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TicketInfor {
-    private String tickets_class;
-    private int tickets_quantity;
-    private int tickets_sold;
-    private int tickets_price;
+    private String tickets_class;     // ví dụ: "Premium", "VIP", "General"
+    private int tickets_quantity;     // tổng số vé loại này
+    private int tickets_sold;         // số vé đã bán
+    private int tickets_price;        // giá 1 vé (VND)
 
     // ⚙️ Constructor mặc định (Firebase cần có)
     public TicketInfor() {}

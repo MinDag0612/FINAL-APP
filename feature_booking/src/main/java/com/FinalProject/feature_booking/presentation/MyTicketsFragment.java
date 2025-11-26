@@ -16,6 +16,7 @@ import android.net.Uri;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.core.content.FileProvider;
 import androidx.navigation.fragment.NavHostFragment;
@@ -668,10 +669,9 @@ public class MyTicketsFragment extends Fragment {
                     + "}";
         }
 
-        BottomSheetDialog dialog = new BottomSheetDialog(
-                requireContext(),
-                com.google.android.material.R.style.ThemeOverlay_Material3_BottomSheetDialog
-        );
+        // ✅ Dùng constructor an toàn, không dùng style từ com.google.android.material.R
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
+
         View content = LayoutInflater.from(requireContext())
                 .inflate(R.layout.bottomsheet_qr_ticket, null, false);
 
@@ -705,7 +705,6 @@ public class MyTicketsFragment extends Fragment {
 
         dialog.setContentView(content);
         dialog.setCancelable(true);
-        dialog.getBehavior().setState(BottomSheetBehavior.STATE_EXPANDED);
         dialog.show();
     }
 
@@ -795,27 +794,30 @@ public class MyTicketsFragment extends Fragment {
     }
 
     private void styleStatusChip(@NonNull Chip chip, boolean upcoming) {
-        int bgAttr = upcoming
-                ? com.google.android.material.R.attr.colorSecondaryContainer
-                : com.google.android.material.R.attr.colorSurfaceVariant;
-        int fgAttr = upcoming
-                ? com.google.android.material.R.attr.colorOnSecondaryContainer
-                : com.google.android.material.R.attr.colorOnSurfaceVariant;
+        // Dùng màu cố định thay vì attr
+        int bgRes = upcoming ? R.color.chip_upcoming_bg : R.color.chip_history_bg;
+        int fgRes = upcoming ? R.color.chip_upcoming_fg : R.color.chip_history_fg;
 
-        int bg = MaterialColors.getColor(chip, bgAttr);
-        int fg = MaterialColors.getColor(chip, fgAttr);
+        int bg = ContextCompat.getColor(chip.getContext(), bgRes);
+        int fg = ContextCompat.getColor(chip.getContext(), fgRes);
+
         chip.setChipBackgroundColor(ColorStateList.valueOf(bg));
         chip.setTextColor(fg);
     }
 
     private void tintFilterChip(@Nullable Chip chip, boolean selected) {
         if (chip == null) return;
-        int bg = MaterialColors.getColor(chip, selected
-                ? com.google.android.material.R.attr.colorSecondaryContainer
-                : com.google.android.material.R.attr.colorSurfaceVariant);
-        int fg = MaterialColors.getColor(chip, selected
-                ? com.google.android.material.R.attr.colorOnSecondaryContainer
-                : com.google.android.material.R.attr.colorOnSurfaceVariant);
+
+        int bgRes = selected
+                ? R.color.chip_filter_selected_bg
+                : R.color.chip_filter_unselected_bg;
+        int fgRes = selected
+                ? R.color.chip_filter_selected_fg
+                : R.color.chip_filter_unselected_fg;
+
+        int bg = ContextCompat.getColor(chip.getContext(), bgRes);
+        int fg = ContextCompat.getColor(chip.getContext(), fgRes);
+
         chip.setChipBackgroundColor(ColorStateList.valueOf(bg));
         chip.setTextColor(fg);
     }

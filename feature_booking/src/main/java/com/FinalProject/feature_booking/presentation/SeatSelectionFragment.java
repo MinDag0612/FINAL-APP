@@ -2,20 +2,24 @@ package com.FinalProject.feature_booking.presentation;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.gridlayout.widget.GridLayout;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.FinalProject.core.constName.StoreField;
+import com.FinalProject.core.model.TicketInfor;
 import com.FinalProject.feature_booking.R;
 import com.FinalProject.feature_booking.data.BookingRepository;
 import com.FinalProject.feature_booking.model.SeatState;
-import com.FinalProject.feature_booking.model.TicketType;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -36,10 +40,54 @@ import java.util.Set;
 
 public class SeatSelectionFragment extends Fragment {
 
+    private static final String TAG = "SeatSelection";
+
     private static final int MAX_SELECT = 4;
+    private static final int DEFAULT_COLUMN_COUNT = 8;
+
+    // page = số ghế generate mỗi lần (8 cột * 4 hàng = 32 ghế)
+    private static final int PAGE_ROWS = 4;
+    private static final int PAGE_SIZE = DEFAULT_COLUMN_COUNT * PAGE_ROWS;
+
+    // Khi còn <= 2 hàng nữa là gần đáy -> load thêm
+    private static final int LOAD_MORE_THRESHOLD = DEFAULT_COLUMN_COUNT * 2;
+
+    // ========== QUOTA THEO HẠNG (NHẬN TỪ MÀN TRƯỚC) ==========
+    // Hàng A -> Premium, B -> VIP, C... -> General
+    private int quotaPremium = 0;   // số ghế Premium (A) user đã mua
+    private int quotaVip     = 0;   // số ghế VIP (B)
+    private int quotaGeneral = 0;   // số ghế General (C..)
+
+    // Counter số ghế đang được chọn theo từng hạng
+    private int selectedPremiumCount = 0;
+    private int selectedVipCount     = 0;
+    private int selectedGeneralCount = 0;
+
+    private enum SeatCategory {
+        PREMIUM,
+        VIP,
+        GENERAL
+    }
+
+    private static class SeatItem {
+        final String seatId;
+        final SeatCategory category;
+        SeatState state;
+
+        SeatItem(@NonNull String seatId,
+                 @NonNull SeatCategory category,
+                 @NonNull SeatState state) {
+            this.seatId = seatId;
+            this.category = category;
+            this.state = state;
+        }
+    }
 
     private String eventId, showId;
-    private GridLayout grid;
+
+    private RecyclerView rvSeats;
+    private SeatAdapter seatAdapter;
+
     private TextView tvSelected, tvTotal;
 
     // Header & legend
@@ -52,18 +100,33 @@ public class SeatSelectionFragment extends Fragment {
 
     private View btnNext;
 
+    // Trạng thái ghế
     private final Map<String, SeatState> stateBySeat = new HashMap<>();
     private final LinkedHashSet<String> selected     = new LinkedHashSet<>();
     private final Set<String> reservedSeats          = new HashSet<>();
+    private final List<SeatItem> seatItems           = new ArrayList<>();
 
     // ---------- Firestore pricing ----------
     private BookingRepository bookingRepo;
     private boolean pricesLoaded = false;
 
     // 3 mức giá theo zone (fallback = demo nếu không load được Firestore)
-    private long priceStd  = 120_000L;  // hàng khác A/B
-    private long priceVip  = 220_000L;  // hàng B
-    private long priceVvip = 350_000L;  // hàng A
+    private long priceStd  = 120_000L;  // General
+    private long priceVip  = 220_000L;  // VIP (B)
+    private long priceVvip = 350_000L;  // Premium (A)
+
+    // Số ghế theo từng loại (đọc từ TicketInfor.tickets_quantity)
+    // Default ban đầu: A:6, B:6, C:12 (sẽ bị override bởi Firestore)
+    private int seatsPremium  = 6;
+    private int seatsVip      = 6;
+    private int seatsGeneral  = 12;
+
+    // tổng số ghế (A + B + C)
+    private int totalSeatCount = 0;
+
+    // số ghế đã generate vào seatItems (lazy load)
+    private int generatedSeatCount = 0;
+    private boolean isLoadingMore = false;
 
     private final NumberFormat vnd = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
@@ -85,10 +148,52 @@ public class SeatSelectionFragment extends Fragment {
         tvPriceVip      = view.findViewById(R.id.tv_price_vip);
         tvPriceGeneral  = view.findViewById(R.id.tv_price_general);
 
-        grid       = view.findViewById(R.id.grid_seats);
+        rvSeats    = view.findViewById(R.id.rv_seats);
         tvSelected = view.findViewById(R.id.tv_selected_seats);
         tvTotal    = view.findViewById(R.id.tv_total_price);
         btnNext    = view.findViewById(R.id.btn_proceed_checkout);
+
+        // RecyclerView + GridLayoutManager
+        GridLayoutManager lm = new GridLayoutManager(requireContext(), DEFAULT_COLUMN_COUNT);
+        rvSeats.setLayoutManager(lm);
+        rvSeats.setHasFixedSize(true);
+        rvSeats.setItemAnimator(null);           // tránh flicker khi notifyItemChanged
+        rvSeats.setItemViewCacheSize(64);        // cache thêm view, scroll mượt hơn
+        rvSeats.setNestedScrollingEnabled(false);// nếu sau này fragment nằm trong ScrollView thì vẫn ok
+
+
+        seatAdapter = new SeatAdapter();
+        rvSeats.setAdapter(seatAdapter);
+
+        // Scroll listener để lazy load ghế
+        rvSeats.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy <= 0) return; // chỉ quan tâm scroll xuống
+
+                GridLayoutManager glm = (GridLayoutManager) recyclerView.getLayoutManager();
+                if (glm == null) return;
+
+                int visibleItemCount = glm.getChildCount();
+                int totalItemCount   = glm.getItemCount();
+                int firstVisible     = glm.findFirstVisibleItemPosition();
+
+                Log.v(TAG, "onScrolled: first=" + firstVisible
+                        + ", visible=" + visibleItemCount
+                        + ", total=" + totalItemCount
+                        + ", generated=" + generatedSeatCount
+                        + ", totalSeatCount=" + totalSeatCount);
+
+                // khi xuống tới gần cuối list hiện tại thì load thêm
+                if (!isLoadingMore
+                        && generatedSeatCount < totalSeatCount
+                        && (visibleItemCount + firstVisible) >= totalItemCount - LOAD_MORE_THRESHOLD) {
+                    Log.d(TAG, "onScrolled: trigger loadNextPage()");
+                    loadNextPage();
+                }
+            }
+        });
 
         bookingRepo = BookingRepository.getInstance();
 
@@ -96,17 +201,23 @@ public class SeatSelectionFragment extends Fragment {
         if (args != null) {
             eventId = args.getString("eventId", "");
             showId  = args.getString("showId", "");
+
             // Nếu EventDetailFragment có truyền eventTitle thì set tạm,
             // sau đó Firestore sẽ override cho nhất quán.
             String eventTitle = args.getString("eventTitle", null);
             if (tvEventTitle != null && !TextUtils.isEmpty(eventTitle)) {
                 tvEventTitle.setText(eventTitle);
             }
+
+            // Nhận quota từng hạng từ EventDetailFragment
+            quotaPremium = args.getInt("qtyPremium", 0);
+            quotaVip     = args.getInt("qtyVip", 0);
+            quotaGeneral = args.getInt("qtyGeneral", 0);
         }
 
-        // Load TicketType từ Firestore -> suy ra giá theo zone
-        // -> đồng thời load header event (location, datetime)
-        // -> sau đó load ghế reserved -> init seats.
+        // Load TicketType từ Firestore -> suy ra GIÁ + SỐ GHẾ mỗi hạng
+        // -> load header event
+        // -> sau đó load ghế reserved -> build seat map lazy.
         loadTicketTypesAndInitSeats();
 
         btnNext.setOnClickListener(v -> {
@@ -128,7 +239,7 @@ public class SeatSelectionFragment extends Fragment {
         renderSummary();
     }
 
-    // ================== LOAD EVENT HEADER + GIÁ VÉ TỪ FIRESTORE ==================
+    // ================== LOAD EVENT HEADER + GIÁ & SỐ GHẾ TỪ FIRESTORE ==================
 
     private void loadTicketTypesAndInitSeats() {
         // Fallback demo nếu eventId rỗng
@@ -144,22 +255,32 @@ public class SeatSelectionFragment extends Fragment {
                     if (!isAdded()) return;
 
                     if (types != null && !types.isEmpty()) {
-                        applyPricesFromTicketTypes(types);
-                    } // else giữ nguyên giá demo
+                        applyPricesAndSeatCountFromTicketTypes(types);
+                    } else {
+                        Log.w(TAG, "loadTicketTypesAndInitSeats: ticketTypes null/empty, dùng layout default.");
+                    }
                 })
                 .addOnFailureListener(e -> {
                     if (!isAdded()) return;
+                    Log.e(TAG, "Không tải được cấu hình ticketTypes", e);
                     Snackbar.make(requireView(),
-                            "Không tải được giá vé từ server, đang dùng giá demo.",
+                            "Không tải được cấu hình vé, đang dùng giá & sơ đồ demo.",
                             Snackbar.LENGTH_SHORT).show();
                 })
                 .addOnCompleteListener(task -> {
                     // Cập nhật lại legend giá theo giá hiện đang dùng (Firestore hoặc fallback)
                     updateZonePriceLabels();
 
+                    // set tổng ghế (nếu chưa set)
+                    if (totalSeatCount <= 0) {
+                        totalSeatCount = seatsPremium + seatsVip + seatsGeneral;
+                    }
+
+                    Log.d(TAG, "loadTicketTypesAndInitSeats: totalSeatCount=" + totalSeatCount);
+
                     // Dù success hay fail thì vẫn cho phép chọn với giá hiện tại
                     pricesLoaded = true;
-                    // Sau khi đã biết giá -> load danh sách ghế đã đặt
+                    // Sau khi đã biết GIÁ + SỐ GHẾ -> load danh sách ghế đã đặt
                     loadReservedSeatsFromFirestore();
                 });
     }
@@ -204,25 +325,76 @@ public class SeatSelectionFragment extends Fragment {
                 })
                 .addOnFailureListener(e -> {
                     if (!isAdded()) return;
+                    Log.e(TAG, "loadEventHeaderFromFirestore: fail", e);
                     // Fail thì giữ text mặc định
                 });
     }
 
-    private void applyPricesFromTicketTypes(@NonNull List<TicketType> types) {
+    /**
+     * Đọc từ TicketInfor:
+     *  - Sắp xếp theo giá: rẻ nhất = General, đắt nhất = Premium, còn lại = VIP.
+     *  - Gán:
+     *      + priceStd / priceVip / priceVvip
+     *      + seatsGeneral / seatsVip / seatsPremium (từ tickets_quantity - tickets_sold)
+     */
+    private void applyPricesAndSeatCountFromTicketTypes(@NonNull List<TicketInfor> types) {
         if (types.isEmpty()) return;
 
-        List<TicketType> sorted = new ArrayList<>(types);
-        Collections.sort(sorted, (a, b) -> Long.compare(a.getPrice(), b.getPrice()));
-        // sorted: rẻ -> đắt
-        long cheapest  = sorted.get(0).getPrice();
-        long mid       = (sorted.size() > 1) ? sorted.get(1).getPrice() : cheapest;
-        long expensive = sorted.get(sorted.size() - 1).getPrice();
+        List<TicketInfor> sorted = new ArrayList<>(types);
+        Collections.sort(sorted, (a, b) ->
+                Integer.compare(a.getTickets_price(), b.getTickets_price())
+        );
+
+        TicketInfor generalType = sorted.get(0);                       // rẻ nhất => General
+        TicketInfor premiumType = sorted.get(sorted.size() - 1);       // đắt nhất => Premium
+        TicketInfor vipType     = (sorted.size() > 2) ? sorted.get(1) : null; // giữa => VIP (nếu có)
+
+        long cheapest  = generalType.getTickets_price();
+        long expensive = premiumType.getTickets_price();
+        long mid       = (vipType != null)
+                ? vipType.getTickets_price()
+                : cheapest;
 
         // Layout giả định: A = premium, B = VIP, còn lại = general
-        priceStd  = cheapest;
-        priceVip  = mid;
-        priceVvip = expensive;
+        priceStd  = cheapest;   // General
+        priceVip  = mid;        // VIP
+        priceVvip = expensive;  // Premium
+
+        // ====== LẤY QUANTITY & SOLD TỪ FIRESTORE RỒI TÍNH GHẾ CÒN LẠI ======
+        int generalQty = generalType.getTickets_quantity();                 // ví dụ 200
+        int premiumQty = premiumType.getTickets_quantity();                // ví dụ 40
+        int vipQty     = (vipType != null) ? vipType.getTickets_quantity() : 0; // ví dụ 80
+
+        int generalSold  = generalType.getTickets_sold();
+        int premiumSold  = premiumType.getTickets_sold();
+        int vipSold      = (vipType != null) ? vipType.getTickets_sold() : 0;
+
+        // Ghế còn lại = quantity - sold (không cho âm)
+        generalQty = Math.max(0, generalQty - generalSold);
+        premiumQty = Math.max(0, premiumQty - premiumSold);
+        vipQty     = Math.max(0, vipQty - vipSold);
+
+        // Gán vào 3 biến seats* dùng cho sơ đồ ghế
+        if (generalQty > 0) {
+            seatsGeneral = generalQty;
+        }
+        if (premiumQty > 0) {
+            seatsPremium = premiumQty;
+        }
+        if (vipQty > 0) {
+            seatsVip = vipQty;
+        }
+
+        // Tránh case cả 3 = 0 (thiết kế sai dữ liệu) -> fallback layout cũ
+        if (seatsPremium <= 0 && seatsVip <= 0 && seatsGeneral <= 0) {
+            seatsPremium = 6;
+            seatsVip     = 6;
+            seatsGeneral = 12;
+        }
+
+        totalSeatCount = seatsPremium + seatsVip + seatsGeneral;
     }
+
 
     private void updateZonePriceLabels() {
         String premiumText = vnd.format(priceVvip);
@@ -272,21 +444,23 @@ public class SeatSelectionFragment extends Fragment {
                             }
                         }
                     }
+                    Log.d(TAG, "loadReservedSeatsFromFirestore: reservedSeats=" + reservedSeats.size());
                 })
                 .addOnFailureListener(e -> {
                     if (!isAdded()) return;
+                    Log.e(TAG, "loadReservedSeatsFromFirestore: fail", e);
                     Snackbar.make(requireView(),
                             "Không tải được trạng thái ghế, hiển thị mặc định.",
                             Snackbar.LENGTH_SHORT).show();
                 })
                 .addOnCompleteListener(task -> {
                     // Dù success hay fail -> tiến hành init seats với reservedSeats hiện có
-                    initSeats();
+                    initSeatsLazy();
                     renderSummary();
                 });
     }
 
-    // ================== SEATS & UI ==================
+    // ================== SEATS & UI (LAZY LOAD) ==================
 
     /** Tính giá 1 ghế dựa trên hàng + giá zone đã load từ Firestore. */
     private long priceOf(@NonNull String seat) {
@@ -299,92 +473,101 @@ public class SeatSelectionFragment extends Fragment {
         }
     }
 
-    private void initSeats() {
-        if (grid == null) return;
+    /** Khởi tạo lại state + generate page đầu tiên. */
+    private void initSeatsLazy() {
+        stateBySeat.clear();
+        selected.clear();
+        seatItems.clear();
+        selectedPremiumCount = 0;
+        selectedVipCount     = 0;
+        selectedGeneralCount = 0;
+        generatedSeatCount   = 0;
+        isLoadingMore        = false;
 
-        int colCount = grid.getColumnCount();
-        if (colCount <= 0) colCount = 6; // fallback an toàn
-
-        for (int i = 0; i < grid.getChildCount(); i++) {
-            View child = grid.getChildAt(i);
-            if (!(child instanceof MaterialButton)) continue;
-
-            MaterialButton btn = (MaterialButton) child;
-
-            // Tắt checkable để tự quản lý state
-            btn.setCheckable(false);
-            btn.setChecked(false);
-
-            // Ưu tiên dùng android:tag, nếu không có thì tự tính theo index
-            Object t = child.getTag();
-            final String seat = buildSeatId(i, colCount, t);
-
-            // 🔹 Text hiển thị theo zone: "A3\nPremium", "B2\nVIP", "C5\nGeneral"
-            btn.setText(buildSeatButtonLabel(seat));
-
-            SeatState init = reservedSeats.contains(seat)
-                    ? SeatState.RESERVED
-                    : SeatState.AVAILABLE;
-
-            stateBySeat.put(seat, init);
-            applySeatStyle(btn, init);
-
-            // Tap bình thường: chọn / bỏ chọn ghế
-            btn.setOnClickListener(v -> onSeatClicked(seat, btn));
-
-            // Long-press: mở bottom sheet thông tin ghế
-            btn.setOnLongClickListener(v -> {
-                showSeatInfoBottomSheet(seat);
-                return true;
-            });
+        if (totalSeatCount <= 0) {
+            totalSeatCount = seatsPremium + seatsVip + seatsGeneral;
         }
+
+        Log.d(TAG, "initSeatsLazy: totalSeatCount=" + totalSeatCount);
+
+        // 🟢 PRELOAD NHIỀU PAGE ĐẦU TIÊN
+        // Ví dụ preload tối đa 3 page đầu (3 * 32 = 96 ghế)
+        // để đảm bảo nội dung cao hơn viewport => RecyclerView scroll được.
+        int maxInitialPages = 2;
+        for (int i = 0; i < maxInitialPages && generatedSeatCount < totalSeatCount; i++) {
+            loadNextPage();
+        }
+
+        // Nếu em muốn cực chắc thì có thể tăng maxInitialPages lên 4.
     }
 
-    /**
-     * Tạo mã ghế:
-     *  - Nếu tag không rỗng -> dùng tag (A1, B2, ...)
-     *  - Nếu tag null -> suy ra theo index + số cột: A1..A6, B1..B6, ...
-     */
+    /** Tạo SeatItem tương ứng với index global (0..totalSeatCount-1). */
     @NonNull
-    private String buildSeatId(int index, int colCount, @Nullable Object tag) {
-        if (tag != null) {
-            String s = tag.toString().trim();
-            if (!s.isEmpty()) {
-                return s.toUpperCase(Locale.ROOT);
-            }
+    private SeatItem createSeatItemForIndex(int index) {
+        char rowLetter;
+        int number;
+
+        int premiumEnd = seatsPremium;
+        int vipEnd     = seatsPremium + seatsVip;
+
+        if (index < premiumEnd) {
+            rowLetter = 'A';
+            number    = index + 1;
+        } else if (index < vipEnd) {
+            rowLetter = 'B';
+            number    = index - premiumEnd + 1;
+        } else {
+            rowLetter = 'C';
+            number    = index - vipEnd + 1;
         }
-        int row = index / colCount;  // 0-based
-        int col = index % colCount;  // 0-based
-        char rowChar = (char) ('A' + row); // row 0 -> 'A'
-        return rowChar + String.valueOf(col + 1);
+
+        String seatId = rowLetter + String.valueOf(number);
+        SeatCategory category = getCategoryForSeat(seatId);
+
+        SeatState init = reservedSeats.contains(seatId)
+                ? SeatState.RESERVED
+                : SeatState.AVAILABLE;
+
+        return new SeatItem(seatId, category, init);
     }
 
-    /** Label dùng cho text trên ghế trong grid (2 dòng). */
+    /** Load thêm 1 page ghế (lazy). */
+    private void loadNextPage() {
+        if (generatedSeatCount >= totalSeatCount) {
+            Log.d(TAG, "loadNextPage: no more seats. generated=" + generatedSeatCount
+                    + " / total=" + totalSeatCount);
+            return;
+        }
+        if (isLoadingMore) return;
+
+        isLoadingMore = true;
+
+        int startIndex    = generatedSeatCount;
+        int endExclusive  = Math.min(startIndex + PAGE_SIZE, totalSeatCount);
+        int oldSize       = seatItems.size();
+
+        for (int i = startIndex; i < endExclusive; i++) {
+            SeatItem item = createSeatItemForIndex(i);
+            seatItems.add(item);
+            stateBySeat.put(item.seatId, item.state);
+        }
+
+        generatedSeatCount = endExclusive;
+
+        if (seatAdapter != null) {
+            seatAdapter.notifyItemRangeInserted(oldSize, seatItems.size() - oldSize);
+        }
+
+        Log.d(TAG, "loadNextPage: loaded " + (endExclusive - startIndex)
+                + " seats, generated=" + generatedSeatCount + "/" + totalSeatCount);
+
+        isLoadingMore = false;
+    }
+
+    /** Label dùng cho text trên ghế. Ở đây chỉ hiển thị mã ghế (A1, B3, ...). */
     @NonNull
     private String buildSeatButtonLabel(@NonNull String seat) {
-        String zoneShort = zoneShortLabelForSeat(seat);
-        if (TextUtils.isEmpty(zoneShort)) return seat;
-        return seat ;
-    }
-
-    /**
-     * Label ngắn hiển thị trên ghế:
-     *  - A → Premium
-     *  - B → VIP
-     *  - C,D,... → General
-     */
-    @NonNull
-    private String zoneShortLabelForSeat(@NonNull String seat) {
-        if (seat.isEmpty()) return "";
-        char row = Character.toUpperCase(seat.charAt(0));
-        switch (row) {
-            case 'A':
-                return "Premium";
-            case 'B':
-                return "VIP";
-            default:
-                return "General";
-        }
+        return seat;
     }
 
     private void applySeatStyle(@NonNull MaterialButton btn, @NonNull SeatState st) {
@@ -396,7 +579,8 @@ public class SeatSelectionFragment extends Fragment {
         btn.setHovered(false);
 
         btn.setIcon(null);
-        btn.setStrokeWidth(2);
+        btn.setBackgroundTintList(null);
+        btn.setStrokeWidth(0);
         btn.setCornerRadius(14);
 
         switch (st) {
@@ -423,8 +607,13 @@ public class SeatSelectionFragment extends Fragment {
         btn.setRippleColorResource(android.R.color.transparent);
     }
 
-    private void onSeatClicked(String seat, MaterialButton btn) {
-        SeatState cur = stateBySeat.get(seat);
+    private void handleSeatClick(int position) {
+        if (position < 0 || position >= seatItems.size()) return;
+
+        SeatItem item = seatItems.get(position);
+        String seat   = item.seatId;
+        SeatState cur = item.state;
+
         if (cur == SeatState.RESERVED) return;
 
         // Chặn click nếu giá chưa load xong
@@ -432,33 +621,30 @@ public class SeatSelectionFragment extends Fragment {
             Snackbar.make(requireView(),
                     "Đang tải giá vé, vui lòng chờ một chút...",
                     Snackbar.LENGTH_SHORT).show();
-
-            btn.setPressed(false);
-            btn.setHovered(false);
-            applySeatStyle(btn, cur == null ? SeatState.AVAILABLE : cur);
             return;
         }
 
-        if (cur == SeatState.AVAILABLE) {
-            if (selected.size() >= MAX_SELECT) {
-                Snackbar.make(requireView(),
-                        "Bạn chỉ có thể chọn tối đa " + MAX_SELECT + " ghế.",
-                        Snackbar.LENGTH_SHORT).show();
+        SeatCategory category = item.category;
 
-                btn.setPressed(false);
-                btn.setHovered(false);
-                applySeatStyle(btn, SeatState.AVAILABLE);
+        if (cur == SeatState.AVAILABLE) {
+            // Check quota trước khi cho chọn
+            if (!canSelectMore(category)) {
                 return;
             }
+
+            item.state = SeatState.SELECTED;
             stateBySeat.put(seat, SeatState.SELECTED);
             selected.add(seat);
-            applySeatStyle(btn, SeatState.SELECTED);
+            incrementCategoryCounter(category);
 
-        } else { // SELECTED -> bỏ chọn
+        } else if (cur == SeatState.SELECTED) {
+            item.state = SeatState.AVAILABLE;
             stateBySeat.put(seat, SeatState.AVAILABLE);
             selected.remove(seat);
-            applySeatStyle(btn, SeatState.AVAILABLE);
+            decrementCategoryCounter(category);
         }
+
+        seatAdapter.notifyItemChanged(position);
         renderSummary();
     }
 
@@ -468,6 +654,144 @@ public class SeatSelectionFragment extends Fragment {
             sum += priceOf(s);
         }
         return sum;
+    }
+
+    private void updateSelectedText() {
+        if (tvSelected == null) return;
+
+        if (selected.isEmpty()) {
+            tvSelected.setText("Chưa chọn ghế");
+            return;
+        }
+
+        StringBuilder sb = new StringBuilder("Ghế: ");
+        boolean first = true;
+        for (String s : selected) {
+            if (!first) sb.append(", ");
+            sb.append(s);
+            first = false;
+        }
+        tvSelected.setText(sb.toString());
+    }
+    // ========== QUOTA HELPERS ==========
+
+    /** Tổng quota nếu màn trước có truyền. */
+    private int getTotalQuota() {
+        return Math.max(0, quotaPremium)
+                + Math.max(0, quotaVip)
+                + Math.max(0, quotaGeneral);
+    }
+
+    @NonNull
+    private SeatCategory getCategoryForSeat(@NonNull String seat) {
+        if (seat.isEmpty()) return SeatCategory.GENERAL;
+        char row = Character.toUpperCase(seat.charAt(0));
+        if (row == 'A') return SeatCategory.PREMIUM;
+        if (row == 'B') return SeatCategory.VIP;
+        return SeatCategory.GENERAL;
+    }
+
+    private void incrementCategoryCounter(@NonNull SeatCategory category) {
+        switch (category) {
+            case PREMIUM:
+                selectedPremiumCount++;
+                break;
+            case VIP:
+                selectedVipCount++;
+                break;
+            case GENERAL:
+                selectedGeneralCount++;
+                break;
+        }
+    }
+
+    private void decrementCategoryCounter(@NonNull SeatCategory category) {
+        switch (category) {
+            case PREMIUM:
+                if (selectedPremiumCount > 0) selectedPremiumCount--;
+                break;
+            case VIP:
+                if (selectedVipCount > 0) selectedVipCount--;
+                break;
+            case GENERAL:
+                if (selectedGeneralCount > 0) selectedGeneralCount--;
+                break;
+        }
+    }
+
+    /**
+     * Kiểm tra xem còn được phép chọn thêm ghế thuộc category này không,
+     * theo cả tổng quota và quota từng hạng.
+     */
+    private boolean canSelectMore(@NonNull SeatCategory category) {
+        int totalQuota    = getTotalQuota();
+        int totalSelected = selectedPremiumCount + selectedVipCount + selectedGeneralCount;
+
+        // 1) Nếu có cấu hình quota tổng -> không cho chọn quá tổng đó
+        if (totalQuota > 0 && totalSelected >= totalQuota) {
+            Snackbar.make(requireView(),
+                    "Bạn đã chọn đủ " + totalQuota + " ghế theo số vé đã mua.",
+                    Snackbar.LENGTH_SHORT).show();
+            return false;
+        }
+
+        // 2) Check quota từng hạng
+        switch (category) {
+            case PREMIUM:
+                if (quotaPremium <= 0) {
+                    Snackbar.make(requireView(),
+                            "Bạn không mua vé Premium, không thể chọn ghế hàng A.",
+                            Snackbar.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (selectedPremiumCount >= quotaPremium) {
+                    Snackbar.make(requireView(),
+                            "Bạn chỉ được chọn tối đa " + quotaPremium + " ghế Premium.",
+                            Snackbar.LENGTH_SHORT).show();
+                    return false;
+                }
+                break;
+
+            case VIP:
+                if (quotaVip <= 0) {
+                    Snackbar.make(requireView(),
+                            "Bạn không mua vé VIP, không thể chọn ghế hàng B.",
+                            Snackbar.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (selectedVipCount >= quotaVip) {
+                    Snackbar.make(requireView(),
+                            "Bạn chỉ được chọn tối đa " + quotaVip + " ghế VIP.",
+                            Snackbar.LENGTH_SHORT).show();
+                    return false;
+                }
+                break;
+
+            case GENERAL:
+                if (quotaGeneral <= 0) {
+                    Snackbar.make(requireView(),
+                            "Bạn không mua vé General, không thể chọn ghế hàng C trở đi.",
+                            Snackbar.LENGTH_SHORT).show();
+                    return false;
+                }
+                if (selectedGeneralCount >= quotaGeneral) {
+                    Snackbar.make(requireView(),
+                            "Bạn chỉ được chọn tối đa " + quotaGeneral + " ghế General.",
+                            Snackbar.LENGTH_SHORT).show();
+                    return false;
+                }
+                break;
+        }
+
+        // 3) Nếu không có quota nào được truyền (tổng = 0) -> fallback về MAX_SELECT như logic cũ
+        if (totalQuota == 0 && selected.size() >= MAX_SELECT) {
+            Snackbar.make(requireView(),
+                    "Bạn chỉ có thể chọn tối đa " + MAX_SELECT + " ghế.",
+                    Snackbar.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 
     private void renderSummary() {
@@ -482,14 +806,10 @@ public class SeatSelectionFragment extends Fragment {
             return;
         }
 
-        if (tvSelected != null) {
-            if (selected.isEmpty()) {
-                tvSelected.setText("Chưa chọn ghế");
-            } else {
-                tvSelected.setText("Ghế: " + String.join(", ", selected));
-            }
-        }
+        // Cập nhật dòng "Ghế: ..."
+        updateSelectedText();
 
+        // Cập nhật tổng tiền
         long total = computeTotal();
         if (tvTotal != null) {
             tvTotal.setText("Tổng tiền: " + vnd.format(total));
@@ -527,10 +847,7 @@ public class SeatSelectionFragment extends Fragment {
         String zoneLabel = zoneLabelForSeat(seat);
         String priceStr = vnd.format(price);
 
-        BottomSheetDialog dialog = new BottomSheetDialog(
-                requireContext(),
-                com.google.android.material.R.style.ThemeOverlay_Material3_BottomSheetDialog
-        );
+        BottomSheetDialog dialog = new BottomSheetDialog(requireContext());
 
         View content = getLayoutInflater().inflate(R.layout.bottomsheet_seat_info, null, false);
         TextView tvTitle = content.findViewById(R.id.tv_seat_info_title);
@@ -538,11 +855,10 @@ public class SeatSelectionFragment extends Fragment {
         TextView tvPrice = content.findViewById(R.id.tv_seat_info_price);
         View btnClose    = content.findViewById(R.id.btn_seat_info_close);
 
-        // 🔹 Chỉ hiện MÃ GHẾ ở title, ví dụ "A1"
+        // Chỉ hiện MÃ GHẾ ở title, ví dụ "A1"
         if (tvTitle != null) {
             tvTitle.setText(seat);
         }
-        // 🔹 Dòng zone + giá vẫn giữ format có prefix cho dễ đọc
         if (tvZone != null) {
             tvZone.setText("Khu: " + zoneLabel);
         }
@@ -555,5 +871,58 @@ public class SeatSelectionFragment extends Fragment {
 
         dialog.setContentView(content);
         dialog.show();
+    }
+
+    // ================== Adapter ==================
+
+    private class SeatAdapter extends RecyclerView.Adapter<SeatAdapter.SeatVH> {
+
+        @NonNull
+        @Override
+        public SeatVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext())
+                    .inflate(R.layout.item_seat, parent, false);
+            return new SeatVH(v);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull SeatVH holder, int position) {
+            SeatItem item = seatItems.get(position);
+            holder.bind(item, position);
+        }
+
+        @Override
+        public int getItemCount() {
+            return seatItems.size();
+        }
+
+        class SeatVH extends RecyclerView.ViewHolder {
+
+            final MaterialButton btnSeat;
+
+            SeatVH(@NonNull View itemView) {
+                super(itemView);
+                btnSeat = itemView.findViewById(R.id.btn_seat);
+            }
+
+            void bind(@NonNull SeatItem item, int position) {
+                btnSeat.setText(buildSeatButtonLabel(item.seatId));
+                applySeatStyle(btnSeat, item.state);
+
+                btnSeat.setOnClickListener(v -> {
+                    int pos = getBindingAdapterPosition();
+                    if (pos == RecyclerView.NO_POSITION) return;
+                    handleSeatClick(pos);
+                });
+
+                btnSeat.setOnLongClickListener(v -> {
+                    int pos = getBindingAdapterPosition();
+                    if (pos == RecyclerView.NO_POSITION) return false;
+                    SeatItem current = seatItems.get(pos);
+                    showSeatInfoBottomSheet(current.seatId);
+                    return true;
+                });
+            }
+        }
     }
 }

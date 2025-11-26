@@ -25,7 +25,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.FinalProject.core.firebase.FirebaseAuthHelper;
 import com.FinalProject.feature_booking.data.BookingRepository;
-import com.FinalProject.feature_booking.model.TicketType;
+import com.FinalProject.core.model.TicketInfor;
 import com.FinalProject.feature_booking.payment.PaymentCallback;
 import com.FinalProject.feature_booking.payment.PaymentMethod;
 import com.FinalProject.feature_booking.payment.PaymentOrchestrator;
@@ -556,24 +556,34 @@ public class CheckoutFragment extends Fragment {
      *  - Hàng B: loại TRUNG BÌNH (VIP)
      *  - Hàng khác: loại RẺ NHẤT (general)
      */
+    /**
+     * Map danh sách ghế -> qtyByType (key = tickets_class trong TicketInfor).
+     *
+     * Quy ước zone (tương tự SeatSelectionFragment):
+     *  - Hàng A: loại ĐẮT NHẤT  (Premium)
+     *  - Hàng B: loại TRUNG BÌNH (VIP)
+     *  - Hàng khác: loại RẺ NHẤT (General/STD)
+     */
     private Map<String, Integer> buildQtyByTypeFromSeats(
             @NonNull List<String> seatList,
-            @NonNull List<TicketType> types
+            @NonNull List<TicketInfor> infos
     ) {
         Map<String, Integer> qty = new HashMap<>();
-        if (seatList.isEmpty() || types.isEmpty()) return qty;
+        if (seatList.isEmpty() || infos.isEmpty()) return qty;
 
-        // Sort TicketType theo price: rẻ -> đắt
-        List<TicketType> sorted = new ArrayList<>(types);
-        Collections.sort(sorted, (a, b) -> Long.compare(a.getPrice(), b.getPrice()));
+        // Sort TicketInfor theo tickets_price: rẻ -> đắt
+        List<TicketInfor> sorted = new ArrayList<>(infos);
+        Collections.sort(sorted, (a, b) ->
+                Integer.compare(a.getTickets_price(), b.getTickets_price())
+        );
 
-        TicketType cheapest  = sorted.get(0);
-        TicketType mid       = (sorted.size() > 1) ? sorted.get(1) : cheapest;
-        TicketType expensive = sorted.get(sorted.size() - 1);
+        TicketInfor cheapest  = sorted.get(0);
+        TicketInfor mid       = (sorted.size() > 1) ? sorted.get(1) : cheapest;
+        TicketInfor expensive = sorted.get(sorted.size() - 1);
 
-        String idStd  = cheapest.getTypeId();    // cho hàng khác A/B
-        String idVip  = mid.getTypeId();         // cho hàng B
-        String idVvip = expensive.getTypeId();   // cho hàng A
+        String idStd  = cheapest != null  ? cheapest.getTickets_class()  : null; // cho hàng khác A/B
+        String idVip  = mid != null       ? mid.getTickets_class()       : null; // cho hàng B
+        String idVvip = expensive != null ? expensive.getTickets_class() : null; // cho hàng A
 
         // Fallback nếu có id null
         if (idStd == null)  idStd  = (idVip != null) ? idVip : idVvip;

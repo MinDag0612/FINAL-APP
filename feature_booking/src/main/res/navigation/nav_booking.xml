@@ -43,7 +43,21 @@
             android:name="showId"
             app:argType="string"
             android:defaultValue="" />
+        <!-- Quota theo hạng ghế -->
+        <argument
+            android:name="qtyPremium"
+            app:argType="integer"
+            android:defaultValue="0" />
 
+        <argument
+            android:name="qtyVip"
+            app:argType="integer"
+            android:defaultValue="0" />
+
+        <argument
+            android:name="qtyGeneral"
+            app:argType="integer"
+            android:defaultValue="0" />
         <action
             android:id="@+id/action_seatSelection_to_checkout"
             app:destination="@id/checkoutFragment" />

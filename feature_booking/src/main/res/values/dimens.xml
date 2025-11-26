@@ -18,4 +18,7 @@
     <dimen name="seat_stroke">1dp</dimen>
     <dimen name="seat_gap">6dp</dimen>
     <dimen name="aisle_gap">12dp</dimen>
+    <dimen name="seat_size">36dp</dimen>
+    <dimen name="seat_map_height">200dp</dimen>
+
 </resources>

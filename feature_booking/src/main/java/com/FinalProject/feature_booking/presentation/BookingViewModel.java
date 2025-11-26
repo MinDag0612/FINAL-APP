@@ -4,10 +4,10 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.FinalProject.core.model.TicketInfor;
 import com.FinalProject.feature_booking.data.BookingRepository;
 import com.FinalProject.feature_booking.model.OrderResult;
 import com.FinalProject.feature_booking.model.Showtime;
-import com.FinalProject.feature_booking.model.TicketType;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,8 +20,8 @@ import java.util.UUID;
  * ViewModel cho BookingActivity.
  *
  * - dates / showtimes: vẫn demo (hard-code) vì DB_Structure chưa có showtimes.
- * - ticketTypes: load thật từ Firestore: events/{eventId}/tickets_infor.
- * - book(): tạo document trong Orders theo DB_Structure (thông qua BookingRepository -> Order_API).
+ * - ticketTypes: lấy thật từ Firestore: Events/{eventId}/Tickets_infor (model TicketInfor trong core).
+ * - book(): tạo document trong Orders (thông qua BookingRepository -> Order_API).
  */
 public class BookingViewModel extends ViewModel {
 
@@ -31,8 +31,11 @@ public class BookingViewModel extends ViewModel {
             new MutableLiveData<>(new ArrayList<>());
     public final MutableLiveData<List<Showtime>> showtimes =
             new MutableLiveData<>(new ArrayList<>());
-    public final MutableLiveData<List<TicketType>> ticketTypes =
+
+    // 🔹 ĐÃ ĐỔI: dùng TicketInfor (core) thay vì TicketType (feature_booking)
+    public final MutableLiveData<List<TicketInfor>> ticketTypes =
             new MutableLiveData<>(new ArrayList<>());
+
     public final MutableLiveData<Long> totalPrice =
             new MutableLiveData<>(0L);
     public final MutableLiveData<String> error =
@@ -42,7 +45,8 @@ public class BookingViewModel extends ViewModel {
     public final MutableLiveData<OrderResult> orderResult =
             new MutableLiveData<>(null);
 
-    // typeId (STD/VIP/...) -> quantity
+    // typeId = tickets_class (STD/VIP/PREMIUM/GENERAL/...)
+    // key phải TRÙNG với field tickets_class trong Firestore
     private final Map<String, Integer> qtyByType = new HashMap<>();
 
     public BookingViewModel(@NonNull BookingRepository repo) {
@@ -51,7 +55,7 @@ public class BookingViewModel extends ViewModel {
 
     // ====== NGÀY (demo) ======
     public void loadDates(String eventId) {
-        // Nếu sau này event có nhiều ngày trong Firestore, bạn map từ repo tại đây.
+        // Sau này nếu event có nhiều ngày trong Firestore, map từ repo tại đây.
         dates.setValue(Arrays.asList("2025-12-20", "2025-12-21"));
     }
 
@@ -71,13 +75,13 @@ public class BookingViewModel extends ViewModel {
         orderResult.setValue(null);
     }
 
-    // ====== LOẠI VÉ: lấy thật từ Firestore ======
+    // ====== LOẠI VÉ: lấy thật từ Firestore (TicketInfor trong core) ======
     public void loadTicketTypes(String eventId, String showId) {
         qtyByType.clear();
         totalPrice.setValue(0L);
         orderResult.setValue(null);
 
-        repo.getTicketTypesForEvent(eventId)
+        repo.getTicketTypesForEvent(eventId)           // Task<List<TicketInfor>>
                 .addOnSuccessListener(list -> {
                     ticketTypes.setValue(list);
                     recomputeTotal();
@@ -87,7 +91,11 @@ public class BookingViewModel extends ViewModel {
                 });
     }
 
-    // delta > 0: tăng, < 0: giảm
+    /**
+     * delta > 0: tăng, < 0: giảm
+     * typeId = tickets_class (ví dụ "Premium", "VIP", "General", "STD", ...)
+     * unitPriceIgnored: giữ lại tham số cũ cho compatible, nhưng không dùng nữa
+     */
     public void changeQuantity(String typeId, long unitPriceIgnored, int delta) {
         int cur = qtyByType.getOrDefault(typeId, 0);
         int next = Math.max(0, cur + delta);
@@ -97,22 +105,24 @@ public class BookingViewModel extends ViewModel {
 
     private void recomputeTotal() {
         long sum = 0L;
-        List<TicketType> tt = ticketTypes.getValue();
+        List<TicketInfor> tt = ticketTypes.getValue();
 
         for (Map.Entry<String, Integer> e : qtyByType.entrySet()) {
-            String typeId = e.getKey();
+            String typeId = e.getKey();   // tickets_class
             int q = e.getValue();
             long price = 0L;
 
             if (tt != null) {
-                for (TicketType t : tt) {
-                    if (typeId.equals(t.getTypeId())) {
-                        price = t.getPriceSafe();
+                for (TicketInfor info : tt) {
+                    // so sánh với tickets_class trong core model
+                    if (info.getTickets_class() != null &&
+                            info.getTickets_class().equalsIgnoreCase(typeId)) {
+                        price = info.getTickets_price();
                         break;
                     }
                 }
             }
-            sum += q * price;
+            sum += (long) q * price;
         }
         totalPrice.setValue(sum);
     }
@@ -130,6 +140,11 @@ public class BookingViewModel extends ViewModel {
         // Copy map để tránh thay đổi trong lúc Firestore đang chạy
         Map<String, Integer> qtyCopy = new HashMap<>(qtyByType);
 
+        // BookingRepository.createOrder -> Order_API.createOrderForEvent
+        // Order_API đã được sửa để:
+        //  - đọc Tickets_infor
+        //  - tạo Order
+        //  - tăng tickets_sold bằng WriteBatch
         repo.createOrder(userId, eventId, showId, qtyCopy)
                 .addOnSuccessListener(orderId -> {
                     String finalOrderId = orderId;

@@ -5,8 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.FinalProject.core.model.TicketInfor;
 import com.FinalProject.feature_booking.R;
-import com.FinalProject.feature_booking.model.TicketType;
 import com.google.android.material.button.MaterialButton;
 
 import androidx.annotation.NonNull;
@@ -19,42 +19,62 @@ import java.util.Locale;
 
 public class TicketTypeAdapter extends RecyclerView.Adapter<TicketTypeAdapter.TicketTypeVH> {
 
-    public interface Listener { void onChangeQuantity(String typeId, long unitPrice, int delta); }
+    // typeId = tickets_class, unitPrice = tickets_price
+    public interface Listener {
+        void onChangeQuantity(String typeId, long unitPrice, int delta);
+    }
 
     private final Listener listener;
-    private final List<TicketType> data = new ArrayList<>();
-    private final NumberFormat vnd = NumberFormat.getCurrencyInstance(new Locale("vi","VN"));
+    private final List<TicketInfor> data = new ArrayList<>();
+    private final NumberFormat vnd = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
 
-    public TicketTypeAdapter(Listener l){ this.listener = l; }
+    public TicketTypeAdapter(@NonNull Listener l) {
+        this.listener = l;
+    }
 
-    public void submit(List<TicketType> list){
+    public void submit(List<TicketInfor> list) {
         data.clear();
         if (list != null) data.addAll(list);
         notifyDataSetChanged();
     }
 
-    @NonNull @Override
-    public TicketTypeVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType){
+    @NonNull
+    @Override
+    public TicketTypeVH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_ticket_type, parent, false);
         return new TicketTypeVH(v);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TicketTypeVH h, int i){
-        TicketType t = data.get(i);
-        h.tvName.setText(t.getName());
-        h.tvPrice.setText(vnd.format(t.getPriceSafe()));
-        h.btnPlus.setOnClickListener(v -> listener.onChangeQuantity(t.getTypeId(), t.getPriceSafe(), +1));
-        h.btnMinus.setOnClickListener(v -> listener.onChangeQuantity(t.getTypeId(), t.getPriceSafe(), -1));
+    public void onBindViewHolder(@NonNull TicketTypeVH h, int position) {
+        TicketInfor t = data.get(position);
+
+        // Name = tickets_class (VD: "Premium", "VIP", "General")
+        h.tvName.setText(t.getTickets_class());
+
+        // Price = tickets_price
+        long price = t.getTickets_price();
+        h.tvPrice.setText(vnd.format(price));
+
+        h.btnPlus.setOnClickListener(v ->
+                listener.onChangeQuantity(t.getTickets_class(), price, +1)
+        );
+        h.btnMinus.setOnClickListener(v ->
+                listener.onChangeQuantity(t.getTickets_class(), price, -1)
+        );
     }
 
-    @Override public int getItemCount(){ return data.size(); }
+    @Override
+    public int getItemCount() {
+        return data.size();
+    }
 
     static class TicketTypeVH extends RecyclerView.ViewHolder {
         final TextView tvName, tvPrice;
         final MaterialButton btnPlus, btnMinus;
-        TicketTypeVH(@NonNull View itemView){
+
+        TicketTypeVH(@NonNull View itemView) {
             super(itemView);
             tvName  = itemView.findViewById(R.id.tvName);
             tvPrice = itemView.findViewById(R.id.tvPrice);

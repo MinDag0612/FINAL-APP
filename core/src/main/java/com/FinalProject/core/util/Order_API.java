@@ -1,7 +1,8 @@
 package com.FinalProject.core.util;
 
 import android.util.Log;
-
+import com.google.firebase.firestore.WriteBatch;
+import com.google.firebase.firestore.DocumentReference;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -166,7 +167,7 @@ public class Order_API {
             return tcs.getTask();
         }
 
-        // Bước 1: load Tickets_infor của event để map typeId -> docId, price
+        // Bước 1: load Tickets_infor của event để map typeId -> docRef, price
         TicketS_Infor_API.getTicketInforByEventId(eventId)
                 .addOnSuccessListener(snap -> {
                     if (snap == null || snap.isEmpty()) {
@@ -176,9 +177,11 @@ public class Order_API {
                     }
 
                     List<Map<String, Object>> ticketList = new ArrayList<>();
+                    List<DocumentReference> ticketDocRefs = new ArrayList<>();
+                    List<Integer> ticketQtys = new ArrayList<>();
                     long totalPrice = 0L;
 
-                    // Duyệt từng loại vé (STD / VIP / VVIP ...) mà user chọn
+                    // Duyệt từng loại vé (STD / VIP / PREMIUM ...) mà user chọn
                     for (Map.Entry<String, Integer> entry : qtyByType.entrySet()) {
                         String typeId = entry.getKey();
                         Integer qtyObj = entry.getValue();
@@ -213,6 +216,10 @@ public class Order_API {
 
                         ticketList.add(item);
                         totalPrice += priceEach * qty;
+
+                        // Lưu ref + qty để lát nữa tăng tickets_sold
+                        ticketDocRefs.add(matchedDoc.getReference());
+                        ticketQtys.add(qty);
                     }
 
                     if (ticketList.isEmpty()) {
@@ -235,20 +242,40 @@ public class Order_API {
                     orderData.put("checked_in", false);
                     orderData.put("checked_in_at", null);
 
-                    // 🔹 NEW: lưu danh sách ghế đã giữ (nếu có)
+                    // 🔹 Lưu danh sách ghế đã giữ (nếu có)
                     if (seats != null && !seats.isEmpty()) {
                         orderData.put("seats", new ArrayList<>(seats));
                     }
 
-                    // Bước 3: ghi vào collection Orders
-                    db.collection(StoreField.ORDERS)
-                            .add(orderData)
-                            .addOnSuccessListener(docRef -> {
-                                Log.d(TAG, "Order created (createOrderForEvent) successfully: " + docRef.getId());
-                                tcs.setResult(docRef.getId());
+                    // Bước 3: dùng WriteBatch để:
+                    //  - Tạo Order
+                    //  - Tăng tickets_sold cho từng Tickets_infor tương ứng
+                    WriteBatch batch = db.batch();
+
+                    DocumentReference orderRef =
+                            db.collection(StoreField.ORDERS).document(); // tự sinh orderId
+                    batch.set(orderRef, orderData);
+
+                    for (int i = 0; i < ticketDocRefs.size(); i++) {
+                        DocumentReference ticketRef = ticketDocRefs.get(i);
+                        int qty = ticketQtys.get(i);
+                        if (qty <= 0) continue;
+
+                        // tickets_sold += qty (atomic trên Firestore)
+                        batch.update(
+                                ticketRef,
+                                StoreField.TicketFields.TICKETS_SOLD,
+                                FieldValue.increment(qty)
+                        );
+                    }
+
+                    batch.commit()
+                            .addOnSuccessListener(unused -> {
+                                Log.d(TAG, "Order created + tickets_sold updated: " + orderRef.getId());
+                                tcs.setResult(orderRef.getId());
                             })
                             .addOnFailureListener(e -> {
-                                Log.e(TAG, "Error creating order (createOrderForEvent)", e);
+                                Log.e(TAG, "Error creating order / updating tickets_sold", e);
                                 tcs.setException(e);
                             });
 

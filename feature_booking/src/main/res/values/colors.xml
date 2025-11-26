@@ -47,4 +47,27 @@
     <color name="seat_text_disabled">#6B6B6B</color>
 
     <color name="seat_ripple_tint">#33000000</color>
+
+    <!-- Màu primary (nút, chip, highlight...) -->
+    <color name="app_primary">#6200EE</color>
+    <color name="app_on_primary">#FFFFFF</color>
+
+    <!-- Màu surface (nền card, chip...) -->
+    <color name="app_surface">#FFFFFFFF</color>
+    <color name="app_on_surface">#FF000000</color>
+
+
+    <!-- Chip Upcoming -->
+    <color name="chip_upcoming_bg">#E3F2FD</color>
+    <color name="chip_upcoming_fg">#0D47A1</color>
+
+    <!-- Chip History -->
+    <color name="chip_history_bg">#EEEEEE</color>
+    <color name="chip_history_fg">#424242</color>
+
+    <!-- Chip filter selected / unselected -->
+    <color name="chip_filter_selected_bg">#E8EAF6</color>
+    <color name="chip_filter_selected_fg">#1A237E</color>
+    <color name="chip_filter_unselected_bg">#F5F5F5</color>
+    <color name="chip_filter_unselected_fg">#616161</color>
 </resources>

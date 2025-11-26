@@ -50,6 +50,7 @@ dependencies {
 
     // GridLayout AndroidX (cho app:layout_columnWeight trong fragment_seat_selection)
     implementation("androidx.gridlayout:gridlayout:1.0.0")
+    implementation(libs.firebase.firestore)
 
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.2.1")
