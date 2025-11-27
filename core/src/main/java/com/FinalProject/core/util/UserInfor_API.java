@@ -59,4 +59,10 @@ public class UserInfor_API {
                 .document(uid)
                 .set(updates, SetOptions.merge());
     }
+
+    public static Task<DocumentSnapshot> getFcmTokenByUserId(String userId) {
+        return db.collection(StoreField.USER_INFOR)
+                .document(userId)
+                .get();
+    }
 }

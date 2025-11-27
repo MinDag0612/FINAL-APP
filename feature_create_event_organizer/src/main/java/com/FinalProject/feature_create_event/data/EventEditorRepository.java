@@ -97,4 +97,6 @@ public class EventEditorRepository {
         t.setTickets_sold(sold != null ? sold.intValue() : 0);
         return t;
     }
+
+
 }

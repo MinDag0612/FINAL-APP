@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.FinalProject.core.constName.StoreField;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.FinalProject.core.model.TicketItem;
@@ -89,5 +90,27 @@ public class Order_API {
                 .whereEqualTo(StoreField.OrderFields.USER_ID, userId)
                 .get();
     }
+
+    public static Task<QuerySnapshot> getOrdersByEventId(String eventId){
+        return db.collection(StoreField.ORDERS)
+                .whereEqualTo(StoreField.OrderFields.EVENT_ID, eventId)
+                .get();
+    }
+
+    public static Task<String> getUserIdByOrderId(String orderId) {
+        return db.collection(StoreField.ORDERS)
+                .document(orderId)
+                .get()
+                .continueWith(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        if (doc != null && doc.exists()) {
+                            return doc.getString("user_id"); // trả về user_id
+                        }
+                    }
+                    return null; // nếu không tồn tại hoặc lỗi
+                });
+    }
+
 
 }

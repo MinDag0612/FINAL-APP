@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 public class HomeOrganizerActivity extends AppCompatActivity  {
 
-    MaterialButton createEventBtn;
+    TextView createEventBtn;
     MaterialButton quickCreateEventBtn;
     RecyclerView rvEvents;
     CircularProgressIndicator progressIndicator;

@@ -15,6 +15,7 @@ public class StoreField {
         public static final String PHONE = "phone";
         public static final String EMAIL = "email";
         public static final String ROLE = "role";
+        public static final String FCM_TOKEN = "fcm_token";
     }
 
     // 🔹 Field trong collection Events
@@ -40,6 +41,8 @@ public class StoreField {
         public static final String IS_PAID = "is_paid";
         public static final String TICKET_ITEMS = "ticket_items";
         public static final String PAYMENT_METHOD = "payment_method";
+        public static final String EVENT_ID = "event_id";
+
     }
 
     public static class ReviewFields {

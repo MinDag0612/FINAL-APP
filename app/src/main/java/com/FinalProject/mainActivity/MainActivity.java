@@ -21,9 +21,9 @@ public class MainActivity extends AppCompatActivity {
 
         Seeder.runSeed();
 
-//        startActivity(new Intent(this, LoginActivity.class));
-//        finish();
-        HandleNotification.test(this);
+        startActivity(new Intent(this, LoginActivity.class));
+        finish();
+//        HandleNotification.test(this);
     }
 
 
