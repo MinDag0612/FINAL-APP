@@ -30,6 +30,19 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+        // ... other configurations like compileSdk, defaultConfig, etc.
+
+    packaging {
+        resources {
+            excludes += "/META-INF/INDEX.LIST"
+        }
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/DEPENDENCIES"
+        }
+    }// ... other configurations like buildTypes, compileOptions, etc.
+
 }
 
 dependencies {
