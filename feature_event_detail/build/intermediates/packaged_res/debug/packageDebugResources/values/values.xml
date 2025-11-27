@@ -65,6 +65,7 @@
     <string name="event_detail_ticket_sold_out">Hết vé</string>
     <string name="event_detail_timeline_empty">Lịch trình sẽ được cập nhật sớm.</string>
     <string name="event_detail_timeline_title">Lịch trình</string>
+    <string name="event_detail_write_review">Viết đánh giá cho sự kiện</string>
     <string name="feature_event_detail_name">Chi tiết sự kiện</string>
     <style name="Theme.FeatureEventDetail" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorPrimary">@color/color_primary</item>

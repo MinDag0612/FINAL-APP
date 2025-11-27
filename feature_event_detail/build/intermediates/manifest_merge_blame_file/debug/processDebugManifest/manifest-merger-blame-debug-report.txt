@@ -5,15 +5,15 @@
 5    <uses-sdk android:minSdkVersion="24" />
 6
 7    <application>
-7-->D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:4:5-9:19
+7-->D:\MobiApp\FINAL3\feature_event_detail\src\main\AndroidManifest.xml:4:5-9:19
 8        <activity
-8-->D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:5:9-8:63
+8-->D:\MobiApp\FINAL3\feature_event_detail\src\main\AndroidManifest.xml:5:9-8:63
 9            android:name="com.FinalProject.feature_event_detail.presentation.EventDetailActivity"
-9-->D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:6:13-61
+9-->D:\MobiApp\FINAL3\feature_event_detail\src\main\AndroidManifest.xml:6:13-61
 10            android:exported="false"
-10-->D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:7:13-37
+10-->D:\MobiApp\FINAL3\feature_event_detail\src\main\AndroidManifest.xml:7:13-37
 11            android:theme="@style/Theme.FeatureEventDetail" />
-11-->D:\MobiApp\FINAL\feature_event_detail\src\main\AndroidManifest.xml:8:13-60
+11-->D:\MobiApp\FINAL3\feature_event_detail\src\main\AndroidManifest.xml:8:13-60
 12    </application>
 13
 14</manifest>

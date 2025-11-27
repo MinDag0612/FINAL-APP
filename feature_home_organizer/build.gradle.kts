@@ -33,6 +33,7 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":feature_create_event_organizer"))
     implementation(project(":feature_attendee_manager_organizer"))
+    implementation(project(":feature_profile"))
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

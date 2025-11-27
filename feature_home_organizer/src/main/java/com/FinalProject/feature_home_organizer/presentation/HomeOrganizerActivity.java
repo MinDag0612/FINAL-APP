@@ -13,9 +13,12 @@ import com.FinalProject.feature_attendee_manager_organizer.presentation.Attendee
 import com.FinalProject.feature_home_organizer.R;
 import com.FinalProject.feature_home_organizer.data.OrganizerEventRepository;
 import com.FinalProject.feature_home_organizer.domain.GetOrganizerEventsUseCase;
+import com.FinalProject.feature_profile.presentation.ProfileActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
+
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 public class HomeOrganizerActivity extends AppCompatActivity  {
@@ -27,6 +30,7 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
     TextView tvEmpty;
     OrganizerEventAdapter adapter;
     GetOrganizerEventsUseCase getEventsUseCase = new GetOrganizerEventsUseCase();
+    FrameLayout btn_avt;
     java.util.List<OrganizerEventRepository.EventItem> currentEvents = new java.util.ArrayList<>();
 
     @Override
@@ -37,6 +41,7 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
 
         init();
         setCreateEventBtn();
+        setBtnAvt();
     }
 
     private void init(){
@@ -45,6 +50,7 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
         rvEvents = findViewById(R.id.rv_active_events);
         progressIndicator = findViewById(R.id.progress_events);
         tvEmpty = findViewById(R.id.tv_empty_events);
+        btn_avt = findViewById(R.id.btn_avt_organize);
         adapter = new OrganizerEventAdapter(new OrganizerEventAdapter.Listener() {
             @Override
             public void onEdit(String eventId) {
@@ -63,6 +69,13 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
         });
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
         rvEvents.setAdapter(adapter);
+    }
+
+    private void setBtnAvt(){
+        btn_avt.setOnClickListener(v -> {
+            Intent intent = new Intent(this, ProfileActivity.class);
+            startActivity(intent);
+        });
     }
 
     private void setCreateEventBtn(){

@@ -66,7 +66,7 @@
 
                 <LinearLayout
                     android:id="@+id/layout_hero_content"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
@@ -77,13 +77,47 @@
                         android:layout_weight="1"
                         android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Xin chào, Organizer!"
-                            android:textColor="@android:color/white"
-                            android:textSize="20sp"
-                            android:textStyle="bold" />
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:gravity="center|left"
+                                android:text="Xin chào, Organizer!"
+                                android:textColor="@android:color/white"
+                                android:textSize="20sp"
+                                android:textStyle="bold" />
+
+                            <FrameLayout
+                                android:id="@+id/btn_avt_organize"
+                                android:layout_width="52dp"
+                                android:layout_height="52dp">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:id="@+id/img_home_avatar"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:contentDescription="@string/home_avatar_content_desc"
+                                    android:foregroundGravity="right"
+                                    android:scaleType="centerCrop"
+                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Corner.Full"
+                                    app:srcCompat="@drawable/bg_avatar_gradient" />
+
+                                <TextView
+                                    android:id="@+id/tv_home_avatar_initial"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:gravity="center"
+                                    android:text="M"
+                                    android:textColor="@color/color_on_primary"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold" />
+                            </FrameLayout>
+                        </LinearLayout>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -103,8 +137,8 @@
                                 android:layout_height="wrap_content"
                                 android:background="@drawable/bg_chip_light"
                                 android:paddingStart="12dp"
-                                android:paddingEnd="12dp"
                                 android:paddingTop="6dp"
+                                android:paddingEnd="12dp"
                                 android:paddingBottom="6dp"
                                 android:text="KPI hôm nay: 120 vé"
                                 android:textColor="@color/color_on_background"
@@ -117,8 +151,8 @@
                                 android:layout_marginStart="@dimen/spacing_sm"
                                 android:background="@drawable/bg_chip_outline"
                                 android:paddingStart="12dp"
-                                android:paddingEnd="12dp"
                                 android:paddingTop="6dp"
+                                android:paddingEnd="12dp"
                                 android:paddingBottom="6dp"
                                 android:text="3 sự kiện đang chạy"
                                 android:textColor="@android:color/white"
@@ -136,12 +170,6 @@
                             android:textAllCaps="false" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
-                        android:contentDescription="@string/app_name"
-                        android:scaleType="fitCenter"
-                        android:src="@drawable/ic_calendar_playstore" />
                 </LinearLayout>
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,34 @@
+*   [33mb442614[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mMAIN[m[33m)[m Resolve merge conflict between 523h0011 and MAIN
+[31m|[m[32m\[m  
+[31m|[m * [33m0b306fc[m[33m ([m[1;31morigin/523h0011[m[33m, [m[1;32m523h0011[m[33m)[m FEATURE: ADD EVENT
+* [32m|[m   [33m59d38e6[m[33m ([m[1;31morigin/MAIN[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge feature/review_event
+[33m|[m[34m\[m [32m\[m  
+[33m|[m * [32m|[m [33mdd3aa5f[m[33m ([m[1;31morigin/feature/review_event[m[33m)[m add feature review event
+[33m|[m[33m/[m [32m/[m  
+* [32m|[m   [33ma330b36[m Merge feature/user_profile
+[32m|[m[36m\[m [32m\[m  
+[32m|[m [36m|[m[32m/[m  
+[32m|[m[32m/[m[36m|[m   
+[32m|[m * [33m1da720d[m[33m ([m[1;31morigin/feature/user_profile[m[33m)[m uodate feature user profile
+[32m|[m[32m/[m  
+* [33m8d5aa28[m[33m ([m[1;31morigin/feature/event_detail[m[33m)[m update feature event detail
+*   [33m8d60327[m Merge branch 'MAIN' into feature/event_detail
+[1;31m|[m[1;32m\[m  
+[1;31m|[m * [33mb917696[m ADD FIND EVENT BY NAME, CAST, ...
+[1;31m|[m * [33m72f5782[m DESCRIP EvenRepo
+[1;31m|[m * [33mb290eb9[m SPLIT HOME REPO -> Even + home
+* [1;32m|[m [33m3280634[m update event_detail
+* [1;32m|[m [33m5ba64e0[m Merge branch 'main' into feature/event_detail
+[1;33m|[m[1;32m\[m[1;32m|[m 
+[1;33m|[m * [33m89fe000[m[33m ([m[1;31morigin/feature/home[m[33m)[m update feature home
+[1;33m|[m * [33m8aab2b8[m add feature home
+* [1;34m|[m [33md23a984[m add feature see event detail
+[1;34m|[m[1;34m/[m  
+* [33mfc7c343[m ADD API + SEED REVIEW
+* [33m8cb86c9[m description
+* [33m2962b91[m ADD StoreFiled - include name of table and field
+* [33m2aa36f3[m ADD DB STRUCTURE
+* [33m213682d[m ADD DB + API + SEEDER (already CONFIG)
+* [33mb4b1d30[m add login, signup
+* [33m97bb353[m Add project
+* [33mfbc8bd6[m FIRST

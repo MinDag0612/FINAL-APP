@@ -48,6 +48,7 @@ int drawable bg_avatar_gradient 0x0
 int drawable bg_badge_featured 0x0
 int drawable bg_event_placeholder 0x0
 int drawable bg_featured_event 0x0
+int drawable bg_home_glass 0x0
 int drawable ic_artist_placeholder 0x0
 int drawable ic_avatar_placeholder 0x0
 int drawable ic_calendar 0x0
