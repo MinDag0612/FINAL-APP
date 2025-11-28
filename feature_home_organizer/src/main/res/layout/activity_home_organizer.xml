@@ -119,6 +119,13 @@
                                     android:textStyle="bold" />
                             </FrameLayout>
                         </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Xin chào, Organizer!"
+                            android:textColor="@android:color/white"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -129,6 +136,7 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_md"
                             android:orientation="horizontal">
@@ -141,6 +149,10 @@
                                 android:paddingStart="12dp"
                                 android:paddingTop="6dp"
                                 android:paddingEnd="12dp"
+                                android:background="@drawable/bg_chip_light"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:paddingTop="6dp"
                                 android:paddingBottom="6dp"
                                 android:text="KPI hôm nay: 120 vé"
                                 android:textColor="@color/color_on_background"
@@ -156,6 +168,10 @@
                                 android:paddingStart="12dp"
                                 android:paddingTop="6dp"
                                 android:paddingEnd="12dp"
+                                android:background="@drawable/bg_chip_outline"
+                                android:paddingStart="12dp"
+                                android:paddingEnd="12dp"
+                                android:paddingTop="6dp"
                                 android:paddingBottom="6dp"
                                 android:text="3 sự kiện đang chạy"
                                 android:textColor="@android:color/white"
@@ -183,6 +199,24 @@
 
                     </LinearLayout>
 
+                        </LinearLayout>
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btn_create_event"
+                            style="@style/Widget.Material3.Button"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_md"
+                            android:text="Tạo sự kiện mới"
+                            android:textAllCaps="false" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:contentDescription="@string/app_name"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_calendar_playstore" />
                 </LinearLayout>
             </FrameLayout>
         </com.google.android.material.card.MaterialCardView>

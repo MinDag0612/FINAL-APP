@@ -16,6 +16,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.FinalProject.core.model.Events;
+import com.FinalProject.core.model.TicketInfor;
+import com.FinalProject.core.util.Event_API;
 
 public class CreateEventRepositoryImpl {
     public interface Callback {
