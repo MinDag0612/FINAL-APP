@@ -37,6 +37,7 @@ dependencies {
     implementation(project(":feature_home_attendee"))
     implementation(project(":core"))
     implementation(project(":feature_home_organizer"))
+    implementation(project(":feature_event_detail"))
 
 
     implementation(libs.appcompat)

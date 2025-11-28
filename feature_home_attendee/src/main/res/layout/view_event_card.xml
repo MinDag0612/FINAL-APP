@@ -1,61 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/corner_radius_md"
     app:cardElevation="@dimen/elevation_card">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/spacing_md">
+        android:layout_height="wrap_content">
 
+        <!-- Ảnh sự kiện -->
         <ImageView
-            android:layout_width="match_parent"
+            android:id="@+id/iv_event_image"
+            android:layout_width="0dp"
             android:layout_height="160dp"
             android:background="@drawable/bg_event_placeholder"
             android:contentDescription="@string/home_event_image_content_desc"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
-        <TextView
-            android:layout_width="match_parent"
+        <!-- Nút Share overlay góc trên phải -->
+        <ImageButton
+            android:id="@+id/btn_share_event"
+            style="@style/Widget.Material3.Button.IconButton"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="Nút chia sẻ sự kiện"
+            android:src="@drawable/ic_share"
+            app:tint="@color/white"
+            app:layout_constraintTop_toTopOf="@id/iv_event_image"
+            app:layout_constraintEnd_toEndOf="@id/iv_event_image" />
+
+        <!-- Tên sự kiện -->
+        <TextView
+            android:id="@+id/tv_event_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_md"
             android:layout_marginTop="@dimen/spacing_md"
-            android:text="Saigon Indie Fest"
+            android:layout_marginEnd="@dimen/spacing_md"
             android:textColor="@color/color_on_background"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/iv_event_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="Saigon Indie Fest" />
 
+        <!-- Thời gian + địa điểm -->
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/tv_event_info"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_xs"
-            android:text="20.08.2024 • Q.1, TP.HCM"
             android:textColor="@color/color_on_surface_variant"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/tv_event_name"
+            app:layout_constraintStart_toStartOf="@id/tv_event_name"
+            app:layout_constraintEnd_toEndOf="@id/tv_event_name"
+            tools:text="20.08.2024 • Q.1, TP.HCM" />
 
+        <!-- Giá vé -->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/layout_price"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_sm"
+            android:layout_marginBottom="@dimen/spacing_md"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@id/tv_event_info"
+            app:layout_constraintStart_toStartOf="@id/tv_event_info"
+            app:layout_constraintEnd_toEndOf="@id/tv_event_info"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:contentDescription="@string/home_event_ticket_desc"
-                android:src="@drawable/ic_ticket" />
+                android:src="@drawable/ic_ticket"
+                app:tint="@color/color_primary" />
 
             <TextView
+                android:id="@+id/tv_event_price"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/spacing_xs"
-                android:text="Từ 350.000đ"
                 android:textColor="@color/color_primary"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                tools:text="Từ 350.000đ" />
         </LinearLayout>
-    </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

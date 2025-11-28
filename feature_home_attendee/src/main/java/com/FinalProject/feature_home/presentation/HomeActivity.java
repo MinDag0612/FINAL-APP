@@ -1,6 +1,10 @@
 package com.FinalProject.feature_home.presentation;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;// Addedimport android.content.ClipboardManager; // Added
+import android.content.Context; // Added
 import android.content.Intent;
+import android.net.Uri; // Added
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -15,8 +19,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
+import com.FinalProject.core.constName.StoreField;
+import com.FinalProject.core.util.Event_API;
 import com.FinalProject.feature_event_detail.presentation.EventDetailNavigator;
 import com.FinalProject.feature_home.R;
+import com.FinalProject.feature_home.data.EventRepository;
 import com.FinalProject.feature_home.data.HomeRepository;
 import com.FinalProject.feature_home.domain.GetHomeContentUseCase;
 import com.FinalProject.feature_home.model.HomeContent;
@@ -26,12 +33,14 @@ import com.FinalProject.feature_home.model.RecentTicketInfo;
 import com.FinalProject.feature_home.presentation.adapter.HomeArtistAdapter;
 import com.FinalProject.feature_home.presentation.adapter.HomeEventAdapter;
 import com.FinalProject.feature_profile.presentation.ProfileNavigator;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.imageview.ShapeableImageView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.firestore.DocumentSnapshot;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -43,7 +52,8 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.EventClickListener {
+// CHANGE 1: Implement both listeners
+public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.EventClickListener, HomeEventAdapter.EventShareListener {
 
     private SwipeRefreshLayout swipeRefreshLayout;
     private TextView tvGreeting;
@@ -115,7 +125,8 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
     }
 
     private void setupRecyclerViews() {
-        eventAdapter = new HomeEventAdapter(this);
+        // CHANGE 2: Pass 'this' for both arguments in the constructor
+        eventAdapter = new HomeEventAdapter(this, this);
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
         rvEvents.setAdapter(eventAdapter);
         rvEvents.setHasFixedSize(true);
@@ -133,6 +144,54 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
             ((SimpleItemAnimator) rvArtists.getItemAnimator()).setSupportsChangeAnimations(false);
         }
     }
+
+    // You already have onEventClick, so now you need to add onShareClick
+
+    @Override
+    public void onEventClick(HomeEvent event) {
+        if (event == null || event.getId() == null) {
+            Toast.makeText(this, "Cannot open this event's details", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Intent intent = EventDetailNavigator.createIntent(
+                this,
+                event.getId(),
+                event.getName(),
+                event.getLocation(),
+                formatDate(event.getStartTimeIso()),
+                event.getStartingPrice()
+        );
+        startActivity(intent);
+    }
+
+    // CHANGE 3: Implement the onShareClick method from the interface
+    // In HomeActivity.java
+
+    // CHANGE 3: Implement the onShareClick method from the interface
+    @Override
+    public void onShareClick(HomeEvent event) {
+        // Create the deep link
+        String deepLink = "https://link-for-app.onrender.com/event/" + event.getId();
+
+        // Get clipboard service
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+
+        // Create ClipData
+        ClipData clip = ClipData.newPlainText("EventLink", deepLink);
+
+        // Set the data to the clipboard
+        if (clipboard != null) {
+            clipboard.setPrimaryClip(clip);
+            // Notify the user
+            Toast.makeText(this, "Event link copied to clipboard!", Toast.LENGTH_SHORT).show();
+        } else {
+            // Handle the case where clipboard service is not available
+            Toast.makeText(this, "Could not access clipboard service.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    // ... The rest of your HomeActivity.java code remains the same ...
 
     private void setupListeners() {
         swipeRefreshLayout.setOnRefreshListener(this::loadHomeContent);
@@ -297,14 +356,10 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
             btnRecentTicket.setEnabled(false);
             return;
         }
-        tvRecentTicketTitle.setText(recentTicketInfo.getTitle());
-        tvRecentTicketSubtitle.setText(recentTicketInfo.getSubtitle());
-        btnRecentTicket.setEnabled(recentTicketInfo.hasTicket());
     }
 
     private void showError(String message) {
-        String errorText = getString(R.string.home_error_loading, message);
-        Snackbar.make(findViewById(R.id.layout_home_container), errorText, Snackbar.LENGTH_LONG).show();
+        Snackbar.make(swipeRefreshLayout, "Error: " + message, Snackbar.LENGTH_LONG).show();
     }
 
     private void openProfileScreen() {
@@ -313,22 +368,18 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
 
     private String formatDate(String raw) {
         if (raw == null || raw.isEmpty()) {
-            return getString(R.string.home_date_pending);
+            return "";
         }
         try {
             return outputDateFormat.format(inputDateFormat.parse(raw));
-        } catch (ParseException e) {
+        } catch (ParseException ignored) {
             return raw;
         }
     }
 
-    @Override
-    public void onEventClick(HomeEvent event) {
-        openEventDetail(event);
-    }
-
     private void openEventDetail(HomeEvent event) {
-        if (event == null) {
+        if (event == null || event.getId() == null) {
+            Toast.makeText(this, "Cannot open this event's details", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent intent = EventDetailNavigator.createIntent(
@@ -342,7 +393,9 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         startActivity(intent);
     }
 
-    public void setHomeSearch(){
-        new HomeSearch(homeSearch, allEvents, eventAdapter).setupSearchListener();
+    private void setHomeSearch() {
+        // Implement search logic
+        HomeSearch search = new HomeSearch(homeSearch, allEvents, eventAdapter);
+        search.setupSearchListener();
     }
 }

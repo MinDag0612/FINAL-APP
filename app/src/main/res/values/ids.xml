@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="tv_event_name_preview" type="id" />
+    <item name="btn_go_to_login" type="id" />
+    <item name="iv_event_icon" type="id" />
+</resources>

@@ -57,8 +57,10 @@ int drawable ic_event_music 0x0
 int drawable ic_event_workshop 0x0
 int drawable ic_location 0x0
 int drawable ic_search 0x0
+int drawable ic_share 0x0
 int drawable ic_ticket 0x0
 int id btn_featured_action 0x0
+int id btn_share_event 0x0
 int id btn_view_ticket 0x0
 int id card_featured_event 0x0
 int id card_recent_ticket 0x0
@@ -67,7 +69,9 @@ int id img_artist_avatar 0x0
 int id img_home_avatar 0x0
 int id input_home_search 0x0
 int id iv_event_badge 0x0
+int id iv_event_image 0x0
 int id layout_home_container 0x0
+int id layout_price 0x0
 int id rv_artists 0x0
 int id rv_events 0x0
 int id scroll_home 0x0
@@ -77,6 +81,7 @@ int id tv_artist_name 0x0
 int id tv_artist_subtitle 0x0
 int id tv_empty_events 0x0
 int id tv_event_date 0x0
+int id tv_event_info 0x0
 int id tv_event_location 0x0
 int id tv_event_name 0x0
 int id tv_event_price 0x0
@@ -99,6 +104,8 @@ int layout item_home_artist 0x0
 int layout item_home_event 0x0
 int layout view_artist_chip 0x0
 int layout view_event_card 0x0
+int mipmap ic_share 0x0
+int mipmap ic_share_round 0x0
 int string home_action_view_all 0x0
 int string home_action_view_ticket 0x0
 int string home_artist_content_desc 0x0
