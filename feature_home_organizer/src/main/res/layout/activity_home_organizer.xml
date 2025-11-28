@@ -136,7 +136,6 @@
 
                         <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_md"
                             android:orientation="horizontal">
@@ -149,10 +148,6 @@
                                 android:paddingStart="12dp"
                                 android:paddingTop="6dp"
                                 android:paddingEnd="12dp"
-                                android:background="@drawable/bg_chip_light"
-                                android:paddingStart="12dp"
-                                android:paddingEnd="12dp"
-                                android:paddingTop="6dp"
                                 android:paddingBottom="6dp"
                                 android:text="KPI hôm nay: 120 vé"
                                 android:textColor="@color/color_on_background"
@@ -168,10 +163,6 @@
                                 android:paddingStart="12dp"
                                 android:paddingTop="6dp"
                                 android:paddingEnd="12dp"
-                                android:background="@drawable/bg_chip_outline"
-                                android:paddingStart="12dp"
-                                android:paddingEnd="12dp"
-                                android:paddingTop="6dp"
                                 android:paddingBottom="6dp"
                                 android:text="3 sự kiện đang chạy"
                                 android:textColor="@android:color/white"
@@ -181,7 +172,7 @@
                         </LinearLayout>
 
                         <TextView
-                            android:id="@+id/btn_create_event"
+                            android:id="@+id/tv_create_event_banner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/spacing_sm"
@@ -196,10 +187,6 @@
                             android:textColor="@android:color/white"
                             android:textSize="12sp"
                             android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                        </LinearLayout>
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/btn_create_event"
