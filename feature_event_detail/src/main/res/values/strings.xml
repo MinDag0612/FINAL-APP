@@ -25,4 +25,5 @@
     <string name="event_detail_missing_id">Không tìm thấy mã sự kiện, hiển thị dữ liệu mẫu.</string>
     <string name="event_detail_retry">Thử tải lại</string>
     <string name="event_detail_cast_format">Khách mời: %1$s</string>
+    <string name="event_detail_back">Quay lại</string>
 </resources>

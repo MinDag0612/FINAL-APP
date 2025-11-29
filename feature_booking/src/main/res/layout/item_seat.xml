@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.button.MaterialButton
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/btn_seat"
+    android:layout_width="match_parent"
+    android:layout_height="36dp"
+    android:layout_margin="2dp"
+
+    android:gravity="center"
+    android:textSize="11sp"
+    android:textAllCaps="false"
+    android:maxLines="1"
+    android:ellipsize="none"
+    android:includeFontPadding="false"
+
+    android:insetLeft="0dp"
+    android:insetRight="0dp"
+    android:insetTop="0dp"
+    android:insetBottom="0dp"
+    android:paddingLeft="4dp"
+    android:paddingRight="4dp"
+    android:minWidth="0dp"
+    android:minHeight="0dp"
+
+    android:backgroundTint="@null"
+    app:backgroundTint="@null"
+    app:rippleColor="@android:color/transparent" />

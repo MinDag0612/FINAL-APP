@@ -1,32 +1,58 @@
 [versions]
-agp = "8.13.1"
+activityVersion = "1.9.3"
+agp = "8.10.1"
+firebaseBom = "34.5.0"
+fragment = "1.8.9"
+gridlayout = "1.1.0"
+gridlayoutVersion = "1.0.0"
 junit = "4.13.2"
 junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 appcompat = "1.7.1"
+lifecycleViewmodel = "2.9.4"
 material = "1.13.0"
 activity = "1.11.0"
 constraintlayout = "2.2.1"
 firebaseAuth = "24.0.1"
 firebaseFirestore = "26.0.2"
-recyclerview = "1.3.2"
-swiperefreshlayout = "1.1.0"
-legacySupportV4 = "1.0.0"
+materialVersion = "1.12.0"
+navigationFragmentVersion = "2.8.3"
+navigationUi = "2.9.6"
+navigationUiVersion = "2.8.3"
+recyclerview = "1.4.0"
+navigationFragment = "2.9.6"
+androidxNavigationFragment = "2.4.2"
 
 [libraries]
+androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version = "1.1.0" }
+activity-v193 = { module = "androidx.activity:activity", version.ref = "activityVersion" }
+com-google-firebase-firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
+google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
+google-firebase-firestore = { module = "com.google.firebase:firebase-firestore" }
+gridlayout = { module = "androidx.gridlayout:gridlayout", version.ref = "gridlayout" }
+gridlayout-v100 = { module = "androidx.gridlayout:gridlayout", version.ref = "gridlayoutVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+lifecycle-viewmodel = { module = "androidx.lifecycle:lifecycle-viewmodel", version.ref = "lifecycleViewmodel" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 firebase-firestore = { group = "com.google.firebase", name = "firebase-firestore", version.ref = "firebaseFirestore" }
-recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "swiperefreshlayout" }
-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+material-v1120 = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+navigation-fragment-v283 = { module = "androidx.navigation:navigation-fragment", version.ref = "navigationFragmentVersion" }
+navigation-ui = { module = "androidx.navigation:navigation-ui", version.ref = "navigationUi" }
+navigation-ui-v283 = { module = "androidx.navigation:navigation-ui", version.ref = "navigationUiVersion" }
+recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
+navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "navigationFragment" }
+androidx-navigation-fragment = { group = "androidx.navigation", name = "navigation-fragment", version.ref = "androidxNavigationFragment" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+

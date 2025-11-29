@@ -30,6 +30,7 @@ android {
 
 dependencies {
     implementation(project(":core"))
+    implementation(project(":feature_booking"))
     implementation(project(":feature_event_detail"))
     implementation(project(":feature_profile"))
 
@@ -38,10 +39,10 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation(libs.recyclerview)
-    implementation(libs.swiperefreshlayout)
+    implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
-    implementation(libs.legacy.support.v4)
+    implementation("androidx.legacy:legacy-support-v4:1.0.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

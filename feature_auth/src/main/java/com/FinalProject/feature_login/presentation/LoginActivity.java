@@ -21,8 +21,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
-
 import java.util.ArrayList;
+
 
 public class LoginActivity extends AppCompatActivity {
     TextInputLayout email;
@@ -110,12 +110,10 @@ public class LoginActivity extends AppCompatActivity {
                     if ("organizer".equalsIgnoreCase(role)) {
                         startActivity(new Intent(LoginActivity.this, HomeOrganizerActivity.class));
                         finish();
-                    }
-                    else {
+                    } else {
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();
                     }
-
                 }
 
                 @Override

@@ -1,0 +1,85 @@
+<resources>
+
+    <!-- Token bo góc dùng chung -->
+    <style name="Shape.Radius.8">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="Shape.Radius.12">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+    <style name="Shape.Radius.16">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+    <style name="ShapeAppearanceOverlay">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+    <!-- Aliases/overlays để khớp các tham chiếu trong layout đã copy -->
+    <style name="ShapeAppearanceOverlay.Material3">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.Material3.Corner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.Material3.Corner.Small">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.Material3.Corner.Medium">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">12dp</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.Material3.Corner.Large">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+    <style name="ShapeAppearanceOverlay.Material3.Corner.Full">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <!-- Thêm các alias trước đó để tránh lỗi lặt vặt -->
+    <style name="Widget.Material3.Button.Filled" parent="Widget.Material3.Button" />
+    <style name="Shape">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+    <style name="Shape.Radius">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">16dp</item>
+    </style>
+    <style name="SeatButton" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:layout_height">@dimen/seat_height</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textAllCaps">false</item>
+
+        <item name="android:background">@drawable/seat_bg_state</item>
+        <item name="android:textColor">@color/seat_text_color</item>
+        <item name="backgroundTint">@null</item>
+        <item name="rippleColor">@color/seat_ripple</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <!-- Nút primary dùng trong màn -->
+    <style name="App_Button_Primary" parent="Widget.Material3.Button.Filled">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textAllCaps">false</item>
+
+    </style>
+
+
+</resources>

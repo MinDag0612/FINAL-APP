@@ -229,16 +229,25 @@
 
             <include
                 android:id="@+id/card_revenue"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/spacing_sm"
                 layout="@layout/view_stat_card" />
 
             <include
                 android:id="@+id/card_tickets"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/spacing_sm"
                 layout="@layout/view_stat_card" />
 
             <include
                 android:id="@+id/card_promotions"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
                 android:layout_margin="@dimen/spacing_sm"
                 layout="@layout/view_stat_card" />
         </android.widget.GridLayout>

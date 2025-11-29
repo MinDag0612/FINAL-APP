@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Ảnh share sẽ nằm ở cacheDir/shared/ -->
+    <cache-path name="shared_qr" path="shared/" />
+</paths>

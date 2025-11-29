@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp" android:height="24dp"
+    android:viewportWidth="24" android:viewportHeight="24">
+    <!-- Calendar outline -->
+    <path
+        android:fillColor="@android:color/black"
+        android:pathData="M5,4 L7,4 L7,2 L9,2 L9,4 L15,4 L15,2 L17,2 L17,4 L19,4 C20.105,4 21,4.895 21,6 L21,20 C21,21.105 20.105,22 19,22 L5,22 C3.895,22 3,21.105 3,20 L3,6 C3,4.895 3.895,4 5,4 Z M5,8 L19,8 L19,20 L5,20 Z"/>
+    <!-- Plus sign -->
+    <path
+        android:fillColor="@android:color/black"
+        android:pathData="M11,11 L13,11 L13,14 L16,14 L16,16 L13,16 L13,19 L11,19 L11,16 L8,16 L8,14 L11,14 Z"/>
+</vector>

@@ -15,6 +15,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.FinalProject.feature_booking.presentation.BookingNavigator;
 import com.FinalProject.feature_event_detail.R;
 import com.FinalProject.feature_event_detail.data.EventDetailRepository;
 import com.FinalProject.feature_event_detail.data.MockEventDetailFactory;
@@ -33,6 +34,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 
@@ -81,6 +83,8 @@ public class EventDetailActivity extends AppCompatActivity {
     private LayoutInflater inflater;
     private String eventId;
     private boolean hasBoundRemoteData = false;
+    private EventDetail currentDetail;
+    private EventDetail fallbackDetail;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -126,8 +130,7 @@ public class EventDetailActivity extends AppCompatActivity {
         btnWriteReview = findViewById(R.id.btn_write_review);
 
         btnRetry.setOnClickListener(v -> loadEventDetail());
-        btnChooseSeat.setOnClickListener(v ->
-                Toast.makeText(this, R.string.event_detail_cta, Toast.LENGTH_SHORT).show());
+        btnChooseSeat.setOnClickListener(v -> openBooking());
         btnWriteReview.setOnClickListener(v -> openReviewScreen());
     }
 
@@ -140,6 +143,7 @@ public class EventDetailActivity extends AppCompatActivity {
             return;
         }
         eventId = intent.getStringExtra(EXTRA_EVENT_ID);
+        android.util.Log.d("EventDetailActivity", "eventId from intent: " + eventId);
         setTextIfNotEmpty(tvEventTitle, intent.getStringExtra(EXTRA_EVENT_TITLE));
         setTextIfNotEmpty(tvEventSchedule, intent.getStringExtra(EXTRA_EVENT_SCHEDULE));
         setTextIfNotEmpty(tvEventLocation, intent.getStringExtra(EXTRA_EVENT_LOCATION));
@@ -157,17 +161,19 @@ public class EventDetailActivity extends AppCompatActivity {
         }
 
         ArrayList<String> fallbackTimeline = intent.getStringArrayListExtra(EXTRA_TIMELINE);
-        if (fallbackTimeline != null && !fallbackTimeline.isEmpty()) {
-            List<TimelineItem> items = new ArrayList<>();
-            for (String raw : fallbackTimeline) {
-                String[] parts = raw.split("\\|");
-                String time = parts.length > 0 ? parts[0].trim() : "";
-                String title = parts.length > 1 ? parts[1].trim() : "";
-                String desc = parts.length > 2 ? parts[2].trim() : "";
-                items.add(new TimelineItem(time, title, desc));
-            }
-            renderTimeline(items);
+        List<TimelineItem> timelineItems = convertToTimelineItems(fallbackTimeline);
+        if (!timelineItems.isEmpty()) {
+            renderTimeline(timelineItems);
         }
+        fallbackDetail = buildFallbackDetail(
+                eventId,
+                intent.getStringExtra(EXTRA_EVENT_TITLE),
+                intent.getStringExtra(EXTRA_EVENT_DESCRIPTION),
+                intent.getStringExtra(EXTRA_EVENT_LOCATION),
+                intent.getStringExtra(EXTRA_EVENT_SCHEDULE),
+                fallbackTags,
+                timelineItems
+        );
     }
 
     private void loadEventDetail() {
@@ -191,11 +197,75 @@ public class EventDetailActivity extends AppCompatActivity {
                 if (hasBoundRemoteData) {
                     Snackbar.make(contentContainer, message, Snackbar.LENGTH_LONG).show();
                 } else {
-                    bindDetail(MockEventDetailFactory.create());
-                    showErrorMessage(message);
+                    EventDetail detailToShow = fallbackDetail != null
+                            ? fallbackDetail
+                            : MockEventDetailFactory.create();
+                    bindDetail(detailToShow);
+                    showErrorMessage(message != null
+                            ? message
+                            : getString(R.string.event_detail_missing_id));
                 }
             }
         });
+    }
+
+    private List<TimelineItem> convertToTimelineItems(List<String> rawItems) {
+        List<TimelineItem> items = new ArrayList<>();
+        if (rawItems == null || rawItems.isEmpty()) {
+            return items;
+        }
+        for (String raw : rawItems) {
+            String[] parts = raw.split("\\|");
+            String time = parts.length > 0 ? parts[0].trim() : "";
+            String title = parts.length > 1 ? parts[1].trim() : "";
+            String desc = parts.length > 2 ? parts[2].trim() : "";
+            items.add(new TimelineItem(time, title, desc));
+        }
+        return items;
+    }
+
+    private EventDetail buildFallbackDetail(@Nullable String id,
+                                            @Nullable String title,
+                                            @Nullable String description,
+                                            @Nullable String location,
+                                            @Nullable String schedule,
+                                            @Nullable List<String> tags,
+                                            @Nullable List<TimelineItem> timelineItems) {
+        String fallbackId = TextUtils.isEmpty(id) ? "fallback_event" : id;
+        String fallbackTitle = !TextUtils.isEmpty(title)
+                ? title
+                : getString(R.string.event_detail_default_title);
+        String fallbackLocation = !TextUtils.isEmpty(location)
+                ? location
+                : getString(R.string.event_detail_default_location);
+        String fallbackDescription = description != null ? description : "";
+        String fallbackEventType = tags != null && !tags.isEmpty()
+                ? tags.get(0)
+                : "";
+        List<String> fallbackTags = tags != null
+                ? new ArrayList<>(tags)
+                : Collections.emptyList();
+        List<TimelineItem> fallbackTimeline = timelineItems != null
+                ? new ArrayList<>(timelineItems)
+                : Collections.emptyList();
+
+        return new EventDetail(
+                fallbackId,
+                fallbackTitle,
+                fallbackDescription,
+                fallbackLocation,
+                fallbackEventType,
+                schedule,
+                null,
+                null,
+                null,
+                fallbackTags,
+                Collections.emptyList(),
+                fallbackTimeline,
+                Collections.emptyList(),
+                0,
+                0
+        );
     }
 
     private void openReviewScreen() {
@@ -216,6 +286,25 @@ public class EventDetailActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void openBooking() {
+        String id = eventId;
+        android.util.Log.d("EventDetailActivity", "========== OPEN BOOKING ==========");
+        android.util.Log.d("EventDetailActivity", "openBooking - eventId: " + id);
+        if (TextUtils.isEmpty(id)) {
+            Toast.makeText(this, R.string.event_detail_missing_id, Toast.LENGTH_SHORT).show();
+            return;
+        }
+        String title = valueOf(tvEventTitle);
+        String showId = id + "_DEFAULT";
+        android.util.Log.d("EventDetailActivity", "openBooking - creating BookingNavigator intent");
+        android.util.Log.d("EventDetailActivity", "  -> eventId: " + id);
+        android.util.Log.d("EventDetailActivity", "  -> title: " + title);
+        android.util.Log.d("EventDetailActivity", "  -> showId: " + showId);
+        Intent intent = BookingNavigator.createBookingIntent(this, id, title, showId);
+        startActivity(intent);
+        android.util.Log.d("EventDetailActivity", "========== BOOKING STARTED ==========");
+    }
+
     private String valueOf(TextView view) {
         return view != null ? view.getText().toString() : null;
     }
@@ -223,6 +312,8 @@ public class EventDetailActivity extends AppCompatActivity {
     private void bindDetail(EventDetail detail) {
         contentContainer.setVisibility(View.VISIBLE);
         errorContainer.setVisibility(View.GONE);
+
+        eventId = detail.getId();
 
         tvEventTitle.setText(detail.getName());
         tvEventDescription.setText(detail.getDescription());
@@ -256,6 +347,7 @@ public class EventDetailActivity extends AppCompatActivity {
             btnChooseSeat.setText(getString(R.string.event_detail_cta_with_price,
                     currencyFormat.format(startingPrice)));
         }
+        currentDetail = detail;
     }
 
     private void renderTags(List<String> tags) {

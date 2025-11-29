@@ -31,6 +31,7 @@ android {
 dependencies {
     implementation(project(":core"))
     implementation(project(":feature_review_event"))
+    implementation(project(":feature_booking"))
 
     implementation(libs.appcompat)
     implementation(libs.material)
