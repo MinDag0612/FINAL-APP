@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Background image -->
+    <item>
+        <bitmap
+            android:src="@drawable/ic_homepage"
+            android:gravity="fill" />
+    </item>
+    
+    <!-- White overlay for better readability -->
+    <item>
+        <shape>
+            <solid android:color="#66FFFFFF" />
+        </shape>
+    </item>
+</layer-list>

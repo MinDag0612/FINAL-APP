@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:orientation="vertical"
+    android:background="@drawable/bg_app_base"
+    android:orientation="vertical">
     android:theme="@style/Theme.Finalapp">
 
     <LinearLayout
@@ -27,7 +27,7 @@
                 android:layout_height="48dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="Quay lại"
-                android:src="@drawable/ic_arrow_back"
+                android:src="@drawable/ic_back_arrow"
                 app:tint="@color/color_on_background" />
 
             <TextView

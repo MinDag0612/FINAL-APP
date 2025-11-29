@@ -51,7 +51,7 @@
                             android:background="?attr/selectableItemBackgroundBorderless"
                             android:contentDescription="Quay lại"
                             android:padding="8dp"
-                            app:srcCompat="@drawable/ic_back" />
+                            app:srcCompat="@drawable/ic_back_arrow" />
 
                         <TextView
                             android:layout_width="0dp"

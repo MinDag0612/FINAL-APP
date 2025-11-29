@@ -52,7 +52,6 @@ public class EventDetailActivity extends AppCompatActivity {
     public static final String EXTRA_TAGS = "extra_tags";
     public static final String EXTRA_TIMELINE = "extra_timeline";
 
-    private MaterialToolbar toolbar;
     private CircularProgressIndicator progressIndicator;
     private ViewGroup contentContainer;
     private ViewGroup errorContainer;
@@ -103,7 +102,6 @@ public class EventDetailActivity extends AppCompatActivity {
     }
 
     private void bindViews() {
-        toolbar = findViewById(R.id.toolbar_event_detail);
         progressIndicator = findViewById(R.id.progress_event_detail);
         contentContainer = findViewById(R.id.layout_event_content);
         errorContainer = findViewById(R.id.layout_event_error);
@@ -129,13 +127,19 @@ public class EventDetailActivity extends AppCompatActivity {
         btnChooseSeat = findViewById(R.id.btn_choose_seat);
         btnWriteReview = findViewById(R.id.btn_write_review);
 
+        // Back button
+        View btnBack = findViewById(R.id.btn_back_event_detail);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        }
+
         btnRetry.setOnClickListener(v -> loadEventDetail());
         btnChooseSeat.setOnClickListener(v -> openBooking());
         btnWriteReview.setOnClickListener(v -> openReviewScreen());
     }
 
     private void configureToolbar() {
-        toolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+        // Toolbar removed, using MaterialButton instead
     }
 
     private void applyFallbackFromIntent(@Nullable Intent intent) {

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/bg_app_base"
     android:padding="@dimen/spacing_lg">
 
     <!-- Back button -->
@@ -13,7 +14,7 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginBottom="@dimen/spacing_md"
-        app:icon="@drawable/ic_arrow_back_24"
+        app:icon="@drawable/ic_back_arrow"
         app:iconGravity="textStart" />
 
     <!-- Event header -->

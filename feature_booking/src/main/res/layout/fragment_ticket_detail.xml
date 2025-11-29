@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background">
+    android:background="@drawable/bg_app_base">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -291,7 +291,7 @@
             android:layout_marginTop="@dimen/spacing_xl"
             android:text="Quay lại vé của tôi"
             android:textAllCaps="false"
-            app:icon="@drawable/ic_arrow_back_24"
+            app:icon="@drawable/ic_back_arrow"
             app:iconGravity="textStart" />
     </LinearLayout>
 </ScrollView>

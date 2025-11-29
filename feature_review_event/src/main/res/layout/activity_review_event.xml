@@ -3,19 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_background">
+    android:background="@drawable/bg_app_base">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_background">
+        android:background="@android:color/transparent">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar_review_event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/color_background"
+            android:background="@android:color/transparent"
             android:paddingHorizontal="@dimen/spacing_md"
+            app:navigationIcon="@drawable/ic_back_arrow"
             app:title="@string/review_event_toolbar_title"
             app:titleTextColor="@color/color_on_background" />
     </com.google.android.material.appbar.AppBarLayout>

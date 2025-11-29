@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@color/color_background"
+    android:background="@drawable/bg_app_base"
     android:padding="@dimen/spacing_md">
 
     <!-- Tiêu đề (optional) -->
