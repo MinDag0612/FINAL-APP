@@ -41,6 +41,7 @@ dimen spacing_xxl
 dimen text_size_body
 dimen text_size_heading
 dimen text_size_subheading
+drawable bg_detail_glass
 drawable bg_event_placeholder
 drawable bg_header_scrim
 drawable bg_rating_chip
@@ -55,6 +56,7 @@ drawable ic_people
 drawable ic_star
 id btn_choose_seat
 id btn_event_retry
+id btn_write_review
 id chip_group_tags
 id img_event_cover
 id layout_event_content
@@ -115,5 +117,6 @@ string event_detail_ticket_section
 string event_detail_ticket_sold_out
 string event_detail_timeline_empty
 string event_detail_timeline_title
+string event_detail_write_review
 string feature_event_detail_name
 style Theme_FeatureEventDetail

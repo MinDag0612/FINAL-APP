@@ -106,3 +106,17 @@ app là module khởi chạy chính (launcher)
 MainActivity có intent-filter để chạy khi bấm Run
 
 Các feature chỉ là library module → không có launcher riêng
+
+-----------------------------------------------------------
+8. Thong báo
+core/util/HandleNotification
+Gọi
+getFcmToken(token -> {
+            if (token != null) {
+                // chạy sendNotification trên thread khác
+                new Thread(() -> sendNotification(context, token, "Xin chào", "Thông báo test")).start();
+            }
+        });
+
+        Kiểm tra log --FCM Response Send Success:--
+        thấy là thành công

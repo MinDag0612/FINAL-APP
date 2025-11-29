@@ -2,32 +2,37 @@ package com.FinalProject.feature_home_organizer.presentation;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.FinalProject.feature_create_event.presentation.CreateEventActivity;
 import com.FinalProject.feature_attendee_manager_organizer.presentation.AttendeeListActivity;
+import com.FinalProject.feature_create_event.presentation.CreateEventActivity;
 import com.FinalProject.feature_home_organizer.R;
 import com.FinalProject.feature_home_organizer.data.OrganizerEventRepository;
 import com.FinalProject.feature_home_organizer.domain.GetOrganizerEventsUseCase;
+import com.FinalProject.feature_profile.presentation.ProfileActivity;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.progressindicator.CircularProgressIndicator;
 import com.google.android.material.snackbar.Snackbar;
-import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class HomeOrganizerActivity extends AppCompatActivity  {
-
-    MaterialButton createEventBtn;
-    MaterialButton quickCreateEventBtn;
-    RecyclerView rvEvents;
-    CircularProgressIndicator progressIndicator;
-    TextView tvEmpty;
-    OrganizerEventAdapter adapter;
-    GetOrganizerEventsUseCase getEventsUseCase = new GetOrganizerEventsUseCase();
-    java.util.List<OrganizerEventRepository.EventItem> currentEvents = new java.util.ArrayList<>();
+    private MaterialButton createEventBtn;
+    private MaterialButton quickCreateEventBtn;
+    private RecyclerView rvEvents;
+    private CircularProgressIndicator progressIndicator;
+    private TextView tvEmpty;
+    private OrganizerEventAdapter adapter;
+    private final GetOrganizerEventsUseCase getEventsUseCase = new GetOrganizerEventsUseCase();
+    private FrameLayout btnAvt;
+    private final List<OrganizerEventRepository.EventItem> currentEvents = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +42,7 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
 
         init();
         setCreateEventBtn();
+        setBtnAvt();
     }
 
     private void init(){
@@ -45,6 +51,7 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
         rvEvents = findViewById(R.id.rv_active_events);
         progressIndicator = findViewById(R.id.progress_events);
         tvEmpty = findViewById(R.id.tv_empty_events);
+        btnAvt = findViewById(R.id.btn_avt_organize);
         adapter = new OrganizerEventAdapter(new OrganizerEventAdapter.Listener() {
             @Override
             public void onEdit(String eventId) {
@@ -65,8 +72,19 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
         rvEvents.setAdapter(adapter);
     }
 
+    private void setBtnAvt(){
+        if (btnAvt != null) {
+            btnAvt.setOnClickListener(v -> {
+                Intent intent = new Intent(this, ProfileActivity.class);
+                startActivity(intent);
+            });
+        }
+    }
+
     private void setCreateEventBtn(){
-        createEventBtn.setOnClickListener(v -> openCreateEvent(null));
+        if (createEventBtn != null) {
+            createEventBtn.setOnClickListener(v -> openCreateEvent(null));
+        }
         if (quickCreateEventBtn != null) {
             quickCreateEventBtn.setOnClickListener(v -> openCreateEvent(null));
         }
@@ -89,13 +107,15 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
     private void loadEvents() {
         String uid = getSharedPreferences("APP_PREFS", MODE_PRIVATE).getString("UID", null);
         if (uid == null) {
-            Snackbar.make(rvEvents, "Không tìm thấy UID organizer", Snackbar.LENGTH_SHORT).show();
+            if (rvEvents != null) {
+                Snackbar.make(rvEvents, "Không tìm thấy UID organizer", Snackbar.LENGTH_SHORT).show();
+            }
             return;
         }
         if (progressIndicator != null) progressIndicator.setVisibility(android.view.View.VISIBLE);
         getEventsUseCase.execute(uid, new GetOrganizerEventsUseCase.Callback() {
             @Override
-            public void onSuccess(java.util.List<OrganizerEventRepository.EventItem> events) {
+            public void onSuccess(List<OrganizerEventRepository.EventItem> events) {
                 if (progressIndicator != null) progressIndicator.setVisibility(android.view.View.GONE);
                 currentEvents.clear();
                 if (events != null) currentEvents.addAll(events);
@@ -108,7 +128,9 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
             @Override
             public void onFailure(String message) {
                 if (progressIndicator != null) progressIndicator.setVisibility(android.view.View.GONE);
-                Snackbar.make(rvEvents, message != null ? message : "Lỗi tải sự kiện", Snackbar.LENGTH_SHORT).show();
+                if (rvEvents != null) {
+                    Snackbar.make(rvEvents, message != null ? message : "Lỗi tải sự kiện", Snackbar.LENGTH_SHORT).show();
+                }
                 if (tvEmpty != null) tvEmpty.setVisibility(android.view.View.VISIBLE);
             }
         });

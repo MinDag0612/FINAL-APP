@@ -1,1 +1,3 @@
-<resources></resources>
+<resources>
+    <string name="home_avatar_content_desc">Ảnh đại diện</string>
+</resources>

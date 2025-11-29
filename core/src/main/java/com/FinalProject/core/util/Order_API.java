@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -483,4 +484,26 @@ public class Order_API {
                 + ", showId=" + showId + ", orderId=" + orderId + ", seats=" + seats);
         return Tasks.forResult(null);
     }
+    public static Task<QuerySnapshot> getOrdersByEventId(String eventId){
+        return db.collection(StoreField.ORDERS)
+                .whereEqualTo(StoreField.OrderFields.EVENT_ID, eventId)
+                .get();
+    }
+
+    public static Task<String> getUserIdByOrderId(String orderId) {
+        return db.collection(StoreField.ORDERS)
+                .document(orderId)
+                .get()
+                .continueWith(task -> {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        if (doc != null && doc.exists()) {
+                            return doc.getString("user_id"); // trả về user_id
+                        }
+                    }
+                    return null; // nếu không tồn tại hoặc lỗi
+                });
+    }
+
+
 }

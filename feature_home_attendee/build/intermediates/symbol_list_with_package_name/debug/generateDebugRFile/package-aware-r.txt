@@ -49,6 +49,7 @@ drawable bg_avatar_gradient
 drawable bg_badge_featured
 drawable bg_event_placeholder
 drawable bg_featured_event
+drawable bg_home_glass
 drawable ic_artist_placeholder
 drawable ic_avatar_placeholder
 drawable ic_calendar

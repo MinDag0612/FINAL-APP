@@ -1,116 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_background">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/color_background">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar_event_detail"
-            style="@style/Widget.Material3.Toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="@color/color_background"
-            app:navigationIcon="@drawable/ic_chevron_left"
-            app:title="@string/feature_event_detail_name"
-            app:titleTextColor="@color/color_on_background" />
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll_event_detail"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:padding="@dimen/spacing_lg"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:contentDescription="@null"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_homepage" />
 
-        <LinearLayout
-            android:id="@+id/layout_event_content"
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#66FFFFFF" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent">
+
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="@dimen/spacing_xxl">
+            android:background="@android:color/transparent"
+            app:liftOnScroll="false">
 
-            <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar_event_detail"
+                style="@style/Widget.Material3.Toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/transparent"
+                app:navigationIcon="@drawable/ic_chevron_left"
+                app:title="@string/feature_event_detail_name"
+                app:titleTextColor="@color/color_on_background" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll_event_detail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            android:padding="@dimen/spacing_lg"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <LinearLayout
+                android:id="@+id/layout_event_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/corner_radius_lg"
-                app:cardUseCompatPadding="true"
-                app:strokeColor="@color/color_outline_variant"
-                app:strokeWidth="1dp">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/spacing_xxl">
 
-                <FrameLayout
+                <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
-                    android:layout_height="240dp">
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="@dimen/corner_radius_lg"
+                    app:cardUseCompatPadding="true"
+                    app:strokeColor="@color/color_outline_variant"
+                    app:strokeWidth="1dp">
 
-                    <ImageView
-                        android:id="@+id/img_event_cover"
+                    <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:contentDescription="@string/feature_event_detail_name"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/bg_event_placeholder" />
+                        android:layout_height="240dp">
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/bg_header_scrim" />
+                        <ImageView
+                            android:id="@+id/img_event_cover"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:contentDescription="@string/feature_event_detail_name"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/bg_event_placeholder" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:orientation="vertical"
-                        android:padding="@dimen/spacing_lg">
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/bg_header_scrim" />
 
-                        <TextView
-                            android:id="@+id/tv_event_type"
-                            android:layout_width="wrap_content"
+                        <LinearLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/bg_rating_chip"
-                            android:paddingHorizontal="@dimen/spacing_sm"
-                            android:paddingVertical="@dimen/spacing_xs"
-                            android:text="Innovation"
-                            android:textColor="@color/color_primary"
-                            android:textSize="12sp"
-                            android:textStyle="bold" />
+                            android:layout_gravity="bottom"
+                            android:orientation="vertical"
+                            android:padding="@dimen/spacing_lg">
 
-                        <TextView
-                            android:id="@+id/tv_event_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_sm"
-                            android:text="@string/event_detail_default_title"
-                            android:textColor="@color/color_on_primary"
-                            android:textSize="@dimen/text_size_heading"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_event_type"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/bg_rating_chip"
+                                android:paddingHorizontal="@dimen/spacing_sm"
+                                android:paddingVertical="@dimen/spacing_xs"
+                                android:text="Innovation"
+                                android:textColor="@color/color_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/tv_event_schedule"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_xs"
-                            android:text="@string/event_detail_default_schedule"
-                            android:textColor="@color/color_on_primary"
-                            android:textStyle="bold" />
+                            <TextView
+                                android:id="@+id/tv_event_title"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_sm"
+                                android:text="@string/event_detail_default_title"
+                                android:textColor="@color/color_on_primary"
+                                android:textSize="@dimen/text_size_heading"
+                                android:textStyle="bold" />
 
-                        <TextView
-                            android:id="@+id/tv_event_location"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/spacing_xs"
-                            android:drawablePadding="@dimen/spacing_xs"
-                            android:drawableStart="@drawable/ic_location"
-                            android:text="@string/event_detail_default_location"
-                            android:textColor="@color/color_on_primary" />
-                    </LinearLayout>
-                </FrameLayout>
-            </com.google.android.material.card.MaterialCardView>
+                            <TextView
+                                android:id="@+id/tv_event_schedule"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xs"
+                                android:text="@string/event_detail_default_schedule"
+                                android:textColor="@color/color_on_primary"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/tv_event_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/spacing_xs"
+                                android:drawablePadding="@dimen/spacing_xs"
+                                android:drawableStart="@drawable/ic_location"
+                                android:text="@string/event_detail_default_location"
+                                android:textColor="@color/color_on_primary" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </com.google.android.material.card.MaterialCardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -201,7 +220,9 @@
                 android:id="@+id/layout_ticket_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:background="@drawable/bg_detail_glass"
+                android:padding="@dimen/spacing_md" />
 
             <TextView
                 android:id="@+id/tv_ticket_empty"
@@ -221,6 +242,8 @@
                 android:id="@+id/tv_event_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bg_detail_glass"
+                android:padding="@dimen/spacing_md"
                 android:text="@string/event_detail_default_description"
                 android:textColor="@color/color_on_surface_variant" />
 
@@ -234,7 +257,9 @@
                 android:id="@+id/layout_timeline_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:background="@drawable/bg_detail_glass"
+                android:padding="@dimen/spacing_md" />
 
             <TextView
                 android:id="@+id/tv_timeline_empty"
@@ -254,7 +279,9 @@
                 android:id="@+id/layout_reviews_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:orientation="vertical"
+                android:background="@drawable/bg_detail_glass"
+                android:padding="@dimen/spacing_md" />
 
             <TextView
                 android:id="@+id/tv_reviews_empty"
@@ -265,6 +292,15 @@
                 android:visibility="gone" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_write_review"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:text="@string/event_detail_write_review"
+                android:textAllCaps="false" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_choose_seat"
                 style="@style/Widget.Material3.Button"
                 android:layout_width="match_parent"
@@ -273,7 +309,7 @@
                 android:text="@string/event_detail_cta"
                 android:textAllCaps="false" />
         </LinearLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
     <LinearLayout
         android:id="@+id/layout_event_error"
@@ -310,3 +346,4 @@
         android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</FrameLayout>
