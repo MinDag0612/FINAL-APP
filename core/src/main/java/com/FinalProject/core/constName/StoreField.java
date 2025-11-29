@@ -24,6 +24,12 @@ public class StoreField {
         public static final String ORGANIZER_UID = "organizer_uid";
         public static final String EVENT_DATE = "event_date";
         public static final String EVENT_LOCATION = "event_location";
+        public static final String EVENT_DESCRIPTION = "event_descrip";
+        public static final String EVENT_TYPE = "event_type";
+        public static final String CAST = "cast";
+        public static final String EVENT_START = "event_start";
+        public static final String EVENT_END = "event_end";
+        public static final String MIN_PRICE = "min_price";
     }
 
     // 🔹 Field trong collection Tickets_infor

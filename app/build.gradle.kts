@@ -51,6 +51,7 @@ dependencies {
     implementation(project(":feature_booking"))
     implementation(project(":core"))
     implementation(project(":feature_home_organizer"))
+    implementation(project(":feature_event_detail"))
 
 
     // AndroidX cơ bản (KHÔNG dùng compose ở đây để tránh yêu cầu plugin/feature)
