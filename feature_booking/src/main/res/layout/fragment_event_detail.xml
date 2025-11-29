@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Cover sự kiện -->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:contentDescription="Event cover"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_event_placeholder" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/spacing_lg">
+
+            <!-- Tên sự kiện -->
+            <TextView
+                android:id="@+id/tv_event_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event title"
+                android:textColor="@color/color_on_background"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <!-- Thời gian (có ID để bind Firestore) -->
+            <TextView
+                android:id="@+id/tv_event_datetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="15.12.2024 • 18:30 - 22:00"
+                android:textColor="@color/color_primary"
+                android:textStyle="bold" />
+
+            <!-- Địa điểm (có ID để bind Firestore) -->
+            <TextView
+                android:id="@+id/tv_event_venue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="Nhà hát Thành phố, Quận 1"
+                android:textColor="@color/color_on_surface_variant" />
+
+            <!-- Giá vé min–max (bind từ Firestore) -->
+            <TextView
+                android:id="@+id/tv_event_price_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:text="Giá vé: đang cập nhật"
+                android:textColor="@color/color_on_background"
+                android:textStyle="bold" />
+
+            <!-- Tag/chủ đề sự kiện -->
+            <com.google.android.material.chip.ChipGroup
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                app:singleLine="true">
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.Material3.Chip.Suggestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Innovation"
+                    android:clickable="false"
+                    android:checkable="false"
+                    android:focusable="false"
+                    android:importantForAccessibility="no"
+                    app:rippleColor="@android:color/transparent" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.Material3.Chip.Suggestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Youth"
+                    android:clickable="false"
+                    android:checkable="false"
+                    android:focusable="false"
+                    android:importantForAccessibility="no"
+                    app:rippleColor="@android:color/transparent" />
+
+                <com.google.android.material.chip.Chip
+                    style="@style/Widget.Material3.Chip.Suggestion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Offline"
+                    android:clickable="false"
+                    android:checkable="false"
+                    android:focusable="false"
+                    android:importantForAccessibility="no"
+                    app:rippleColor="@android:color/transparent" />
+            </com.google.android.material.chip.ChipGroup>
+
+            <!-- Card ví dụ giá Ghế phổ thông / Ghế VIP -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
+                app:cardCornerRadius="@dimen/corner_radius_md">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/spacing_md">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ghế phổ thông"
+                            android:textColor="@color/color_on_background"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:text="690.000đ"
+                            android:textColor="@color/color_on_surface_variant" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ghế VIP"
+                            android:textColor="@color/color_on_background"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/spacing_xs"
+                            android:text="1.290.000đ"
+                            android:textColor="@color/color_on_surface_variant" />
+                    </LinearLayout>
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Giới thiệu -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Giới thiệu"
+                android:textColor="@color/color_on_background"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_sm"
+                android:text="TEDxYouth Saigon 2024 mang đến 8 câu chuyện truyền cảm hứng từ những người trẻ tiên phong trong giáo dục, nghệ thuật và công nghệ. Sự kiện kết hợp biểu diễn nghệ thuật, trải nghiệm thực tế và khu vực networking chuyên sâu."
+                android:textColor="@color/color_on_surface_variant" />
+
+            <!-- Lịch trình -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Lịch trình"
+                android:textColor="@color/color_on_background"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_md"
+                android:orientation="vertical">
+
+                <include layout="@layout/view_timeline_item" />
+                <include layout="@layout/view_timeline_item" />
+                <include layout="@layout/view_timeline_item" />
+            </LinearLayout>
+
+            <!-- Lợi ích vé VIP -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                app:cardCornerRadius="@dimen/corner_radius_md">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_md">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Lợi ích vé VIP"
+                        android:textColor="@color/color_on_background"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/spacing_xs"
+                        android:text="• Ghế ngồi hàng đầu\n• Phòng chờ riêng và đồ uống\n• Bộ quà tặng và gặp gỡ diễn giả"
+                        android:textColor="@color/color_on_surface_variant" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Nút chọn chỗ ngồi -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_choose_seat"
+                style="@style/Widget.Material3.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xl"
+                android:text="Chọn chỗ ngồi"
+                android:textAllCaps="false" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

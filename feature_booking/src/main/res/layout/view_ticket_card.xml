@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="@dimen/corner_radius_md"
+    app:strokeWidth="1dp"
+    app:strokeColor="?attr/colorOutline"
+    app:cardElevation="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
+
+        <!-- Header: tên sự kiện + trạng thái -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
+
+            <TextView
+                android:id="@+id/tv_event_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tên sự kiện"
+                android:textColor="@color/color_on_background"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:breakStrategy="balanced" />
+
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_status"
+                style="@style/Widget.Material3.Chip.Assist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="UPCOMING"
+                app:checkedIconVisible="false"
+                app:rippleColor="?attr/colorPrimary" />
+        </LinearLayout>
+
+        <!-- Thông tin thời gian / địa điểm -->
+        <TextView
+            android:id="@+id/tv_show_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="15/12/2025 • 19:30 • Nhà hát Thành phố"
+            android:textColor="@color/color_on_surface_variant"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:breakStrategy="balanced" />
+
+        <!-- Tóm tắt vé -->
+        <TextView
+            android:id="@+id/tv_seats"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="Ghế: A1, A2"
+            android:textColor="@color/color_on_background"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:breakStrategy="balanced" />
+
+        <!-- Mã giao dịch + tổng tiền -->
+        <TextView
+            android:id="@+id/tv_order"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xs"
+            android:text="Mã GD: TX-123456"
+            android:textColor="@color/color_on_surface_variant"
+            android:maxLines="1"
+            android:ellipsize="end" />
+
+        <!-- Hàng nút hành động -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_md">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_view_qr"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:minWidth="0dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:text="Xem QR"
+                android:textAllCaps="false"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:hyphenationFrequency="none"
+                app:icon="@drawable/ic_qr_code_24"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/spacing_xs" />
+
+            <Space
+                android:layout_width="@dimen/spacing_sm"
+                android:layout_height="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_view_detail"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginEnd="@dimen/spacing_sm"
+                android:minWidth="0dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:text="Chi tiết"
+                android:textAllCaps="false"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:hyphenationFrequency="none"
+                app:icon="@drawable/ic_info_24"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/spacing_xs" />
+
+            <Space
+                android:layout_width="@dimen/spacing_sm"
+                android:layout_height="1dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_add_calendar"
+                style="@style/Widget.Material3.Button.TonalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minWidth="0dp"
+                android:paddingHorizontal="@dimen/spacing_sm"
+                android:text="Thêm lịch"
+                android:textAllCaps="false"
+                android:maxLines="1"
+                android:ellipsize="none"
+                app:icon="@drawable/ic_event_add_24"
+                app:iconGravity="textStart"
+                app:iconPadding="@dimen/spacing_xs" />
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

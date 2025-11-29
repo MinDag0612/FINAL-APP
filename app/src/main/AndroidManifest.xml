@@ -2,6 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- 🔹 QUYỀN CAMERA & FEATURE (từ master) -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature
+        android:name="android.hardware.camera.any"
+        android:required="true" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,6 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Finalapp"
         tools:targetApi="31">
+
+        <!-- Activity chính -->
         <activity
             android:name="com.FinalProject.mainActivity.MainActivity"
             android:exported="true">
@@ -28,6 +36,28 @@
 <!--            </intent-filter>-->
         </activity>
 
+
+        <!-- Booking host / activity (từ master) -->
+        <activity
+            android:name="com.FinalProject.feature_booking.presentation.BookingHostActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
+
+        <activity
+            android:name="com.FinalProject.feature_booking.presentation.BookingActivity"
+            android:exported="false"
+            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
+
+        <!-- FileProvider dùng share QR (từ master) -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths_share" />
+        </provider>
 
     </application>
 

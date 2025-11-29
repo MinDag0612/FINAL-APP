@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Cho phép chia sẻ file nằm trong .../cache/share/ -->
+    <cache-path name="share" path="share/" />
+    <!-- (tuỳ chọn) Nếu bạn từng lưu ngoài external cache, bật luôn dòng dưới:
+    <external-cache-path name="ext_share" path="share/" />
+    -->
+</paths>

@@ -8,7 +8,6 @@ import com.FinalProject.core.model.Events;
 import com.FinalProject.core.model.TicketInfor;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskCompletionSource;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -90,6 +89,18 @@ public class Event_API {
                 .add(eventData.toMap());
     }
 
+    public static Task<DocumentReference> addNewEvent(Events eventData){
+        return db.collection(StoreField.EVENTS)
+                .add(eventData.toMap());
+    }
+    // Lấy tất cả event đang active, sort theo thời gian bắt đầu
+    public static Task<QuerySnapshot> getAllEvents() {
+        return db.collection(StoreField.EVENTS)
+                .orderBy("event_start", Query.Direction.ASCENDING)
+                .get();
+    }
+
+    // Lấy chi tiết 1 event (dùng cho EventDetail)
     public static Task<DocumentSnapshot> getEventById(String eventId) {
         return db.collection(StoreField.EVENTS)
                 .document(eventId)

@@ -1,8 +1,8 @@
 package com.FinalProject.feature_login.domain;
 
-import com.FinalProject.core.constName.StoreField;
 import com.FinalProject.feature_login.data.LoginRepositoryImpl;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.auth.AuthResult;
 
 public class LoginUseCase {
@@ -23,6 +23,12 @@ public class LoginUseCase {
             return;
         }
         Task<AuthResult> task = repo.login(email, password);
+    public void execute(String email, String password, String role, LoginCallback callback) {
+        if (email.isEmpty() || password.isEmpty()){
+            callback.onFailure("Email or password is empty");
+            return;
+        }
+        Task<AuthResult> task = repo.login(email, password, role);
         task.addOnCompleteListener(task1 -> {
             if (task1.isSuccessful()) {
                 String uid = task1.getResult().getUser().getUid();
@@ -38,6 +44,12 @@ public class LoginUseCase {
                                     return;
                                 }
                                 callback.onSuccess(uid, roleDb);
+                                String roleDb = queryDocumentSnapshots.getString("role");
+                                if (!roleDb.equals(role)) {
+                                    callback.onFailure("Role not match. Please check your role again");
+                                } else {
+                                    callback.onSuccess();
+                                }
                             }
                         })
                         .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
