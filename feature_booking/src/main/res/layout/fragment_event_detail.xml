@@ -1,41 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/color_background"
-    android:fillViewport="true">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:contentDescription="@string/feature_event_detail_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_homepage" />
 
-        <!-- Cover sự kiện -->
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:contentDescription="Event cover"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_event_placeholder" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_back_event_detail_fragment"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:insetLeft="0dp"
+        android:insetTop="0dp"
+        android:insetRight="0dp"
+        android:insetBottom="0dp"
+        app:icon="@drawable/ic_arrow_back_24"
+        app:iconGravity="textStart"
+        app:iconPadding="0dp"
+        app:iconSize="24dp"
+        app:iconTint="#000000"
+        app:backgroundTint="#FFFFFF"
+        app:cornerRadius="24dp"
+        app:elevation="8dp"
+        app:strokeWidth="0dp" />
+
+    <ScrollView
+        android:id="@+id/scroll_event_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true"
+        android:overScrollMode="never"
+        android:paddingStart="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_md"
+        android:paddingTop="@dimen/spacing_xl"
+        android:paddingBottom="@dimen/spacing_xxl">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:background="@color/color_background"
             android:padding="@dimen/spacing_lg">
 
-            <!-- Tên sự kiện -->
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:contentDescription="Event cover"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bg_event_placeholder" />
+
             <TextView
                 android:id="@+id/tv_event_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_lg"
                 android:text="Event title"
                 android:textColor="@color/color_on_background"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
-            <!-- Thời gian (có ID để bind Firestore) -->
             <TextView
                 android:id="@+id/tv_event_datetime"
                 android:layout_width="wrap_content"
@@ -45,7 +76,6 @@
                 android:textColor="@color/color_primary"
                 android:textStyle="bold" />
 
-            <!-- Địa điểm (có ID để bind Firestore) -->
             <TextView
                 android:id="@+id/tv_event_venue"
                 android:layout_width="wrap_content"
@@ -54,7 +84,6 @@
                 android:text="Nhà hát Thành phố, Quận 1"
                 android:textColor="@color/color_on_surface_variant" />
 
-            <!-- Giá vé min–max (bind từ Firestore) -->
             <TextView
                 android:id="@+id/tv_event_price_range"
                 android:layout_width="wrap_content"
@@ -64,7 +93,6 @@
                 android:textColor="@color/color_on_background"
                 android:textStyle="bold" />
 
-            <!-- Tag/chủ đề sự kiện -->
             <com.google.android.material.chip.ChipGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -105,7 +133,6 @@
                     app:rippleColor="@android:color/transparent" />
             </com.google.android.material.chip.ChipGroup>
 
-            <!-- Card ví dụ giá Ghế phổ thông / Ghế VIP -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -162,7 +189,6 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Giới thiệu -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -179,7 +205,6 @@
                 android:text="TEDxYouth Saigon 2024 mang đến 8 câu chuyện truyền cảm hứng từ những người trẻ tiên phong trong giáo dục, nghệ thuật và công nghệ. Sự kiện kết hợp biểu diễn nghệ thuật, trải nghiệm thực tế và khu vực networking chuyên sâu."
                 android:textColor="@color/color_on_surface_variant" />
 
-            <!-- Lịch trình -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -198,9 +223,9 @@
                 <include layout="@layout/view_timeline_item" />
                 <include layout="@layout/view_timeline_item" />
                 <include layout="@layout/view_timeline_item" />
+                <include layout="@layout/view_timeline_item" />
             </LinearLayout>
 
-            <!-- Lợi ích vé VIP -->
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -226,11 +251,9 @@
                         android:layout_marginTop="@dimen/spacing_xs"
                         android:text="• Ghế ngồi hàng đầu\n• Phòng chờ riêng và đồ uống\n• Bộ quà tặng và gặp gỡ diễn giả"
                         android:textColor="@color/color_on_surface_variant" />
-
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
-            <!-- Nút chọn chỗ ngồi -->
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_choose_seat"
                 style="@style/Widget.Material3.Button"
@@ -240,5 +263,5 @@
                 android:text="Chọn chỗ ngồi"
                 android:textAllCaps="false" />
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</FrameLayout>

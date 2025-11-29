@@ -22,12 +22,7 @@
         <!-- Activity chính -->
         <activity
             android:name="com.FinalProject.mainActivity.MainActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:exported="true" />
         <activity android:name="com.FinalProject.feature_home_organizer.presentation.HomeOrganizerActivity"
             android:exported="true">
 <!--            <intent-filter>-->
@@ -37,16 +32,16 @@
         </activity>
 
 
-        <!-- Booking host / activity (từ master) -->
         <activity
-            android:name="com.FinalProject.feature_booking.presentation.BookingHostActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
-
-        <activity
-            android:name="com.FinalProject.feature_booking.presentation.BookingActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Material3.DayNight.NoActionBar" />
+            android:name="com.FinalProject.feature_login.presentation.LoginActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Finalapp"
+            tools:replace="android:exported">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <!-- FileProvider dùng share QR (từ master) -->
         <provider

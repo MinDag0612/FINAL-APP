@@ -1,47 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:padding="16dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvShowtimes"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:overScrollMode="never"
-        android:paddingBottom="8dp" />
+        android:layout_height="match_parent"
+        android:contentDescription="@string/feature_event_detail_name"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_homepage" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTicketTypes"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:overScrollMode="never"
-        android:paddingTop="8dp" />
+        android:layout_height="match_parent"
+        android:background="#66FFFFFF" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layout_booking_root"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="end|center_vertical"
-        android:orientation="horizontal"
-        android:paddingTop="8dp">
+        android:layout_height="match_parent"
+        android:paddingStart="@dimen/spacing_md"
+        android:paddingEnd="@dimen/spacing_md"
+        android:paddingTop="@dimen/spacing_xl"
+        android:paddingBottom="@dimen/spacing_md">
 
-        <TextView
-            android:id="@+id/tvTotal"
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar_booking"
+            android:layout_width="0dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/transparent"
+            android:title="@string/event_detail_cta"
+            android:titleTextColor="@color/color_on_background"
+            app:navigationIcon="@drawable/ic_chevron_left"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ScrollView
+            android:id="@+id/scroll_booking"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:fillViewport="true"
+            android:overScrollMode="never"
+            app:layout_constraintBottom_toTopOf="@+id/bottom_bar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar_booking"
+            android:paddingTop="@dimen/spacing_md">
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/spacing_xl"
+                app:cardBackgroundColor="@color/app_surface"
+                app:cardCornerRadius="@dimen/corner_radius_lg"
+                app:cardElevation="@dimen/elevation_card"
+                app:strokeColor="@color/color_outline_variant"
+                app:strokeWidth="1dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="@dimen/spacing_md">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvShowtimes"
+                        android:layout_width="match_parent"
+                        android:layout_height="72dp"
+                        android:overScrollMode="never"
+                        android:paddingBottom="@dimen/spacing_sm" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvTicketTypes"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:overScrollMode="never"
+                        android:paddingTop="@dimen/spacing_md" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </ScrollView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/bottom_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="0 ₫"
-            android:textStyle="bold"
-            android:textSize="18sp" />
+            android:layout_marginBottom="@dimen/spacing_sm"
+            app:cardBackgroundColor="@color/app_surface"
+            app:cardCornerRadius="@dimen/corner_radius_md"
+            app:cardElevation="@dimen/elevation_card"
+            app:strokeColor="@color/color_outline_variant"
+            app:strokeWidth="1dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnBook"
-            style="@style/Widget.Material3.Button.Filled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Đặt vé" />
-    </LinearLayout>
-</LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/spacing_md">
+
+                <TextView
+                    android:id="@+id/tvTotal"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="0 ₫"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnBook"
+                    style="@style/Widget.Material3.Button.Filled"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đặt vé" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

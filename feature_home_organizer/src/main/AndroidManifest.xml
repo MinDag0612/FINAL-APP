@@ -3,9 +3,6 @@
 
     <application>
         <activity
-            android:name=".presentation.CreateEventActivity"
-            android:exported="false" />
-        <activity
             android:name=".presentation.HomeOrganizerActivity"
             android:exported="true"
             android:theme="@style/Theme.Finalapp" />

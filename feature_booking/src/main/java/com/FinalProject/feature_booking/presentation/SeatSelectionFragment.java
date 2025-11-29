@@ -152,6 +152,11 @@ public class SeatSelectionFragment extends Fragment {
         tvSelected = view.findViewById(R.id.tv_selected_seats);
         tvTotal    = view.findViewById(R.id.tv_total_price);
         btnNext    = view.findViewById(R.id.btn_proceed_checkout);
+        
+        MaterialButton btnBack = view.findViewById(R.id.btn_back_seat_selection);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
+        }
 
         // RecyclerView + GridLayoutManager
         GridLayoutManager lm = new GridLayoutManager(requireContext(), DEFAULT_COLUMN_COUNT);
@@ -242,10 +247,16 @@ public class SeatSelectionFragment extends Fragment {
     // ================== LOAD EVENT HEADER + GIÁ & SỐ GHẾ TỪ FIRESTORE ==================
 
     private void loadTicketTypesAndInitSeats() {
-        // Fallback demo nếu eventId rỗng
+        // Kiểm tra eventId bắt buộc
         if (TextUtils.isEmpty(eventId)) {
-            eventId = "seed_tedxyouth_2024";
+            Snackbar.make(requireView(), 
+                "Lỗi: Không có thông tin sự kiện.", 
+                Snackbar.LENGTH_LONG).show();
+            requireActivity().finish();
+            return;
         }
+        
+        Log.d(TAG, "loadTicketTypesAndInitSeats - eventId: " + eventId);
 
         // SeatSelection tự load event từ Firestore bằng eventId
         loadEventHeaderFromFirestore();
@@ -720,31 +731,37 @@ public class SeatSelectionFragment extends Fragment {
     }
 
     /**
-     * Kiểm tra xem còn được phép chọn thêm ghế thuộc category này không,
-     * theo cả tổng quota và quota từng hạng.
+     * Kiểm tra xem còn được phép chọn thêm ghế thuộc category này không.
+     * Nếu không có quota được định trước (totalQuota = 0), cho phép chọn tự do tối đa MAX_SELECT ghế.
+     * Nếu có quota, kiểm tra theo quota từng hạng.
      */
     private boolean canSelectMore(@NonNull SeatCategory category) {
         int totalQuota    = getTotalQuota();
         int totalSelected = selectedPremiumCount + selectedVipCount + selectedGeneralCount;
 
-        // 1) Nếu có cấu hình quota tổng -> không cho chọn quá tổng đó
-        if (totalQuota > 0 && totalSelected >= totalQuota) {
+        // 1) Nếu KHÔNG có quota (chế độ chọn tự do) -> chỉ giới hạn MAX_SELECT ghế
+        if (totalQuota == 0) {
+            if (selected.size() >= MAX_SELECT) {
+                Snackbar.make(requireView(),
+                        "Bạn chỉ có thể chọn tối đa " + MAX_SELECT + " ghế.",
+                        Snackbar.LENGTH_SHORT).show();
+                return false;
+            }
+            return true; // Cho phép chọn bất kỳ loại ghế nào
+        }
+
+        // 2) Nếu CÓ quota -> check theo tổng quota
+        if (totalSelected >= totalQuota) {
             Snackbar.make(requireView(),
                     "Bạn đã chọn đủ " + totalQuota + " ghế theo số vé đã mua.",
                     Snackbar.LENGTH_SHORT).show();
             return false;
         }
 
-        // 2) Check quota từng hạng
+        // 3) Check quota từng hạng (chỉ khi có quota cụ thể cho hạng đó)
         switch (category) {
             case PREMIUM:
-                if (quotaPremium <= 0) {
-                    Snackbar.make(requireView(),
-                            "Bạn không mua vé Premium, không thể chọn ghế hàng A.",
-                            Snackbar.LENGTH_SHORT).show();
-                    return false;
-                }
-                if (selectedPremiumCount >= quotaPremium) {
+                if (quotaPremium > 0 && selectedPremiumCount >= quotaPremium) {
                     Snackbar.make(requireView(),
                             "Bạn chỉ được chọn tối đa " + quotaPremium + " ghế Premium.",
                             Snackbar.LENGTH_SHORT).show();
@@ -753,13 +770,7 @@ public class SeatSelectionFragment extends Fragment {
                 break;
 
             case VIP:
-                if (quotaVip <= 0) {
-                    Snackbar.make(requireView(),
-                            "Bạn không mua vé VIP, không thể chọn ghế hàng B.",
-                            Snackbar.LENGTH_SHORT).show();
-                    return false;
-                }
-                if (selectedVipCount >= quotaVip) {
+                if (quotaVip > 0 && selectedVipCount >= quotaVip) {
                     Snackbar.make(requireView(),
                             "Bạn chỉ được chọn tối đa " + quotaVip + " ghế VIP.",
                             Snackbar.LENGTH_SHORT).show();
@@ -768,13 +779,7 @@ public class SeatSelectionFragment extends Fragment {
                 break;
 
             case GENERAL:
-                if (quotaGeneral <= 0) {
-                    Snackbar.make(requireView(),
-                            "Bạn không mua vé General, không thể chọn ghế hàng C trở đi.",
-                            Snackbar.LENGTH_SHORT).show();
-                    return false;
-                }
-                if (selectedGeneralCount >= quotaGeneral) {
+                if (quotaGeneral > 0 && selectedGeneralCount >= quotaGeneral) {
                     Snackbar.make(requireView(),
                             "Bạn chỉ được chọn tối đa " + quotaGeneral + " ghế General.",
                             Snackbar.LENGTH_SHORT).show();
@@ -783,14 +788,8 @@ public class SeatSelectionFragment extends Fragment {
                 break;
         }
 
-        // 3) Nếu không có quota nào được truyền (tổng = 0) -> fallback về MAX_SELECT như logic cũ
-        if (totalQuota == 0 && selected.size() >= MAX_SELECT) {
-            Snackbar.make(requireView(),
-                    "Bạn chỉ có thể chọn tối đa " + MAX_SELECT + " ghế.",
-                    Snackbar.LENGTH_SHORT).show();
-            return false;
-        }
-
+        // 4) Nếu có quota tổng nhưng không có quota cụ thể cho hạng này -> vẫn cho chọn
+        // (ví dụ: quota tổng = 3, chưa chọn đủ 3 ghế -> cho phép chọn bất kỳ hạng nào)
         return true;
     }
 

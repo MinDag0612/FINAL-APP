@@ -31,6 +31,7 @@ android {
 dependencies {
 
     implementation(project(":core"))
+    implementation(project(":feature_booking"))
     implementation(project(":feature_create_event_organizer"))
     implementation(project(":feature_attendee_manager_organizer"))
     implementation(libs.appcompat)

@@ -2,6 +2,7 @@ package com.FinalProject.feature_booking.presentation;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -32,6 +33,8 @@ import java.util.Locale;
  */
 public class EventDetailFragment extends Fragment {
 
+    private static final String TAG = "EventDetailFragment";
+    
     private BookingRepository bookingRepo;
 
     private String eventId;
@@ -62,20 +65,40 @@ public class EventDetailFragment extends Fragment {
         tvDateTime    = view.findViewById(R.id.tv_event_datetime);
         tvPriceRange  = view.findViewById(R.id.tv_event_price_range);
         btnChooseSeat = view.findViewById(R.id.btn_choose_seat);
+        
+        MaterialButton btnBack = view.findViewById(R.id.btn_back_event_detail_fragment);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> requireActivity().finish());
+        }
 
         // ===== Đọc arguments từ NavGraph =====
         Bundle args = getArguments();
+        Log.d(TAG, "EventDetailFragment - getArguments() result: " + (args != null ? "NOT NULL" : "NULL"));
+        if (args != null) {
+            Log.d(TAG, "EventDetailFragment - Bundle keys: " + args.keySet());
+            for (String key : args.keySet()) {
+                Log.d(TAG, "EventDetailFragment - Bundle[" + key + "] = '" + args.get(key) + "'");
+            }
+        }
+        
         eventId       = args != null ? args.getString("eventId", "") : "";
         eventTitleArg = args != null ? args.getString("eventTitle", "") : "";
         showId        = args != null ? args.getString("showId", "") : "";
 
-        // Fallback demo nếu thiếu
+        // Log để debug
+        Log.d(TAG, "EventDetailFragment - eventId from args: '" + eventId + "'");
+        Log.d(TAG, "EventDetailFragment - eventTitle from args: '" + eventTitleArg + "'");
+        Log.d(TAG, "EventDetailFragment - showId from args: '" + showId + "'");
+
+        // Kiểm tra eventId bắt buộc - KHÔNG fallback về sự kiện mặc định
         if (TextUtils.isEmpty(eventId)) {
-            eventId = "seed_tedxyouth_2024";
+            Log.w(TAG, "EventDetailFragment - eventId is empty, waiting for navigation to complete...");
+            // Không finish ngay - có thể đang trong quá trình navigation
+            // Fragment sẽ được tạo lại với arguments đúng
+            return;
         }
-        if (TextUtils.isEmpty(eventTitleArg)) {
-            eventTitleArg = "TEDxYouth Saigon 2024";
-        }
+        
+        // Tạo showId nếu thiếu
         if (TextUtils.isEmpty(showId)) {
             showId = eventId + "_DEFAULT";
         }
@@ -89,9 +112,9 @@ public class EventDetailFragment extends Fragment {
         loadEventFromFirestore();
         loadTicketSummaryFromFirestore();
 
-        // ===== Điều hướng chọn chỗ ngồi: MỞ BOTTOM SHEET CHỌN VÉ =====
+        // ===== Điều hướng chọn chỗ ngồi: NHẢY THẲNG VÀO MÀN CHỌN GHẾ =====
         if (btnChooseSeat != null) {
-            btnChooseSeat.setOnClickListener(v -> openTicketTypeBottomSheet());
+            btnChooseSeat.setOnClickListener(v -> navigateToSeatSelection());
         }
     }
 
@@ -183,6 +206,34 @@ public class EventDetailFragment extends Fragment {
     }
 
     // ============= Bottom sheet chọn loại vé + số lượng =============
+
+    /**
+     * Nhảy thẳng vào màn chọn ghế mà không cần chọn số lượng trước.
+     * Người dùng sẽ click trực tiếp vào ghế trống để chọn.
+     */
+    private void navigateToSeatSelection() {
+        if (TextUtils.isEmpty(eventId)) {
+            Snackbar.make(requireView(),
+                    "Thiếu thông tin sự kiện, không thể chọn vé.",
+                    Snackbar.LENGTH_LONG).show();
+            return;
+        }
+
+        String finalTitle = tvTitle != null ? tvTitle.getText().toString() : eventTitleArg;
+
+        Bundle toSeat = new Bundle();
+        toSeat.putString("eventId", eventId);
+        toSeat.putString("eventTitle", finalTitle);
+        toSeat.putString("showId", showId);
+        
+        // Không cần truyền quota - người dùng tự chọn ghế
+        toSeat.putInt("qtyPremium", 0);
+        toSeat.putInt("qtyVip", 0);
+        toSeat.putInt("qtyGeneral", 0);
+
+        NavHostFragment.findNavController(this)
+                .navigate(R.id.action_eventDetail_to_seatSelection, toSeat);
+    }
 
     /**
      * Mở bottom sheet chọn loại vé + số lượng.

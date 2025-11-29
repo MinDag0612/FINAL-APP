@@ -118,7 +118,6 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         eventAdapter = new HomeEventAdapter(this);
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
         rvEvents.setAdapter(eventAdapter);
-        rvEvents.setHasFixedSize(true);
         rvEvents.setItemViewCacheSize(10);
         if (rvEvents.getItemAnimator() instanceof SimpleItemAnimator) {
             ((SimpleItemAnimator) rvEvents.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -127,7 +126,6 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         artistAdapter = new HomeArtistAdapter();
         rvArtists.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false));
         rvArtists.setAdapter(artistAdapter);
-        rvArtists.setHasFixedSize(true);
         rvArtists.setItemViewCacheSize(10);
         if (rvArtists.getItemAnimator() instanceof SimpleItemAnimator) {
             ((SimpleItemAnimator) rvArtists.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -331,6 +329,7 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         if (event == null) {
             return;
         }
+        android.util.Log.d("HomeActivity", "openEventDetail - eventId: " + event.getId() + ", name: " + event.getName());
         Intent intent = EventDetailNavigator.createIntent(
                 this,
                 event.getId(),

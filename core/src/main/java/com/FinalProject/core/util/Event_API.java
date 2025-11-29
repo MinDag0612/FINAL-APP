@@ -3,7 +3,6 @@ package com.FinalProject.core.util;
 import android.util.Log;
 
 import com.FinalProject.core.constName.StoreField;
-import com.FinalProject.core.constName.StoreField;
 import com.FinalProject.core.model.Events;
 import com.FinalProject.core.model.TicketInfor;
 import com.google.android.gms.tasks.Task;
@@ -82,11 +81,6 @@ public class Event_API {
                 .whereEqualTo(StoreField.EventFields.ORGANIZER_UID, organizerUid)
                 .limit(fetchLimit)
                 .get();
-    }
-
-    public static Task<DocumentReference> addNewEvent(Events eventData){
-        return db.collection(StoreField.EVENTS)
-                .add(eventData.toMap());
     }
 
     public static Task<DocumentReference> addNewEvent(Events eventData){

@@ -6,6 +6,16 @@
     android:orientation="vertical"
     android:padding="@dimen/spacing_lg">
 
+    <!-- Back button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_back_seat_selection"
+        style="@style/Widget.Material3.Button.IconButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="@dimen/spacing_md"
+        app:icon="@drawable/ic_arrow_back_24"
+        app:iconGravity="textStart" />
+
     <!-- Event header -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_event_header"

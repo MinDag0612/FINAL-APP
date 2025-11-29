@@ -18,6 +18,7 @@ import com.FinalProject.feature_booking.model.Showtime;
 import com.FinalProject.feature_booking.model.OrderResult;
 import com.FinalProject.feature_booking.ui.ShowtimeAdapter;
 import com.FinalProject.feature_booking.ui.TicketTypeAdapter;
+import com.google.android.material.appbar.MaterialToolbar;
 
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -55,6 +56,12 @@ public class BookingActivity extends AppCompatActivity
         rvTicketTypes = findViewById(R.id.rvTicketTypes);
         tvTotal       = findViewById(R.id.tvTotal);
         btnBook       = findViewById(R.id.btnBook);
+        MaterialToolbar toolbar = findViewById(R.id.toolbar_booking);
+        setSupportActionBar(toolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         rvShowtimes.setLayoutManager(
                 new LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)

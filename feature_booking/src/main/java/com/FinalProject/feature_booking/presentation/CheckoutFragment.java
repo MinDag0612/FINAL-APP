@@ -125,6 +125,11 @@ public class CheckoutFragment extends Fragment {
         for (MaterialButton b : paymentButtons) if (b != null) b.setCheckable(true);
 
         btnConfirm = view.findViewById(R.id.btn_confirm_payment);
+        
+        MaterialButton btnBack = view.findViewById(R.id.btn_back_checkout);
+        if (btnBack != null) {
+            btnBack.setOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
+        }
 
         // Promo field
         tilPromo = view.findViewById(R.id.til_promo);
@@ -146,9 +151,13 @@ public class CheckoutFragment extends Fragment {
             ticketPrice   = args.getLong("totalPrice", 0L);
         }
 
-        // Fallback demo: nếu vì gì đó eventId rỗng, dùng sample từ Seeder
+        // Kiểm tra eventId bắt buộc
         if (TextUtils.isEmpty(eventId)) {
-            eventId = "seed_tedxyouth_2024";
+            Snackbar.make(view, 
+                "Lỗi: Không có thông tin sự kiện.", 
+                Snackbar.LENGTH_LONG).show();
+            requireActivity().finish();
+            return;
         }
 
         // UI ban đầu

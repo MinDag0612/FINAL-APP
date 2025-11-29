@@ -21,6 +21,8 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
+
 
 public class LoginActivity extends AppCompatActivity {
     TextInputLayout email;
@@ -95,11 +97,6 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             loginUseCase.execute(emailStr, passwordStr, new LoginUseCase.LoginCallback() {
-            emailStr = email.getEditText().getText().toString();
-            passwordStr = password.getEditText().getText().toString();
-            role = selectedRole;
-
-            loginUseCase.execute(emailStr, passwordStr, role, new LoginUseCase.LoginCallback() {
                 @Override
                 public void onSuccess(String uid, String role) {
                     Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_SHORT).show();
@@ -113,12 +110,10 @@ public class LoginActivity extends AppCompatActivity {
                     if ("organizer".equalsIgnoreCase(role)) {
                         startActivity(new Intent(LoginActivity.this, HomeOrganizerActivity.class));
                         finish();
-                    }
-                    else {
+                    } else {
                         startActivity(new Intent(LoginActivity.this, HomeActivity.class));
                         finish();
                     }
-
                 }
 
                 @Override

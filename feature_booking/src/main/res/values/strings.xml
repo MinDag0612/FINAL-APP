@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">EventSphere</string>
+    <string name="feature_event_detail_name">Chi tiết sự kiện</string>
     <string name="label_feature_coming_soon">Tính năng đang được phát triển</string>
     <string name="label_total_revenue">Tổng doanh thu</string>
     <string name="label_tickets_sold">Vé đã bán</string>
