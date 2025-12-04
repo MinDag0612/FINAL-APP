@@ -3,6 +3,7 @@ package com.FinalProject.feature_booking.presentation;
 import com.FinalProject.feature_booking.R;
 
 import android.content.Context;
+import android.util.Log;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -26,6 +27,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.FinalProject.core.firebase.FirebaseAuthHelper;
 import com.FinalProject.feature_booking.data.BookingRepository;
 import com.FinalProject.core.model.TicketInfor;
+import com.FinalProject.core.util.Promotion_API;
 import com.FinalProject.feature_booking.payment.PaymentCallback;
 import com.FinalProject.feature_booking.payment.PaymentMethod;
 import com.FinalProject.feature_booking.payment.PaymentOrchestrator;
@@ -33,6 +35,7 @@ import com.FinalProject.feature_booking.payment.PaymentRequest;
 import com.FinalProject.feature_booking.payment.PaymentResult;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.gms.tasks.Tasks;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -62,9 +65,16 @@ public class CheckoutFragment extends Fragment {
     private View rowDiscount;           // @id/ll_row_discount
     private TextView tvDiscount;        // @id/tv_checkout_discount
 
-    // 3 nút phương thức (single-select)
-    private MaterialButton btnCard, btnWallet, btnQr;
+    // 4 nút phương thức chính (single-select)
+    private MaterialButton btnCard, btnWallet, btnQr, btnBank;
     private List<MaterialButton> paymentButtons;
+    
+    // Lưu e-wallet đang chọn (MoMo, VNPay, ZaloPay)
+    private String selectedEWallet = "MoMo"; // Mặc định
+    
+    // Bank Transaction ID input
+    private com.google.android.material.textfield.TextInputLayout tilBankTransactionId;
+    private com.google.android.material.textfield.TextInputEditText etBankTransactionId;
 
     private MaterialButton btnConfirm;
 
@@ -89,6 +99,8 @@ public class CheckoutFragment extends Fragment {
     private TextInputLayout tilPromo;           // @id/til_promo (nếu có)
     private TextInputEditText etPromo;          // @id/et_promo (nếu có)
     private String appliedPromoCode = "";       // ✅ CHỈ set khi bấm icon check & hợp lệ
+    private String appliedPromotionId = "";     // Firestore promotion ID
+    private int appliedDiscountAmount = 0;      // Discount amount từ API
 
     // Dialog processing
     private AlertDialog processingDialog;
@@ -121,8 +133,12 @@ public class CheckoutFragment extends Fragment {
         btnCard   = view.findViewById(R.id.btn_payment_card);
         btnWallet = view.findViewById(R.id.btn_payment_wallet);
         btnQr     = view.findViewById(R.id.btn_payment_qr);
-        paymentButtons = Arrays.asList(btnCard, btnWallet, btnQr);
+        btnBank   = view.findViewById(R.id.btn_payment_bank);
+        paymentButtons = Arrays.asList(btnCard, btnWallet, btnQr, btnBank);
         for (MaterialButton b : paymentButtons) if (b != null) b.setCheckable(true);
+        
+        tilBankTransactionId = view.findViewById(R.id.til_bank_transaction_id);
+        etBankTransactionId  = view.findViewById(R.id.et_bank_transaction_id);
 
         btnConfirm = view.findViewById(R.id.btn_confirm_payment);
         
@@ -182,8 +198,18 @@ public class CheckoutFragment extends Fragment {
             startAuthorize(tapped);
         };
         btnCard.setOnClickListener(choose);
-        btnWallet.setOnClickListener(choose);
         btnQr.setOnClickListener(choose);
+        btnWallet.setOnClickListener(v -> {
+            if (isProcessing) return;
+            if (paymentLocked) {
+                Snackbar.make(requireView(),
+                        "Thanh toán đã được xác nhận. Không thể thay đổi phương thức.",
+                        Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+            showEWalletDialog();
+        });
+        btnBank.setOnClickListener(choose);
 
         // Nhận vé
         btnConfirm.setEnabled(false);
@@ -196,9 +222,19 @@ public class CheckoutFragment extends Fragment {
                 return;
             }
 
+            // Validate Bank Transaction ID nếu chọn Bank Transfer
+            if (authorizedMethod == PaymentMethod.BANK_TRANSFER) {
+                String transactionId = etBankTransactionId != null && etBankTransactionId.getText() != null
+                    ? etBankTransactionId.getText().toString().trim() : "";
+                if (transactionId.isEmpty()) {
+                    Snackbar.make(requireView(),
+                            "Vui lòng nhập mã giao dịch ngân hàng.",
+                            Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
             String userId = FirebaseAuthHelper.getCurrentUserUid();
-            // DEMO: tạm hard-code nếu chưa ghép auth
-            userId = "DEMO_USER_001";
             if (TextUtils.isEmpty(userId)) {
                 Snackbar.make(requireView(),
                         "Bạn cần đăng nhập để nhận vé.",
@@ -222,17 +258,7 @@ public class CheckoutFragment extends Fragment {
             tilPromo.setEndIconContentDescription("Áp dụng mã");
             tilPromo.setEndIconOnClickListener(v -> {
                 String code = getPromoText();
-                if (isValidPromo(code)) {
-                    appliedPromoCode = code.toUpperCase(Locale.ROOT);      // ✅ chỉ set khi hợp lệ
-                    tilPromo.setError(null);
-                    tilPromo.setHelperText("Đã áp dụng: " + appliedPromoCode + " (-10%)");
-                } else {
-                    appliedPromoCode = "";                                  // không hợp lệ → không áp dụng
-                    tilPromo.setHelperText(null);
-                    tilPromo.setError("Mã không hợp lệ (chấp nhận: GIAM10, SALE10)");
-                }
-                hideKeyboard();
-                recalcTotalsFor(selectedMethod);
+                validatePromoCodeWithAPI(code);
             });
         } catch (Exception ignore) {}
 
@@ -244,6 +270,8 @@ public class CheckoutFragment extends Fragment {
                     // Gõ lại ⇒ hủy mã đã áp dụng (yêu cầu nhấn ✓ lại)
                     if (!appliedPromoCode.isEmpty()) {
                         appliedPromoCode = "";
+                        appliedPromotionId = "";
+                        appliedDiscountAmount = 0;
                     }
                     tilPromo.setError(null);
                     tilPromo.setHelperText(null);
@@ -251,6 +279,73 @@ public class CheckoutFragment extends Fragment {
                 }
             });
         }
+    }
+
+    // ---------------- Validate Promo với Promotion_API ----------------
+    private void validatePromoCodeWithAPI(@NonNull String code) {
+        if (code.isEmpty()) {
+            tilPromo.setError("Vui lòng nhập mã khuyến mãi");
+            return;
+        }
+
+        String userId = FirebaseAuthHelper.getCurrentUserUid();
+        if (userId == null) {
+            tilPromo.setError("Bạn cần đăng nhập để sử dụng mã khuyến mãi");
+            return;
+        }
+
+        long orderAmount = ticketPrice;
+        int ticketCount = seats.size();
+
+        tilPromo.setEnabled(false);
+        tilPromo.setHelperText("Đang kiểm tra mã...");
+
+        Promotion_API.validatePromotion(code, userId, eventId, (int) orderAmount, ticketCount)
+                .addOnSuccessListener(result -> {
+                    if (!isAdded()) return;
+
+                    boolean isValid = (boolean) result.get("isValid");
+                    
+                    if (isValid) {
+                        appliedPromoCode = code.toUpperCase(Locale.ROOT);
+                        appliedPromotionId = (String) result.get("promotion_id");
+                        
+                        Integer discount = (Integer) result.get("discount_amount");
+                        appliedDiscountAmount = (discount != null) ? discount : 0;
+                        
+                        tilPromo.setError(null);
+                        tilPromo.setHelperText("Đã áp dụng: " + appliedPromoCode + " (-" + 
+                                NumberFormat.getCurrencyInstance(new Locale("vi", "VN"))
+                                        .format(appliedDiscountAmount) + ")");
+                    } else {
+                        appliedPromoCode = "";
+                        appliedPromotionId = "";
+                        appliedDiscountAmount = 0;
+                        
+                        String message = (String) result.get("message");
+                        tilPromo.setHelperText(null);
+                        tilPromo.setError(message != null ? message : "Mã không hợp lệ");
+                    }
+                    
+                    tilPromo.setEnabled(true);
+                    hideKeyboard();
+                    recalcTotalsFor(selectedMethod);
+                })
+                .addOnFailureListener(e -> {
+                    if (!isAdded()) return;
+                    
+                    appliedPromoCode = "";
+                    appliedPromotionId = "";
+                    appliedDiscountAmount = 0;
+                    
+                    tilPromo.setEnabled(true);
+                    tilPromo.setHelperText(null);
+                    tilPromo.setError("Lỗi kiểm tra mã: " + 
+                            (e != null ? e.getMessage() : "Không rõ"));
+                    
+                    hideKeyboard();
+                    recalcTotalsFor(selectedMethod);
+                });
     }
 
     private void hideKeyboard() {
@@ -262,9 +357,37 @@ public class CheckoutFragment extends Fragment {
         } catch (Exception ignore) {}
     }
 
-    private boolean isValidPromo(@NonNull String code) {
-        return "GIAM10".equalsIgnoreCase(code) || "SALE10".equalsIgnoreCase(code);
+    // ---------------- E-Wallet Selection Dialog ----------------
+    private void showEWalletDialog() {
+        String[] wallets = {"MoMo", "VNPay", "ZaloPay"};
+        int currentSelection = 0;
+        
+        // Tìm vị trí hiện tại
+        for (int i = 0; i < wallets.length; i++) {
+            if (wallets[i].equals(selectedEWallet)) {
+                currentSelection = i;
+                break;
+            }
+        }
+        
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Chọn ví điện tử")
+                .setSingleChoiceItems(wallets, currentSelection, (dialog, which) -> {
+                    selectedEWallet = wallets[which];
+                })
+                .setPositiveButton("Đồng ý", (dialog, which) -> {
+                    // Cập nhật text button
+                    btnWallet.setText("Ví điện tử (" + selectedEWallet + ")");
+                    
+                    // Chọn và authorize WALLET method
+                    setSelection(PaymentMethod.WALLET);
+                    startAuthorize(PaymentMethod.WALLET);
+                })
+                .setNegativeButton("Hủy", null)
+                .show();
     }
+
+
 
     @NonNull
     private String getPromoText() {
@@ -303,11 +426,11 @@ public class CheckoutFragment extends Fragment {
     private String paymentMethodLabel(@NonNull PaymentMethod m) {
         switch (m) {
             case CARD:
-                return "Thẻ (Card)";
+                return "Thẻ ngân hàng";
             case WALLET:
-                return "Ví điện tử";
-            case QR:
-                return "QR Banking";
+                return "Ví điện tử (" + selectedEWallet + ")";
+            case BANK_TRANSFER:
+                return "Chuyển khoản";
             default:
                 return "ĐÃ THANH TOÁN";
         }
@@ -366,8 +489,8 @@ public class CheckoutFragment extends Fragment {
         if (m == null) return "UNKNOWN";
         switch (m) {
             case CARD:   return "CARD";
-            case WALLET: return "WALLET";
-            case QR:     return "QR";
+            case WALLET: return selectedEWallet.toUpperCase(); // "MOMO", "VNPAY", "ZALOPAY"
+            case BANK_TRANSFER: return "BANK_TRANSFER";
             default:     return "UNKNOWN";
         }
     }
@@ -380,9 +503,9 @@ public class CheckoutFragment extends Fragment {
         }
         if (isProcessing) return;
 
-        // Dùng CHỈ appliedPromoCode (đã tick ✅)
+        // Dùng appliedDiscountAmount từ Promotion_API
         long base      = ticketPrice;
-        long discount  = applyPromoDiscount(appliedPromoCode, base);
+        long discount  = appliedDiscountAmount;
         long subTotal  = Math.max(0L, base - discount);
         long fee       = calcServiceFeeByMethod(subTotal, method);
         long grandTotal= subTotal + fee;
@@ -497,10 +620,17 @@ public class CheckoutFragment extends Fragment {
                     String paymentMethod = paymentMethodCode(authorizedMethod);
 
                     // 🔹 DÙNG API MỚI – TRUYỀN LUÔN DANH SÁCH GHẾ XUỐNG ORDER
+                    android.util.Log.d("CheckoutFragment", "=== CREATE ORDER START ===");
+                    android.util.Log.d("CheckoutFragment", "UserId: " + userId);
+                    android.util.Log.d("CheckoutFragment", "EventId: " + eventId);
+                    android.util.Log.d("CheckoutFragment", "ShowId: " + showId);
+                    
                     bookingRepo.createOrder(userId, eventId, showId, qtyByType, paymentMethod, seats)
                             .addOnSuccessListener(orderId -> {
                                 if (!isAdded()) return;
                                 isProcessing = false;
+
+                                android.util.Log.d("CheckoutFragment", "Order created! OrderId: " + orderId);
 
                                 if (orderId == null || orderId.trim().isEmpty()) {
                                     setUiEnabled(true);
@@ -514,23 +644,70 @@ public class CheckoutFragment extends Fragment {
                                 // 🔹 Build payload QR và update field qr_code
                                 String qrPayload = buildQrPayload(orderId, totalPaid, qtyByType);
 
+                                // 🔹 STEP 1: Update QR Code
                                 bookingRepo.updateOrderQrCode(orderId, qrPayload)
-                                        .addOnCompleteListener(task -> {
-                                            if (!isAdded()) return;
-
-                                            if (!task.isSuccessful()) {
-                                                Snackbar.make(requireView(),
-                                                        "Đã tạo vé nhưng không lưu được QR: " +
-                                                                (task.getException() != null
-                                                                        ? task.getException().getMessage()
-                                                                        : ""),
-                                                        Snackbar.LENGTH_LONG).show();
+                                        .continueWithTask(qrTask -> {
+                                            if (!qrTask.isSuccessful()) {
+                                                Log.w("CheckoutFragment", "Failed to update QR: " + 
+                                                        (qrTask.getException() != null ? qrTask.getException().getMessage() : ""));
                                             }
 
-                                            Bundle bundle = buildTicketBundle(orderId, totalPaid);
-                                            NavController navController =
-                                                    NavHostFragment.findNavController(this);
-                                            navController.navigate(R.id.action_checkout_to_myTickets, bundle);
+                                            // 🔹 STEP 2: Update Payment Transaction (nếu có)
+                                            if (lastPaymentResult != null && 
+                                                lastPaymentResult.getTransactionId() != null) {
+                                                return bookingRepo.updatePaymentTransaction(
+                                                    orderId,
+                                                    lastPaymentResult.getTransactionId(),
+                                                    System.currentTimeMillis()
+                                                );
+                                            }
+                                            return Tasks.forResult(null);
+                                        })
+                                        .continueWithTask(paymentTask -> {
+                                            if (paymentTask.getException() != null) {
+                                                Log.w("CheckoutFragment", "Failed to update payment transaction: " + 
+                                                        paymentTask.getException().getMessage());
+                                            }
+
+                                            // 🔹 STEP 3: Update Promotion Info (nếu có)
+                                            if (!appliedPromotionId.isEmpty() && appliedDiscountAmount > 0) {
+                                                return bookingRepo.updatePromotionInfo(
+                                                    orderId,
+                                                    appliedPromotionId,
+                                                    appliedPromoCode,
+                                                    appliedDiscountAmount,
+                                                    (int) ticketPrice
+                                                );
+                                            }
+                                            return Tasks.forResult(null);
+                                        })
+                                        .continueWithTask(promoTask -> {
+                                            if (promoTask.getException() != null) {
+                                                Log.w("CheckoutFragment", "Failed to update promotion: " + 
+                                                        promoTask.getException().getMessage());
+                                            }
+
+                                            // 🔹 STEP 4: Apply promotion usage (increment count)
+                                            if (!appliedPromotionId.isEmpty()) {
+                                                return Promotion_API.applyPromotion(appliedPromotionId, userId, orderId);
+                                            }
+                                            return Tasks.forResult(null);
+                                        })
+                                        .addOnCompleteListener(allTask -> {
+                                            if (!isAdded()) return;
+
+                                            android.util.Log.d("CheckoutFragment", "Order created successfully. OrderId: " + orderId);
+                                            
+                                            // Delay nhỏ để Firestore sync data trước khi navigate
+                                            requireView().postDelayed(() -> {
+                                                if (!isAdded()) return;
+                                                
+                                                // Navigate to MyTickets
+                                                Bundle bundle = buildTicketBundle(orderId, totalPaid);
+                                                NavController navController =
+                                                        NavHostFragment.findNavController(CheckoutFragment.this);
+                                                navController.navigate(R.id.action_checkout_to_myTickets, bundle);
+                                            }, 300); // Delay 300ms để Firestore sync
                                         });
                             })
                             .addOnFailureListener(e -> {
@@ -689,12 +866,21 @@ public class CheckoutFragment extends Fragment {
         setChecked(btnCard,   method == PaymentMethod.CARD);
         setChecked(btnWallet, method == PaymentMethod.WALLET);
         setChecked(btnQr,     method == PaymentMethod.QR);
+        setChecked(btnBank,   method == PaymentMethod.BANK_TRANSFER);
+        
+        // Hiển thị Bank Transaction ID input nếu chọn Bank Transfer
+        if (tilBankTransactionId != null) {
+            tilBankTransactionId.setVisibility(
+                method == PaymentMethod.BANK_TRANSFER ? View.VISIBLE : View.GONE
+            );
+        }
+        
         recalcTotalsFor(method);
     }
 
     private void recalcTotalsFor(@NonNull PaymentMethod method) {
         long base     = ticketPrice;
-        long discount = applyPromoDiscount(appliedPromoCode, base);   // ❗ chỉ dùng appliedPromoCode
+        long discount = appliedDiscountAmount; // Dùng discount từ Promotion_API
         long subTotal = Math.max(0L, base - discount);
         long fee      = calcServiceFeeByMethod(subTotal, method);
         long total    = subTotal + fee;
@@ -760,19 +946,14 @@ public class CheckoutFragment extends Fragment {
         return Math.max(0L, fee);
     }
 
-    private long applyPromoDiscount(String code, long baseTicketPrice) {
-        if (code == null || code.isEmpty()) return 0L;
-        if ("GIAM10".equalsIgnoreCase(code) || "SALE10".equalsIgnoreCase(code)) {
-            return Math.round(baseTicketPrice * 0.10);
-        }
-        return 0L;
-    }
+
 
     @Nullable
     private PaymentMethod idToMethod(@IdRes int id) {
         if (id == R.id.btn_payment_card)   return PaymentMethod.CARD;
         if (id == R.id.btn_payment_wallet) return PaymentMethod.WALLET;
         if (id == R.id.btn_payment_qr)     return PaymentMethod.QR;
+        if (id == R.id.btn_payment_bank)   return PaymentMethod.BANK_TRANSFER;
         return null;
     }
 

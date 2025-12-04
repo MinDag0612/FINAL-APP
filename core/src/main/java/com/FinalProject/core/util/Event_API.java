@@ -83,6 +83,14 @@ public class Event_API {
                 .get();
     }
 
+    public static Task<QuerySnapshot> getEventsByLegacyUid(String organizerUid, int limit) {
+        int fetchLimit = limit > 0 ? limit : 20;
+        return db.collection(StoreField.EVENTS)
+                .whereEqualTo(StoreField.EventFields.LEGACY_UID, organizerUid)
+                .limit(fetchLimit)
+                .get();
+    }
+
     public static Task<DocumentReference> addNewEvent(Events eventData){
         return db.collection(StoreField.EVENTS)
                 .add(eventData.toMap());

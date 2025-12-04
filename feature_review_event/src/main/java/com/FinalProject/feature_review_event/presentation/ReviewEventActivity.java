@@ -103,7 +103,7 @@ public class ReviewEventActivity extends AppCompatActivity {
 
     private void loadContent() {
         if (TextUtils.isEmpty(eventId)) {
-            Toast.makeText(this, R.string.review_event_missing_event_id, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, R.string.review_event_missing_event_id, Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
@@ -118,7 +118,7 @@ public class ReviewEventActivity extends AppCompatActivity {
             @Override
             public void onError(String message) {
                 showLoading(false);
-                Toast.makeText(ReviewEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(ReviewEventActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -152,7 +152,7 @@ public class ReviewEventActivity extends AppCompatActivity {
 
         if (rating == 0) {
             inputComment.setError(null);
-            Toast.makeText(this, R.string.review_event_error_invalid_rating, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, R.string.review_event_error_invalid_rating, Toast.LENGTH_SHORT).show();
             return;
         }
         if (comment.trim().length() < 10) {
@@ -165,14 +165,14 @@ public class ReviewEventActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 setSubmitting(false);
-                Toast.makeText(ReviewEventActivity.this, R.string.review_event_success, Toast.LENGTH_LONG).show();
+                // Toast.makeText(ReviewEventActivity.this, R.string.review_event_success, Toast.LENGTH_LONG).show();
                 updateReviewState(true);
             }
 
             @Override
             public void onError(String message) {
                 setSubmitting(false);
-                Toast.makeText(ReviewEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(ReviewEventActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
     }

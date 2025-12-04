@@ -87,10 +87,10 @@ public class RegisterActivity extends AppCompatActivity {
 //            passwordStr = password.getText().toString().trim();
 //
 //            if (fullNameStr.isEmpty() || emailStr.isEmpty() || phoneNumberStr.isEmpty() || passwordStr.isEmpty() || selectedRole.isEmpty()) {
-//                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+//                // Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
 //            } else {
 //                // TODO: Implement SignupUseCase logic here
-//                Toast.makeText(this, "Đăng ký thành công (placeholder)", Toast.LENGTH_SHORT).show();
+//                // Toast.makeText(this, "Đăng ký thành công (placeholder)", Toast.LENGTH_SHORT).show();
 //            }
 //        });
 //    }
@@ -112,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
             regisreUseCase.execute(emailStr, passwordStr, selectedRole, fullNameStr, phoneNumberStr, new RegisterUserUseCase.RegisterCallback(){
                 @Override
                 public void onSuccess() {
-                    Toast.makeText(RegisterActivity.this, "Sign up successful", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(RegisterActivity.this, "Sign up successful", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
                     intent.putExtra("email", emailStr);
                     intent.putExtra("password", passwordStr);
@@ -122,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(String message) {
-                    Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
             });
         });

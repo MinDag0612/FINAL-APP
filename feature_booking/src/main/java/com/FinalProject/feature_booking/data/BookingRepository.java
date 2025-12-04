@@ -229,6 +229,13 @@ public class BookingRepository {
         return Order_API.getOrdersByUserId(userId);
     }
 
+    /**
+     * Lấy Orders của user với Source (để force reload từ server)
+     */
+    public Task<QuerySnapshot> getOrdersForUser(@NonNull String userId, @NonNull com.google.firebase.firestore.Source source) {
+        return Order_API.getOrdersByUserId(userId, source);
+    }
+
     // --------------------------------------------------------------------------------------------
     //  Orders – lấy 1 Order theo ID (TicketDetailFragment, ScanTicketFragment)
     // --------------------------------------------------------------------------------------------
@@ -256,6 +263,27 @@ public class BookingRepository {
     public Task<Void> updateOrderQrCode(@NonNull String orderId,
                                         @NonNull String qrPayload) {
         return Order_API.updateQrCode(orderId, qrPayload);
+    }
+
+    /**
+     * Cập nhật transaction_id và payment_timestamp sau payment thành công.
+     */
+    public Task<Void> updatePaymentTransaction(@NonNull String orderId,
+                                               @NonNull String transactionId,
+                                               long paymentTimestamp) {
+        return Order_API.updatePaymentTransaction(orderId, transactionId, paymentTimestamp);
+    }
+
+    /**
+     * Cập nhật promotion info vào Order.
+     */
+    public Task<Void> updatePromotionInfo(@NonNull String orderId,
+                                          @NonNull String promotionId,
+                                          @NonNull String promotionCode,
+                                          int discountAmount,
+                                          int originalPrice) {
+        return Order_API.updatePromotionInfo(orderId, promotionId, promotionCode, 
+                discountAmount, originalPrice);
     }
 
     // --------------------------------------------------------------------------------------------

@@ -94,6 +94,9 @@ public class HomeEventAdapter extends RecyclerView.Adapter<HomeEventAdapter.Even
         }
 
         void bind(HomeEvent event, EventClickListener clickListener, EventShareListener shareListener) {
+            // Set banner làm ảnh nền cho tất cả event
+            ivEventImage.setImageResource(R.drawable.banner);
+            
             tvEventName.setText(event.getName());
             String date = formatDate(event.getStartTimeIso());
             String location = event.getLocation();

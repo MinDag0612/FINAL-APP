@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity {
                     : "";
 
             if (TextUtils.isEmpty(emailStr) || TextUtils.isEmpty(passwordStr)) {
-                Toast.makeText(this, "Vui lòng nhập email và mật khẩu", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "Vui lòng nhập email và mật khẩu", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(String message) {
-                    Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
                 }
             });
         });
@@ -141,14 +141,16 @@ public class LoginActivity extends AppCompatActivity {
                 .setPositiveButton("Gửi", (dialog, which) -> {
                     String emailStr = input != null ? input.getText().toString().trim() : "";
                     if (TextUtils.isEmpty(emailStr)) {
-                        Toast.makeText(this, "Vui lòng nhập email", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(this, "Vui lòng nhập email", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     logionRepo.sendResetPassword(emailStr)
-                            .addOnSuccessListener(unused ->
-                                    Toast.makeText(this, "Đã gửi link đặt lại mật khẩu tới email.", Toast.LENGTH_SHORT).show())
-                            .addOnFailureListener(e ->
-                                    Toast.makeText(this, "Gửi thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show());
+                            .addOnSuccessListener(unused -> {
+                                    // Toast.makeText(this, "Đã gửi link đặt lại mật khẩu tới email.", Toast.LENGTH_SHORT).show();
+                            })
+                            .addOnFailureListener(e -> {
+                                    // Toast.makeText(this, "Gửi thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            });
                 })
                 .setNegativeButton("Hủy", null)
                 .show();

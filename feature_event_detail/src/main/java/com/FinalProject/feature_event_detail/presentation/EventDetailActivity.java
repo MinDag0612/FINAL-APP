@@ -274,7 +274,7 @@ public class EventDetailActivity extends AppCompatActivity {
 
     private void openReviewScreen() {
         if (TextUtils.isEmpty(eventId)) {
-            Toast.makeText(this, R.string.event_detail_missing_id, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, R.string.event_detail_missing_id, Toast.LENGTH_SHORT).show();
             return;
         }
         String title = valueOf(tvEventTitle);
@@ -295,18 +295,42 @@ public class EventDetailActivity extends AppCompatActivity {
         android.util.Log.d("EventDetailActivity", "========== OPEN BOOKING ==========");
         android.util.Log.d("EventDetailActivity", "openBooking - eventId: " + id);
         if (TextUtils.isEmpty(id)) {
-            Toast.makeText(this, R.string.event_detail_missing_id, Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, R.string.event_detail_missing_id, Toast.LENGTH_SHORT).show();
             return;
         }
         String title = valueOf(tvEventTitle);
+        String location = valueOf(tvEventLocation);
+        String schedule = valueOf(tvEventSchedule);
+        long startingPrice = resolveStartingPrice();
         String showId = id + "_DEFAULT";
         android.util.Log.d("EventDetailActivity", "openBooking - creating BookingNavigator intent");
         android.util.Log.d("EventDetailActivity", "  -> eventId: " + id);
         android.util.Log.d("EventDetailActivity", "  -> title: " + title);
+        android.util.Log.d("EventDetailActivity", "  -> location: " + location);
+        android.util.Log.d("EventDetailActivity", "  -> schedule: " + schedule);
+        android.util.Log.d("EventDetailActivity", "  -> price: " + startingPrice);
         android.util.Log.d("EventDetailActivity", "  -> showId: " + showId);
-        Intent intent = BookingNavigator.createBookingIntent(this, id, title, showId);
+        Intent intent = BookingNavigator.createBookingIntent(
+                this,
+                id,
+                title,
+                location,
+                schedule,
+                startingPrice,
+                showId
+        );
         startActivity(intent);
         android.util.Log.d("EventDetailActivity", "========== BOOKING STARTED ==========");
+    }
+
+    private long resolveStartingPrice() {
+        if (currentDetail != null && !currentDetail.getTicketTiers().isEmpty()) {
+            return currentDetail.getTicketTiers().get(0).getPrice();
+        }
+        if (fallbackDetail != null && !fallbackDetail.getTicketTiers().isEmpty()) {
+            return fallbackDetail.getTicketTiers().get(0).getPrice();
+        }
+        return 0;
     }
 
     private String valueOf(TextView view) {
@@ -318,6 +342,11 @@ public class EventDetailActivity extends AppCompatActivity {
         errorContainer.setVisibility(View.GONE);
 
         eventId = detail.getId();
+        
+        // Set banner làm ảnh sự kiện
+        if (imgEventCover != null) {
+            imgEventCover.setImageResource(R.drawable.banner);
+        }
 
         tvEventTitle.setText(detail.getName());
         tvEventDescription.setText(detail.getDescription());

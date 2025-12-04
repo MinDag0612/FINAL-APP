@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -161,9 +162,18 @@ public class Order_API {
             @NonNull String paymentMethod,
             @Nullable List<String> seats
     ) {
+        Log.d("Order_API", "=== CREATE ORDER API START ===");
+        Log.d("Order_API", "UserId: " + userId);
+        Log.d("Order_API", "EventId: " + eventId);
+        Log.d("Order_API", "ShowId: " + showId);
+        Log.d("Order_API", "PaymentMethod: " + paymentMethod);
+        Log.d("Order_API", "QtyByType: " + qtyByType);
+        Log.d("Order_API", "Seats: " + (seats != null ? seats.size() : 0));
+        
         TaskCompletionSource<String> tcs = new TaskCompletionSource<>();
 
         if (qtyByType.isEmpty()) {
+            Log.e("Order_API", "QtyByType is empty!");
             tcs.setException(new IllegalArgumentException("Không có vé nào được chọn."));
             return tcs.getTask();
         }
@@ -270,13 +280,17 @@ public class Order_API {
                         );
                     }
 
+                    Log.d(TAG, "Committing batch with OrderId: " + orderRef.getId());
+                    Log.d(TAG, "Order data - userId: " + userId);
+                    
                     batch.commit()
                             .addOnSuccessListener(unused -> {
-                                Log.d(TAG, "Order created + tickets_sold updated: " + orderRef.getId());
+                                Log.d(TAG, "✅ Order SUCCESSFULLY created: " + orderRef.getId());
+                                Log.d(TAG, "✅ UserId in order: " + userId);
                                 tcs.setResult(orderRef.getId());
                             })
                             .addOnFailureListener(e -> {
-                                Log.e(TAG, "Error creating order / updating tickets_sold", e);
+                                Log.e(TAG, "❌ FAILED to create order", e);
                                 tcs.setException(e);
                             });
 
@@ -374,6 +388,17 @@ public class Order_API {
     }
 
     /**
+     * Lấy Orders theo userId với Source (cache/server/default)
+     * Dùng Source.SERVER để force reload từ server sau khi tạo order mới
+     */
+    @NonNull
+    public static Task<QuerySnapshot> getOrdersByUserId(@NonNull String userId, @NonNull Source source) {
+        return db.collection(StoreField.ORDERS)
+                .whereEqualTo(StoreField.OrderFields.USER_ID, userId)
+                .get(source);
+    }
+
+    /**
      * Lấy 1 Order theo ID (dùng cho ScanTicket, TicketDetail nếu cần).
      */
     @NonNull
@@ -407,6 +432,45 @@ public class Order_API {
         Map<String, Object> updates = new HashMap<>();
         updates.put("checked_in", true);
         updates.put("checked_in_at", FieldValue.serverTimestamp());
+
+        return db.collection(StoreField.ORDERS)
+                .document(orderId)
+                .update(updates);
+    }
+
+    /**
+     * Cập nhật transaction_id và payment_timestamp sau khi payment thành công.
+     * Gọi từ CheckoutFragment sau khi PaymentOrchestrator.onSuccess().
+     */
+    @NonNull
+    public static Task<Void> updatePaymentTransaction(@NonNull String orderId,
+                                                      @NonNull String transactionId,
+                                                      long paymentTimestamp) {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("transaction_id", transactionId);
+        updates.put("payment_timestamp", paymentTimestamp);
+        updates.put("is_paid", true); // Đánh dấu đã thanh toán
+
+        return db.collection(StoreField.ORDERS)
+                .document(orderId)
+                .update(updates);
+    }
+
+    /**
+     * Cập nhật promotion info vào Order sau khi apply promotion.
+     * Gọi từ CheckoutFragment khi user apply promo code hợp lệ.
+     */
+    @NonNull
+    public static Task<Void> updatePromotionInfo(@NonNull String orderId,
+                                                 @NonNull String promotionId,
+                                                 @NonNull String promotionCode,
+                                                 int discountAmount,
+                                                 int originalPrice) {
+        Map<String, Object> updates = new HashMap<>();
+        updates.put("promotion_id", promotionId);
+        updates.put("promotion_code", promotionCode);
+        updates.put("discount_amount", discountAmount);
+        updates.put("original_price", originalPrice);
 
         return db.collection(StoreField.ORDERS)
                 .document(orderId)

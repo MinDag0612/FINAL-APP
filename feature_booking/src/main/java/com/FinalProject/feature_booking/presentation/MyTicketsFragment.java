@@ -89,6 +89,9 @@ public class MyTicketsFragment extends Fragment {
     private final List<TicketItem> historyTickets  = new ArrayList<>();
 
     private final NumberFormat vnd = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
+    
+    // Flag để tránh load duplicate trong onViewCreated + onResume
+    private boolean hasLoadedInitially = false;
 
     public MyTicketsFragment() {
         super(R.layout.fragment_tickets);
@@ -103,6 +106,23 @@ public class MyTicketsFragment extends Fragment {
         super.onViewCreated(root, savedInstanceState);
 
         bookingRepo = BookingRepository.getInstance();
+
+        // Setup toolbar back button - về Home
+        com.google.android.material.appbar.MaterialToolbar toolbar = root.findViewById(R.id.toolbar_tickets);
+        if (toolbar != null) {
+            toolbar.setNavigationOnClickListener(v -> {
+                // Navigate về Home Activity
+                android.content.Intent intent = new android.content.Intent();
+                intent.setClassName(requireContext().getPackageName(), 
+                    "com.FinalProject.feature_home.presentation.HomeActivity");
+                intent.addFlags(android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP | 
+                    android.content.Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                startActivity(intent);
+                if (getActivity() != null) {
+                    getActivity().finish();
+                }
+            });
+        }
 
         // Chip filters
         ChipGroup chipGroup   = root.findViewById(R.id.chip_group_ticket_filters);
@@ -131,10 +151,14 @@ public class MyTicketsFragment extends Fragment {
         if (chipGroup != null) {
             chipGroup.setOnCheckedStateChangeListener((group, checkedIds) -> {
                 int id = checkedIds.isEmpty() ? View.NO_ID : checkedIds.get(0);
+                
+                android.util.Log.d("MyTicketsFragment", "🎯 Chip clicked! ID: " + id);
 
                 boolean showUpcoming = (id == R.id.chip_ticket_upcoming) || id == View.NO_ID;
                 boolean showHistory  = (id == R.id.chip_ticket_history);
                 boolean showShared   = (id == R.id.chip_ticket_shared);
+                
+                android.util.Log.d("MyTicketsFragment", "ShowUpcoming: " + showUpcoming + ", ShowHistory: " + showHistory);
 
                 if (rvUpcoming != null) {
                     rvUpcoming.setVisibility(showUpcoming ? View.VISIBLE : View.GONE);
@@ -165,14 +189,41 @@ public class MyTicketsFragment extends Fragment {
         }
 
         // 🔹 Load Orders từ Firestore theo user thật (chuẩn hoá qua FirebaseAuthHelper)
-        loadMyTicketsFromFirestore();
+        // Load initial data ngay
+        loadMyTicketsFromFirestore(false);
+        hasLoadedInitially = true;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Force reload từ server mỗi khi resume (navigate back từ checkout)
+        // Thêm delay nhỏ để Firestore kịp commit transaction
+        if (getView() != null) {
+            getView().postDelayed(() -> {
+                if (isAdded()) {
+                    android.util.Log.d("MyTicketsFragment", "onResume: Force reloading from server");
+                    loadMyTicketsFromFirestore(true); // Force server
+                }
+            }, 800); // Tăng delay lên 800ms để chắc chắn Firestore đã sync
+        }
     }
 
     // ---------------- Load Orders của user từ Firestore ----------------
 
     private void loadMyTicketsFromFirestore() {
+        loadMyTicketsFromFirestore(false);
+    }
+
+    private void loadMyTicketsFromFirestore(boolean forceServer) {
         String userId = FirebaseAuthHelper.getCurrentUserUid();
+        
+        android.util.Log.d("MyTicketsFragment", "=== LOAD TICKETS START ===");
+        android.util.Log.d("MyTicketsFragment", "UserId: " + userId);
+        android.util.Log.d("MyTicketsFragment", "ForceServer: " + forceServer);
+        
         if (TextUtils.isEmpty(userId)) {
+            android.util.Log.w("MyTicketsFragment", "UserId is empty - user not logged in");
             if (rvUpcoming != null) rvUpcoming.setVisibility(View.GONE);
             if (rvHistory != null) rvHistory.setVisibility(View.GONE);
             if (emptyView != null) emptyView.setVisibility(View.VISIBLE);
@@ -185,9 +236,19 @@ public class MyTicketsFragment extends Fragment {
             return;
         }
 
-        bookingRepo.getOrdersForUser(userId)
+        // Force từ server khi cần (onResume sau khi đặt vé)
+        com.google.firebase.firestore.Source source = forceServer 
+                ? com.google.firebase.firestore.Source.SERVER 
+                : com.google.firebase.firestore.Source.DEFAULT;
+
+        android.util.Log.d("MyTicketsFragment", "Query source: " + source);
+        
+        bookingRepo.getOrdersForUser(userId, source)
                 .addOnSuccessListener(snap -> {
                     if (!isAdded()) return;
+                    
+                    android.util.Log.d("MyTicketsFragment", "Orders loaded. Count: " + (snap != null ? snap.size() : 0));
+                    
                     if (snap == null || snap.isEmpty()) {
                         upcomingTickets.clear();
                         historyTickets.clear();
@@ -210,9 +271,18 @@ public class MyTicketsFragment extends Fragment {
                 })
                 .addOnFailureListener(e -> {
                     if (!isAdded()) return;
-                    Snackbar.make(requireView(),
-                            "Không thể tải danh sách vé: " + e.getMessage(),
-                            Snackbar.LENGTH_LONG).show();
+                    android.util.Log.e("MyTicketsFragment", "Failed to load orders from " + 
+                        (forceServer ? "SERVER" : "DEFAULT"), e);
+                    
+                    // Nếu force server fail, thử lại với DEFAULT
+                    if (forceServer) {
+                        android.util.Log.d("MyTicketsFragment", "Retrying with DEFAULT source");
+                        loadMyTicketsFromFirestore(false);
+                    } else {
+                        Snackbar.make(requireView(),
+                                "Không thể tải danh sách vé: " + e.getMessage(),
+                                Snackbar.LENGTH_LONG).show();
+                    }
                 });
     }
 
@@ -266,7 +336,15 @@ public class MyTicketsFragment extends Fragment {
      */
     private void addTicketAndRefresh(@NonNull TicketItem item) {
         long now = System.currentTimeMillis();
+        // Nếu không có thông tin ngày (eventTimeMillis <= 0) → coi là upcoming
+        // Nếu có ngày: so sánh với hiện tại
         boolean isUpcoming = (item.eventTimeMillis <= 0L) || (item.eventTimeMillis >= now);
+        
+        android.util.Log.d("MyTicketsFragment", "Event: " + item.eventTitle);
+        android.util.Log.d("MyTicketsFragment", "EventTimeMillis: " + item.eventTimeMillis);
+        android.util.Log.d("MyTicketsFragment", "Now: " + now);
+        android.util.Log.d("MyTicketsFragment", "IsUpcoming: " + isUpcoming);
+        
         item.upcoming = isUpcoming;
 
         if (isUpcoming) {
@@ -277,6 +355,8 @@ public class MyTicketsFragment extends Fragment {
 
         sortTickets();
 
+        android.util.Log.d("MyTicketsFragment", "Upcoming: " + upcomingTickets.size() + ", History: " + historyTickets.size());
+
         if (upcomingAdapter != null) {
             upcomingAdapter.submitList(new ArrayList<>(upcomingTickets));
         }
@@ -284,11 +364,17 @@ public class MyTicketsFragment extends Fragment {
             historyAdapter.submitList(new ArrayList<>(historyTickets));
         }
 
-        if (emptyView != null) {
-            if (upcomingTickets.isEmpty() && historyTickets.isEmpty()) {
-                emptyView.setVisibility(View.VISIBLE);
-            } else {
-                emptyView.setVisibility(View.GONE);
+        // Update visibility based on data
+        if (upcomingTickets.isEmpty() && historyTickets.isEmpty()) {
+            if (rvUpcoming != null) rvUpcoming.setVisibility(View.GONE);
+            if (rvHistory != null) rvHistory.setVisibility(View.GONE);
+            if (emptyView != null) emptyView.setVisibility(View.VISIBLE);
+        } else {
+            if (emptyView != null) emptyView.setVisibility(View.GONE);
+            // Show appropriate RecyclerView based on current filter
+            // Default shows upcoming
+            if (rvUpcoming != null && !upcomingTickets.isEmpty()) {
+                rvUpcoming.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -562,6 +648,8 @@ public class MyTicketsFragment extends Fragment {
 
                 // Chi tiết vé (TicketDetailFragment) – Firestore-driven bằng orderId
                 if (btnDetail != null) {
+                    btnDetail.setEnabled(true);
+                    btnDetail.setClickable(true);
                     btnDetail.setOnClickListener(v -> {
                         String eTitle = tvTitle != null ? tvTitle.getText().toString() : eventTitle;
                         String sInfo  = tvShowInfo != null ? tvShowInfo.getText().toString() : showInfo;

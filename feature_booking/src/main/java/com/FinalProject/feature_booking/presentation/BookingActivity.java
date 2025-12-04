@@ -34,10 +34,25 @@ public class BookingActivity extends AppCompatActivity
     private RecyclerView rvShowtimes, rvTicketTypes;
     private TextView tvTotal;
     private Button btnBook;
+    private Button btnGroupBooking;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Check nếu được gọi từ Home với flag open_my_tickets
+        boolean openMyTickets = getIntent().getBooleanExtra("open_my_tickets", false);
+        if (openMyTickets) {
+            // Navigate trực tiếp đến MyTicketsFragment
+            setContentView(R.layout.activity_booking);
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                    .replace(android.R.id.content, new MyTicketsFragment())
+                    .commit();
+            }
+            return;
+        }
+        
         setContentView(R.layout.activity_booking);
 
         // Lấy eventId từ Intent (fallback demo)
@@ -56,6 +71,7 @@ public class BookingActivity extends AppCompatActivity
         rvTicketTypes = findViewById(R.id.rvTicketTypes);
         tvTotal       = findViewById(R.id.tvTotal);
         btnBook       = findViewById(R.id.btnBook);
+        btnGroupBooking = findViewById(R.id.btnGroupBooking);
         MaterialToolbar toolbar = findViewById(R.id.toolbar_booking);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
@@ -98,18 +114,14 @@ public class BookingActivity extends AppCompatActivity
         // Quan sát error
         vm.error.observe(this, e -> {
             if (e != null && !e.isEmpty()) {
-                Toast.makeText(this, e, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, e, Toast.LENGTH_SHORT).show();
             }
         });
 
         // Quan sát kết quả đặt vé
         vm.orderResult.observe(this, r -> {
             if (r != null) {
-                Toast.makeText(
-                        this,
-                        "Đặt vé thành công: " + r.getOrderId(),
-                        Toast.LENGTH_LONG
-                ).show();
+                // Toast.makeText(this, "Đặt vé thành công: " + r.getOrderId(), Toast.LENGTH_LONG).show();
                 finish();
             }
         });
@@ -117,18 +129,24 @@ public class BookingActivity extends AppCompatActivity
         // Nút đặt vé
         btnBook.setOnClickListener(v -> {
             if (selectedShowId == null) {
-                Toast.makeText(this, "Vui lòng chọn suất diễn.", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "Vui lòng chọn suất diễn.", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             // 🔹 Dùng FirebaseAuthHelper để lấy userId chuẩn
             String userId = FirebaseAuthHelper.getCurrentUserUid();
             if (userId == null || userId.trim().isEmpty()) {
-                Toast.makeText(this, "Bạn cần đăng nhập để đặt vé.", Toast.LENGTH_LONG).show();
+                // Toast.makeText(this, "Bạn cần đăng nhập để đặt vé.", Toast.LENGTH_LONG).show();
                 return;
             }
-
             vm.book(userId, eventId, selectedShowId);
+        });
+
+        // Nút đặt vé nhóm
+        btnGroupBooking.setOnClickListener(v -> {
+            android.content.Intent intent = new android.content.Intent(this, GroupBookingActivity.class);
+            intent.putExtra("eventId", eventId);
+            startActivity(intent);
         });
 
         // Load ngày ban đầu

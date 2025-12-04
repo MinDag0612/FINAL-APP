@@ -5,19 +5,23 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:background="@drawable/bg_app_base"
-    android:padding="@dimen/spacing_md">
+    android:background="@drawable/bg_app_base">
 
-    <!-- Tiêu đề (optional) -->
-    <TextView
-        android:id="@+id/tv_tickets_title"
+    <!-- Toolbar với nút back -->
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar_tickets"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Vé của tôi"
-        android:textStyle="bold"
-        android:textSize="20sp"
-        android:textColor="@color/color_on_background"
-        android:paddingBottom="@dimen/spacing_sm" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/color_surface"
+        app:title="Vé của tôi"
+        app:titleTextColor="@color/color_on_surface"
+        app:navigationIcon="@drawable/ic_arrow_back_24" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="@dimen/spacing_md">
 
     <!-- Nhóm filter: Upcoming / History / Shared -->
     <com.google.android.material.chip.ChipGroup
@@ -28,7 +32,7 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_ticket_upcoming"
-            style="@style/Widget.Material3.Chip.Assist"
+            style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sắp diễn ra"
@@ -36,14 +40,14 @@
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_ticket_history"
-            style="@style/Widget.Material3.Chip.Assist"
+            style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Lịch sử" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_ticket_shared"
-            style="@style/Widget.Material3.Chip.Assist"
+            style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Được chia sẻ" />
@@ -88,5 +92,7 @@
         android:textAlignment="center"
         android:textColor="@color/color_on_surface_variant"
         android:visibility="gone" />
+
+    </LinearLayout>
 
 </LinearLayout>

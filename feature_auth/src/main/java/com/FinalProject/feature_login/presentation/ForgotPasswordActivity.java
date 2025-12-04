@@ -71,7 +71,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
     private void sendReset(String email) {
         repo.sendResetPassword(email)
                 .addOnSuccessListener(unused -> {
-                    Toast.makeText(this, "Đã gửi liên kết đặt lại mật khẩu.", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "Đã gửi liên kết đặt lại mật khẩu.", Toast.LENGTH_SHORT).show();
                     finish();
                 })
                 .addOnFailureListener(e -> {
@@ -80,11 +80,11 @@ public class ForgotPasswordActivity extends AppCompatActivity {
                     if (e instanceof FirebaseAuthException) {
                         String code = ((FirebaseAuthException) e).getErrorCode();
                         if ("ERROR_USER_NOT_FOUND".equals(code)) {
-                            Toast.makeText(this, "Email chưa đăng ký tài khoản.", Toast.LENGTH_SHORT).show();
+                            // Toast.makeText(this, "Email chưa đăng ký tài khoản.", Toast.LENGTH_SHORT).show();
                             return;
                         }
                     }
-                    Toast.makeText(this, "Gửi thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(this, "Gửi thất bại: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                 });
     }
 

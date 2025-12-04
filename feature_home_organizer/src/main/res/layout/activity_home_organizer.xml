@@ -22,32 +22,33 @@
         android:clipToPadding="false"
         android:paddingStart="@dimen/spacing_lg"
         android:paddingEnd="@dimen/spacing_lg"
-        android:paddingTop="@dimen/spacing_xl"
+        android:paddingTop="@dimen/spacing_xxl"
         android:paddingBottom="@dimen/spacing_xxl"
         android:background="@android:color/transparent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_xxl"
             android:orientation="vertical"
             android:gravity="center_horizontal">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Bảng điều khiển nhà tổ chức"
-            android:textColor="@color/color_on_background"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bảng điều khiển nhà tổ chức"
+                android:textColor="@color/color_on_background"
+                android:textSize="22sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_xs"
-            android:text="Theo dõi hiệu suất bán vé theo thời gian thực"
-            android:textColor="@color/color_on_surface_variant" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_xs"
+                android:text="Theo dõi hiệu suất bán vé theo thời gian thực"
+                android:textColor="@color/color_on_surface_variant" />
 
-        <com.google.android.material.card.MaterialCardView
+            <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/spacing_lg"
@@ -93,31 +94,6 @@
                                 android:textSize="20sp"
                                 android:textStyle="bold" />
 
-                            <FrameLayout
-                                android:id="@+id/btn_avt_organize"
-                                android:layout_width="52dp"
-                                android:layout_height="52dp">
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:id="@+id/img_home_avatar"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:contentDescription="@string/home_avatar_content_desc"
-                                    android:foregroundGravity="right"
-                                    android:scaleType="centerCrop"
-                                    app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Corner.Full"
-                                    app:srcCompat="@drawable/bg_avatar_gradient" />
-
-                                <TextView
-                                    android:id="@+id/tv_home_avatar_initial"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:gravity="center"
-                                    android:text="M"
-                                    android:textColor="@color/color_on_primary"
-                                    android:textSize="18sp"
-                                    android:textStyle="bold" />
-                            </FrameLayout>
                         </LinearLayout>
                         <TextView
                             android:layout_width="wrap_content"
@@ -155,6 +131,7 @@
                                 android:textStyle="bold" />
 
                             <TextView
+                                android:id="@+id/tv_active_events_count"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/spacing_sm"
@@ -164,7 +141,7 @@
                                 android:paddingTop="6dp"
                                 android:paddingEnd="12dp"
                                 android:paddingBottom="6dp"
-                                android:text="3 sự kiện đang chạy"
+                                android:text="0 sự kiện đang chạy"
                                 android:textColor="@android:color/white"
                                 android:textSize="12sp"
                                 android:textStyle="bold" />
@@ -401,6 +378,41 @@
                     android:textAllCaps="false" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-    </LinearLayout>
+        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <FrameLayout
+        android:id="@+id/btn_avt_organize"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="top|end"
+        android:layout_marginTop="@dimen/spacing_xl"
+        android:layout_marginEnd="@dimen/spacing_xl"
+        android:background="@drawable/bg_chip_outline"
+        android:padding="2dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:elevation="8dp"
+        android:translationZ="8dp"
+        android:foreground="?attr/selectableItemBackgroundBorderless">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/img_home_avatar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/home_avatar_content_desc"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.Material3.Corner.Full"
+            app:srcCompat="@drawable/bg_avatar_gradient" />
+
+        <TextView
+            android:id="@+id/tv_home_avatar_initial"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="M"
+            android:textColor="@color/color_on_primary"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </FrameLayout>
 </FrameLayout>

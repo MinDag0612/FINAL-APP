@@ -29,6 +29,7 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
     private RecyclerView rvEvents;
     private CircularProgressIndicator progressIndicator;
     private TextView tvEmpty;
+    private TextView tvActiveEventsCount;
     private OrganizerEventAdapter adapter;
     private final GetOrganizerEventsUseCase getEventsUseCase = new GetOrganizerEventsUseCase();
     private FrameLayout btnAvt;
@@ -51,6 +52,7 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
         rvEvents = findViewById(R.id.rv_active_events);
         progressIndicator = findViewById(R.id.progress_events);
         tvEmpty = findViewById(R.id.tv_empty_events);
+        tvActiveEventsCount = findViewById(R.id.tv_active_events_count);
         btnAvt = findViewById(R.id.btn_avt_organize);
         adapter = new OrganizerEventAdapter(new OrganizerEventAdapter.Listener() {
             @Override
@@ -67,17 +69,31 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
             public void onAttendeeList(String eventId) {
                 openAttendeeList(eventId);
             }
+
+            @Override
+            public void onTicketManager(String eventId, String eventName) {
+                openTicketManager(eventId, eventName);
+            }
+
+            @Override
+            public void onSalesReport(String eventId, String eventName) {
+                openSalesReport(eventId, eventName);
+            }
         });
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
         rvEvents.setAdapter(adapter);
     }
 
     private void setBtnAvt(){
+        android.util.Log.d("HomeOrganizerActivity", "setBtnAvt called, btnAvt is " + (btnAvt != null ? "not null" : "null"));
         if (btnAvt != null) {
             btnAvt.setOnClickListener(v -> {
+                android.util.Log.d("HomeOrganizerActivity", "Avatar button clicked");
                 Intent intent = new Intent(this, ProfileActivity.class);
                 startActivity(intent);
             });
+        } else {
+            android.util.Log.e("HomeOrganizerActivity", "btnAvt is null, click listener not set");
         }
     }
 
@@ -106,7 +122,15 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
 
     private void loadEvents() {
         String uid = getSharedPreferences("APP_PREFS", MODE_PRIVATE).getString("UID", null);
+        android.util.Log.d("HomeOrganizerActivity", "loadEvents - Retrieved UID from SharedPreferences: " + uid);
+        
+        // Debug Toast - hiển thị UID
+        if (uid != null && rvEvents != null) {
+            // android.widget.Toast.makeText(this, "Đang tìm sự kiện cho UID: " + uid, android.widget.Toast.LENGTH_LONG).show();
+        }
+        
         if (uid == null) {
+            android.util.Log.e("HomeOrganizerActivity", "UID is null, cannot load events");
             if (rvEvents != null) {
                 Snackbar.make(rvEvents, "Không tìm thấy UID organizer", Snackbar.LENGTH_SHORT).show();
             }
@@ -117,9 +141,23 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
             @Override
             public void onSuccess(List<OrganizerEventRepository.EventItem> events) {
                 if (progressIndicator != null) progressIndicator.setVisibility(android.view.View.GONE);
+                android.util.Log.d("HomeOrganizerActivity", "onSuccess - Received events count: " + (events != null ? events.size() : "null"));
+                
+                // Debug Toast
+                if (rvEvents != null) {
+                    // android.widget.Toast.makeText(HomeOrganizerActivity.this, "Load được " + (events != null ? events.size() : 0) + " sự kiện", android.widget.Toast.LENGTH_LONG).show();
+                }
+                
                 currentEvents.clear();
                 if (events != null) currentEvents.addAll(events);
                 adapter.submitList(events);
+                
+                // Update KPI counter
+                int eventCount = events != null ? events.size() : 0;
+                if (tvActiveEventsCount != null) {
+                    tvActiveEventsCount.setText(eventCount + " sự kiện đang chạy");
+                }
+                
                 if (tvEmpty != null) {
                     tvEmpty.setVisibility(events == null || events.isEmpty() ? android.view.View.VISIBLE : android.view.View.GONE);
                 }
@@ -148,5 +186,29 @@ public class HomeOrganizerActivity extends AppCompatActivity  {
         intent.putExtra(AttendeeListActivity.EXTRA_EVENT_ID, eventId);
         intent.putExtra(AttendeeListActivity.EXTRA_EVENT_NAME, name);
         startActivity(intent);
+    }
+
+    private void openTicketManager(String eventId, String eventName) {
+        try {
+            Class<?> ticketManagerClass = Class.forName("com.FinalProject.feature_ticket_manager.presentation.TicketManagerActivity");
+            Intent intent = new Intent(this, ticketManagerClass);
+            intent.putExtra("event_id", eventId);
+            intent.putExtra("event_name", eventName);
+            startActivity(intent);
+        } catch (ClassNotFoundException e) {
+            Snackbar.make(rvEvents, "Không tìm thấy module Quản lý vé", Snackbar.LENGTH_SHORT).show();
+        }
+    }
+
+    private void openSalesReport(String eventId, String eventName) {
+        try {
+            Class<?> salesReportClass = Class.forName("com.FinalProject.feature_sales_report.presentation.SalesReportActivity");
+            Intent intent = new Intent(this, salesReportClass);
+            intent.putExtra("event_id", eventId);
+            intent.putExtra("event_name", eventName);
+            startActivity(intent);
+        } catch (ClassNotFoundException e) {
+            Snackbar.make(rvEvents, "Không tìm thấy module Báo cáo bán vé", Snackbar.LENGTH_SHORT).show();
+        }
     }
 }

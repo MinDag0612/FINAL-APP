@@ -179,7 +179,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     private void performLogout() {
         logoutUseCase.execute();
-        Toast.makeText(this, R.string.profile_logout_message, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, R.string.profile_logout_message, Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
         intent.setClassName(getPackageName(), "com.FinalProject.feature_login.presentation.LoginActivity");
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);

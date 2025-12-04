@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="54bce51c-ec30-41f7-b300-a6568b5da4c0" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/appInsightsSettings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deploymentTargetSelector.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/deviceManager.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/FinalProject/core/constName/StoreField.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/FinalProject/core/constName/StoreField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/FinalProject/core/model/Orders.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/FinalProject/core/model/Orders.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/FinalProject/core/util/Event_API.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/FinalProject/core/util/Event_API.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/com/FinalProject/core/util/Order_API.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/com/FinalProject/core/util/Order_API.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_attendee_manager_organizer/src/main/java/com/FinalProject/feature_attendee_manager_organizer/presentation/AttendeeListActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_attendee_manager_organizer/src/main/java/com/FinalProject/feature_attendee_manager_organizer/presentation/AttendeeListActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_auth/src/main/java/com/FinalProject/feature_login/presentation/ForgotPasswordActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_auth/src/main/java/com/FinalProject/feature_login/presentation/ForgotPasswordActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_auth/src/main/java/com/FinalProject/feature_login/presentation/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_auth/src/main/java/com/FinalProject/feature_login/presentation/LoginActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_auth/src/main/java/com/FinalProject/feature_login/presentation/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_auth/src/main/java/com/FinalProject/feature_login/presentation/RegisterActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/data/BookingRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/data/BookingRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/payment/PaymentMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/payment/PaymentMethod.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/payment/PaymentOrchestrator.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/payment/PaymentOrchestrator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/presentation/BookingActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/presentation/BookingActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/presentation/BookingNavigator.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/presentation/BookingNavigator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/presentation/CheckoutFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/presentation/CheckoutFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/presentation/MyTicketsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_booking/src/main/java/com/FinalProject/feature_booking/presentation/MyTicketsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_booking/src/main/res/layout/activity_booking.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_booking/src/main/res/layout/activity_booking.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_booking/src/main/res/layout/fragment_checkout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_booking/src/main/res/layout/fragment_checkout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_booking/src/main/res/layout/fragment_tickets.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_booking/src/main/res/layout/fragment_tickets.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_create_event_organizer/src/main/java/com/FinalProject/feature_create_event/presentation/CreateEventActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_create_event_organizer/src/main/java/com/FinalProject/feature_create_event/presentation/CreateEventActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_create_event_organizer/src/main/res/layout/activity_create_event.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_create_event_organizer/src/main/res/layout/activity_create_event.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/EventDetailApi.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/EventDetailRepository$Callback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/EventDetailRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/FirebaseEventDetailApi.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/MockEventDetailFactory.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/domain/GetEventDetailUseCase$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/domain/GetEventDetailUseCase$Callback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/domain/GetEventDetailUseCase.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/EventDetail.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/ReviewDisplayItem.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/TicketTier.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/TimelineItem.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailNavigator.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/08db2340716146207414d79c7346c785/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/EventDetailRepository$Callback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/EventDetailRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/MockEventDetailFactory.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/EventDetail.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/ReviewDisplayItem.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/TicketTier.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/TimelineItem.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailNavigator.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/4bf8a5df656398b90c1ade84e788c1c8/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/d3306760a1050ec433a331984db8d6ee/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/d3306760a1050ec433a331984db8d6ee/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/d3306760a1050ec433a331984db8d6ee/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/EventDetailApi.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/EventDetailRepository$Callback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/EventDetailRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/FirebaseEventDetailApi.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/data/MockEventDetailFactory.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/domain/GetEventDetailUseCase$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/domain/GetEventDetailUseCase$Callback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/domain/GetEventDetailUseCase.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/EventDetail.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/ReviewDisplayItem.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/TicketTier.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/model/TimelineItem.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailNavigator.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/.transforms/e40442166a0fdbd4f13840a0f6d057c3/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_event_placeholder.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_event_placeholder.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_header_scrim.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_header_scrim.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_rating_chip.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_rating_chip.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_review_card.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_review_card.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_ticket_row.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_ticket_row.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_ticket_status.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_ticket_status.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_timeline_dot.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_timeline_dot.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_chevron_left.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_chevron_left.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_clock.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_clock.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_location.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_location.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_people.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_people.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_star.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_star.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_activity_event_detail.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_activity_event_detail.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_detail_chip.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_detail_chip.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_review.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_review.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_ticket_tier.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_ticket_tier.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_view_timeline_item.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_view_timeline_item.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/debug/packageDebugResources/merged.dir/values/values.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/debug/packageDebugResources/merged.dir/values/values.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/debug/packageDebugResources/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/debug/packageDebugResources/merger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/mergeDebugAssets/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/mergeDebugAssets/merger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/mergeDebugShaders/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/incremental/mergeDebugShaders/merger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/FinalProject/feature_event_detail/presentation/EventDetailActivity$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/FinalProject/feature_event_detail/presentation/EventDetailActivity$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/FinalProject/feature_event_detail/presentation/EventDetailActivity.class" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/FinalProject/feature_event_detail/presentation/EventDetailActivity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/packaged_res/debug/packageDebugResources/layout/activity_event_detail.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/packaged_res/debug/packageDebugResources/layout/activity_event_detail.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity.class" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_event_detail/presentation/EventDetailActivity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/outputs/logs/manifest-merger-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/outputs/logs/manifest-merger-debug-report.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_event_detail/src/main/java/com/FinalProject/feature_event_detail/presentation/EventDetailActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_event_detail/src/main/java/com/FinalProject/feature_event_detail/presentation/EventDetailActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home/build/intermediates/incremental/debug/packageDebugResources/merged.dir/values/values.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/EventRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/FirebaseHomeApi.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeApi.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeRepository$HomeDataCallback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$Callback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeArtist.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeContent.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeEvent.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeUser.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/RecentTicketInfo.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeSearch$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeSearch.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeArtistAdapter$ArtistViewHolder.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeArtistAdapter.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventClickListener.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventViewHolder.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/35661f82eac7c1f742c582861bcead75/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/EventRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/FirebaseHomeApi.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeApi.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeRepository$HomeDataCallback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$Callback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeArtist.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeContent.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeEvent.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeUser.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/RecentTicketInfo.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeSearch$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeSearch.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeArtistAdapter$ArtistViewHolder.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeArtistAdapter.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventClickListener.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventViewHolder.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/77131c286ab1c5654b99691065a1023a/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/EventRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeRepository$HomeDataCallback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$Callback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeArtist.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeContent.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeEvent.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeUser.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/RecentTicketInfo.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeArtistAdapter$ArtistViewHolder.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeArtistAdapter.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventClickListener.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventViewHolder.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/a676d32bde0c43e537ce10fe9d9f334c/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/EventRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeRepository$HomeDataCallback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$Callback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeArtist.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeContent.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeEvent.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeUser.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/RecentTicketInfo.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeSearch$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeSearch.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeArtistAdapter$ArtistViewHolder.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeArtistAdapter.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventClickListener.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventViewHolder.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/aa19d63616b13247cd68d8a6f60c28e6/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/d12d7481fe8e5fd02cbf2fa56181a273/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/d12d7481fe8e5fd02cbf2fa56181a273/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/d12d7481fe8e5fd02cbf2fa56181a273/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/results.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeRepository$HomeDataCallback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/data/HomeRepository.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase$Callback.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/domain/GetHomeContentUseCase.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeArtist.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeContent.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeEvent.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/HomeUser.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/model/RecentTicketInfo.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity$1.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeArtistAdapter$ArtistViewHolder.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeArtistAdapter.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventClickListener.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventViewHolder.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter.dex" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/.transforms/e3a928248cde28ac111d5564d8ffe740/transformed/bundleLibRuntimeToDirDebug/desugar_graph.bin" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compile_library_classes_jar/debug/bundleLibCompileToJarDebug/classes.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compile_r_class_jar/debug/generateDebugRFile/R.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compile_symbol_list/debug/generateDebugRFile/R.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_avatar_gradient.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_avatar_gradient.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_badge_featured.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_badge_featured.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_event_placeholder.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_event_placeholder.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_featured_event.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_bg_featured_event.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_artist_placeholder.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_artist_placeholder.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_avatar_placeholder.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_avatar_placeholder.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_calendar.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_calendar.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_event_business.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_event_business.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_event_music.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_event_music.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_event_workshop.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_event_workshop.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_location.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_location.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_search.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_search.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_ticket.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/drawable_ic_ticket.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_activity_home.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_activity_home.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_filter_chip.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_filter_chip.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_home_artist.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_home_artist.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_home_event.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_item_home_event.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_view_artist_chip.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_view_artist_chip.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_view_event_card.xml.flat" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/compiled_local_resources/debug/compileDebugLibraryResources/out/layout_view_event_card.xml.flat" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/incremental/debug/packageDebugResources/compile-file-map.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/incremental/debug/packageDebugResources/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/incremental/debug/packageDebugResources/merger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/incremental/mergeDebugAssets/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/incremental/mergeDebugAssets/merger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/incremental/mergeDebugJniLibFolders/merger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/incremental/mergeDebugShaders/merger.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/incremental/mergeDebugShaders/merger.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/FinalProject/feature_home/presentation/HomeActivity$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/FinalProject/feature_home/presentation/HomeActivity$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/FinalProject/feature_home/presentation/HomeActivity.class" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/FinalProject/feature_home/presentation/HomeActivity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventViewHolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/javac/debug/compileDebugJavaWithJavac/classes/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventViewHolder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/local_only_symbol_list/debug/parseDebugLocalResources/R-def.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/manifest_merge_blame_file/debug/processDebugManifest/manifest-merger-blame-debug-report.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/packaged_res/debug/packageDebugResources/layout/activity_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/packaged_res/debug/packageDebugResources/layout/activity_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/packaged_res/debug/packageDebugResources/layout/item_home_event.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/packaged_res/debug/packageDebugResources/layout/item_home_event.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/packaged_res/debug/packageDebugResources/values/values.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity.class" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/HomeActivity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventViewHolder.class" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/runtime_library_classes_dir/debug/bundleLibRuntimeToDirDebug/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter$EventViewHolder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/intermediates/symbol_list_with_package_name/debug/generateDebugRFile/package-aware-r.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/outputs/logs/manifest-merger-debug-report.txt" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/outputs/logs/manifest-merger-debug-report.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/build/tmp/compileDebugJavaWithJavac/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/src/main/java/com/FinalProject/feature_home/presentation/HomeActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/src/main/java/com/FinalProject/feature_home/presentation/HomeActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/src/main/java/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/src/main/java/com/FinalProject/feature_home/presentation/adapter/HomeEventAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/src/main/res/layout/activity_home.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/src/main/res/layout/activity_home.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/src/main/res/layout/item_home_event.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/src/main/res/layout/item_home_event.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_attendee/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_attendee/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_organizer/src/main/java/com/FinalProject/feature_home_organizer/data/OrganizerEventRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_organizer/src/main/java/com/FinalProject/feature_home_organizer/data/OrganizerEventRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_organizer/src/main/java/com/FinalProject/feature_home_organizer/presentation/HomeOrganizerActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_organizer/src/main/java/com/FinalProject/feature_home_organizer/presentation/HomeOrganizerActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_organizer/src/main/java/com/FinalProject/feature_home_organizer/presentation/OrganizerEventAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_organizer/src/main/java/com/FinalProject/feature_home_organizer/presentation/OrganizerEventAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_organizer/src/main/res/layout/activity_home_organizer.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_organizer/src/main/res/layout/activity_home_organizer.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_home_organizer/src/main/res/layout/view_organizer_event_card.xml" beforeDir="false" afterPath="$PROJECT_DIR$/feature_home_organizer/src/main/res/layout/view_organizer_event_card.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_profile/src/main/java/com/FinalProject/feature_profile/presentation/ProfileActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_profile/src/main/java/com/FinalProject/feature_profile/presentation/ProfileActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/feature_review_event/src/main/java/com/FinalProject/feature_review_event/presentation/ReviewEventActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/feature_review_event/src/main/java/com/FinalProject/feature_review_event/presentation/ReviewEventActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ClangdSettings">
+    <option name="formatViaClangd" value="false" />
+  </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=Default, isTemplate=false, identifier=serial=127.0.0.1:6555;connection=9b08df88)]" />
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 8
+}]]></component>
+  <component name="ProjectId" id="36NuzdfYN5lcsLchw17D7nnDiUe" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Android App.app.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "cf.first.check.clang-format": "false",
+    "cidr.known.project.marker": "true",
+    "git-widget-placeholder": "master"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
+      <module name="final_app.app" />
+      <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
+      <option name="DEPLOY" value="true" />
+      <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
+      <option name="DEPLOY_AS_INSTANT" value="false" />
+      <option name="ARTIFACT_NAME" value="" />
+      <option name="PM_INSTALL_OPTIONS" value="" />
+      <option name="ALL_USERS" value="false" />
+      <option name="ALWAYS_INSTALL_WITH_PM" value="false" />
+      <option name="ALLOW_ASSUME_VERIFIED" value="false" />
+      <option name="CLEAR_APP_STORAGE" value="false" />
+      <option name="DYNAMIC_FEATURES_DISABLED_LIST" value="" />
+      <option name="ACTIVITY_EXTRA_FLAGS" value="" />
+      <option name="MODE" value="default_activity" />
+      <option name="RESTORE_ENABLED" value="false" />
+      <option name="RESTORE_FILE" value="" />
+      <option name="RESTORE_FRESH_INSTALL_ONLY" value="false" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="false" />
+      <option name="TARGET_SELECTION_MODE" value="DEVICE_AND_SNAPSHOT_COMBO_BOX" />
+      <option name="SELECTED_CLOUD_MATRIX_CONFIGURATION_ID" value="-1" />
+      <option name="SELECTED_CLOUD_MATRIX_PROJECT_ID" value="" />
+      <option name="DEBUGGER_TYPE" value="Auto" />
+      <Auto>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Auto>
+      <Hybrid>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Hybrid>
+      <Java>
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Java>
+      <Native>
+        <option name="USE_JAVA_AWARE_DEBUGGER" value="false" />
+        <option name="SHOW_STATIC_VARS" value="true" />
+        <option name="WORKING_DIR" value="" />
+        <option name="TARGET_LOGGING_CHANNELS" value="lldb process:gdb-remote packets" />
+        <option name="SHOW_OPTIMIZED_WARNING" value="true" />
+        <option name="ATTACH_ON_WAIT_FOR_DEBUGGER" value="false" />
+        <option name="DEBUG_SANDBOX_SDK" value="false" />
+      </Native>
+      <Profilers>
+        <option name="ADVANCED_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_ENABLED" value="false" />
+        <option name="STARTUP_CPU_PROFILING_CONFIGURATION_NAME" value="Java/Kotlin Method Sample (legacy)" />
+        <option name="STARTUP_NATIVE_MEMORY_PROFILING_ENABLED" value="false" />
+        <option name="NATIVE_MEMORY_SAMPLE_RATE_BYTES" value="2048" />
+      </Profilers>
+      <option name="DEEP_LINK" value="" />
+      <option name="ACTIVITY" value="" />
+      <option name="ACTIVITY_CLASS" value="" />
+      <option name="SEARCH_ACTIVITY_IN_GLOBAL_SCOPE" value="false" />
+      <option name="SKIP_ACTIVITY_VALIDATION" value="false" />
+      <method v="2">
+        <option name="Android.Gradle.BeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="54bce51c-ec30-41f7-b300-a6568b5da4c0" name="Changes" comment="" />
+      <created>1764859616214</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1764859616214</updated>
+    </task>
+    <servers />
+  </component>
+</project>

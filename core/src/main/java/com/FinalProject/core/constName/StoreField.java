@@ -4,6 +4,7 @@ public class StoreField {
 
     // 🔹 Tên các collection chính
     public static final String USER_INFOR = "User_Infor";
+    public static final String USERS = "User_Infor";  // Alias for User_Infor
     public static final String EVENTS = "Events";
     public static final String TICKETS_INFOR = "Tickets_infor";
     public static final String ORDERS = "Orders";
@@ -30,6 +31,7 @@ public class StoreField {
         public static final String EVENT_START = "event_start";
         public static final String EVENT_END = "event_end";
         public static final String MIN_PRICE = "min_price";
+        public static final String LEGACY_UID = "uid";
     }
 
     // 🔹 Field trong collection Tickets_infor

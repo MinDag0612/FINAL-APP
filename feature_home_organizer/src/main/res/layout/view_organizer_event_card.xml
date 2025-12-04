@@ -53,6 +53,7 @@
                 android:textColor="@color/color_on_surface_variant" />
         </LinearLayout>
 
+        <!-- Row 1: Check-in, Attendee List, Edit -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -87,6 +88,34 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Chỉnh sửa"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+        <!-- Row 2: Ticket Manager, Sales Report -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_sm"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_ticket_manager"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/spacing_sm"
+                android:layout_weight="1"
+                android:text="Quản lý vé"
+                android:textAllCaps="false" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_sales_report"
+                style="@style/Widget.Material3.Button.OutlinedButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Báo cáo bán vé"
                 android:textAllCaps="false" />
         </LinearLayout>
     </LinearLayout>

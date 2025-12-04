@@ -188,7 +188,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
             if (eventName.isEmpty() || eventDescription.isEmpty() || eventStart.isEmpty() || eventEnd.isEmpty() || eventLocation.isEmpty()
                     || priceStr.isEmpty() || quantityStr.isEmpty()) {
-                Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -202,12 +202,12 @@ public class CreateEventActivity extends AppCompatActivity {
                 ticketPrice = Integer.parseInt(priceStr);
                 ticketQuantity = Integer.parseInt(quantityStr);
             } catch (NumberFormatException e) {
-                Toast.makeText(this, "Giá vé và số lượng phải là số", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "Giá vé và số lượng phải là số", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             if (ticketPrice <= 0 || ticketQuantity <= 0) {
-                Toast.makeText(this, "Giá vé và số lượng phải > 0", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, "Giá vé và số lượng phải > 0", Toast.LENGTH_SHORT).show();
                 return;
             }
 
@@ -236,14 +236,14 @@ public class CreateEventActivity extends AppCompatActivity {
                 createEventUseCase.execute(newEvent, defaultTicket, new CreateEventUseCase.CreateEventCallback() {
                     @Override
                     public void onSuccess() {
-                        Toast.makeText(CreateEventActivity.this, "Tạo sự kiện thành công", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(CreateEventActivity.this, "Tạo sự kiện thành công", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 
                     @Override
                     public void onFailure(String message) {
                         Log.d("CreateEventActivity", "onError: " + message);
-                        Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 });
             } else {
@@ -254,14 +254,14 @@ public class CreateEventActivity extends AppCompatActivity {
                             SendNotificationEvent.sendUpdateNoti(CreateEventActivity.this, fcmList, newEvent);
                         });
 
-                        Toast.makeText(CreateEventActivity.this, "Lưu sự kiện thành công", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(CreateEventActivity.this, "Lưu sự kiện thành công", Toast.LENGTH_SHORT).show();
                         finish();
                     }
 
                     @Override
                     public void onFailure(String message) {
                         Log.d("CreateEventActivity", "update error: " + message);
-                        Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
                     }
                 });
             }
@@ -297,7 +297,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(String message) {
-                Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(CreateEventActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
     }

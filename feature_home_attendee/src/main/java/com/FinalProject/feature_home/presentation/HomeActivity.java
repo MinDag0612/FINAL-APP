@@ -20,7 +20,11 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import androidx.recyclerview.widget.SimpleItemAnimator;
 
 import com.FinalProject.core.constName.StoreField;
+import com.FinalProject.core.model.Artist;
+import com.FinalProject.core.model.NewsFeed;
+import com.FinalProject.core.util.Artist_API;
 import com.FinalProject.core.util.Event_API;
+import com.FinalProject.core.util.NewsFeed_API;
 import com.FinalProject.feature_event_detail.presentation.EventDetailNavigator;
 import com.FinalProject.feature_home.R;
 import com.FinalProject.feature_home.data.EventRepository;
@@ -32,6 +36,7 @@ import com.FinalProject.feature_home.model.HomeUser;
 import com.FinalProject.feature_home.model.RecentTicketInfo;
 import com.FinalProject.feature_home.presentation.adapter.HomeArtistAdapter;
 import com.FinalProject.feature_home.presentation.adapter.HomeEventAdapter;
+import com.FinalProject.feature_home.presentation.adapter.NewsAdapter;
 import com.FinalProject.feature_profile.presentation.ProfileNavigator;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
@@ -63,20 +68,21 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
     private TextView tvFeaturedLocation;
     private TextView tvFeaturedDescription;
     private TextView tvFeaturedPrice;
-    private TextView tvRecentTicketTitle;
-    private TextView tvRecentTicketSubtitle;
     private TextView tvEventsEmpty;
     private MaterialButton btnFeaturedAction;
-    private MaterialButton btnRecentTicket;
     private ChipGroup chipGroup;
     private RecyclerView rvEvents;
     private RecyclerView rvArtists;
+    private RecyclerView rvNews;
     private ShapeableImageView imgAvatar;
     private TextView tvAvatarInitial;
 
     private HomeEventAdapter eventAdapter;
     private HomeArtistAdapter artistAdapter;
+    private NewsAdapter newsAdapter;
     private final List<HomeEvent> allEvents = new ArrayList<>();
+    private final List<Artist> allArtists = new ArrayList<>();
+    private final List<NewsFeed> allNews = new ArrayList<>();
     private final NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     private final SimpleDateFormat inputDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
     private final SimpleDateFormat outputDateFormat = new SimpleDateFormat("dd MMM yyyy - HH:mm", Locale.getDefault());
@@ -99,6 +105,7 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         setupRecyclerViews();
         setupListeners();
         loadHomeContent();
+        loadArtistsAndNews();
         setHomeSearch();
     }
 
@@ -111,17 +118,21 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         tvFeaturedLocation = findViewById(R.id.tv_featured_location);
         tvFeaturedDescription = findViewById(R.id.tv_featured_description);
         tvFeaturedPrice = findViewById(R.id.tv_featured_price);
-        tvRecentTicketTitle = findViewById(R.id.tv_recent_ticket_title);
-        tvRecentTicketSubtitle = findViewById(R.id.tv_recent_ticket_subtitle);
         tvEventsEmpty = findViewById(R.id.tv_empty_events);
         btnFeaturedAction = findViewById(R.id.btn_featured_action);
-        btnRecentTicket = findViewById(R.id.btn_view_ticket);
         chipGroup = findViewById(R.id.chip_group_categories);
         rvEvents = findViewById(R.id.rv_events);
         rvArtists = findViewById(R.id.rv_artists);
+        rvNews = findViewById(R.id.rv_news);
         imgAvatar = findViewById(R.id.img_home_avatar);
         tvAvatarInitial = findViewById(R.id.tv_home_avatar_initial);
         homeSearch = findViewById(R.id.input_home_search);
+        
+        // Button vé của tôi
+        MaterialButton btnMyTickets = findViewById(R.id.btn_home_my_tickets);
+        if (btnMyTickets != null) {
+            btnMyTickets.setOnClickListener(v -> openMyTicketsScreen());
+        }
     }
 
     private void setupRecyclerViews() {
@@ -129,6 +140,8 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         eventAdapter = new HomeEventAdapter(this, this);
         rvEvents.setLayoutManager(new LinearLayoutManager(this));
         rvEvents.setAdapter(eventAdapter);
+        int spacing = getResources().getDimensionPixelSize(R.dimen.spacing_lg);
+        rvEvents.addItemDecoration(new VerticalSpaceItemDecoration(spacing));
         rvEvents.setItemViewCacheSize(10);
         if (rvEvents.getItemAnimator() instanceof SimpleItemAnimator) {
             ((SimpleItemAnimator) rvEvents.getItemAnimator()).setSupportsChangeAnimations(false);
@@ -141,6 +154,40 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         if (rvArtists.getItemAnimator() instanceof SimpleItemAnimator) {
             ((SimpleItemAnimator) rvArtists.getItemAnimator()).setSupportsChangeAnimations(false);
         }
+
+        // News Feed RecyclerView
+        newsAdapter = new NewsAdapter(new NewsAdapter.OnNewsClickListener() {
+            @Override
+            public void onNewsClick(NewsFeed news) {
+                // Increment views when clicked
+                String userId = com.FinalProject.core.firebase.FirebaseAuthHelper.getCurrentUserUid();
+                if (userId != null && !userId.isEmpty()) {
+                    NewsFeed_API.incrementViewCount(news.getNews_id(), userId);
+                }
+                // Toast.makeText(HomeActivity.this, "Đọc tin: " + news.getTitle(), Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLikeClick(NewsFeed news, int position) {
+                String userId = com.FinalProject.core.firebase.FirebaseAuthHelper.getCurrentUserUid();
+                if (userId == null || userId.isEmpty()) {
+                    // Toast.makeText(HomeActivity.this, "Vui lòng đăng nhập", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                
+                NewsFeed_API.toggleLike(news.getNews_id(), userId).addOnSuccessListener(isLiked -> {
+                    // toggleLike returns Boolean: true if now liked, false if unliked
+                    int newCount = news.getLike_count() + (isLiked ? 1 : -1);
+                    news.setLike_count(newCount);
+                    newsAdapter.updateLikeCount(position, newCount);
+                    // Toast.makeText(HomeActivity.this, isLiked ? "Đã thích tin tức" : "Đã bỏ thích", Toast.LENGTH_SHORT).show();
+                }).addOnFailureListener(e -> {
+                    // Toast.makeText(HomeActivity.this, "Lỗi: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+            }
+        });
+        rvNews.setLayoutManager(new LinearLayoutManager(this));
+        rvNews.setAdapter(newsAdapter);
     }
 
     // You already have onEventClick, so now you need to add onShareClick
@@ -148,7 +195,7 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
     @Override
     public void onEventClick(HomeEvent event) {
         if (event == null || event.getId() == null) {
-            Toast.makeText(this, "Cannot open this event's details", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Cannot open this event's details", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent intent = EventDetailNavigator.createIntent(
@@ -181,10 +228,10 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         if (clipboard != null) {
             clipboard.setPrimaryClip(clip);
             // Notify the user
-            Toast.makeText(this, "Event link copied to clipboard!", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Event link copied to clipboard!", Toast.LENGTH_SHORT).show();
         } else {
             // Handle the case where clipboard service is not available
-            Toast.makeText(this, "Could not access clipboard service.", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Could not access clipboard service.", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -198,16 +245,35 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
             if (!allEvents.isEmpty()) {
                 openEventDetail(allEvents.get(0));
             } else {
-                Toast.makeText(this, R.string.home_button_book_now, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(this, R.string.home_button_book_now, Toast.LENGTH_SHORT).show();
             }
         });
-
-        btnRecentTicket.setOnClickListener(v ->
-                Toast.makeText(this, R.string.home_action_view_ticket, Toast.LENGTH_SHORT).show());
 
         View.OnClickListener profileClickListener = v -> openProfileScreen();
         imgAvatar.setOnClickListener(profileClickListener);
         tvAvatarInitial.setOnClickListener(profileClickListener);
+    }
+    
+    private void openMyTicketsScreen() {
+        try {
+            Intent intent = new Intent();
+            intent.setClassName(
+                getPackageName(),
+                "com.FinalProject.feature_booking.presentation.BookingActivity"
+            );
+            // Truyền flag để BookingActivity mở MyTicketsFragment
+            intent.putExtra("open_my_tickets", true);
+            startActivity(intent);
+        } catch (Exception e) {
+            // Toast.makeText(this, "Không thể mở trang vé", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Reload content khi user quay lại từ booking để cập nhật Recent Ticket
+        loadHomeContent();
     }
 
     private void loadHomeContent() {
@@ -231,7 +297,6 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         bindUser(content.getUser());
         bindEvents(content.getEvents());
         artistAdapter.submitList(content.getArtists());
-        bindRecentTicket(content.getRecentTicketInfo());
     }
 
     private void bindUser(HomeUser user) {
@@ -284,11 +349,9 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
                 ? currencyFormat.format(event.getStartingPrice())
                 : getString(R.string.home_price_pending));
 
-        btnFeaturedAction.setOnClickListener(v -> Toast.makeText(
-                this,
-                event.getName(),
-                Toast.LENGTH_SHORT
-        ).show());
+        btnFeaturedAction.setOnClickListener(v -> {
+            // Toast.makeText(this, event.getName(), Toast.LENGTH_SHORT).show();
+        });
     }
 
     private void renderCategoryChips(List<HomeEvent> events) {
@@ -347,15 +410,6 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         tvSubtitle.setText(getString(R.string.home_subtitle_filtered, filtered.size()));
     }
 
-    private void bindRecentTicket(RecentTicketInfo recentTicketInfo) {
-        if (recentTicketInfo == null) {
-            tvRecentTicketTitle.setText(R.string.home_no_event);
-            tvRecentTicketSubtitle.setText("");
-            btnRecentTicket.setEnabled(false);
-            return;
-        }
-    }
-
     private void showError(String message) {
         Snackbar.make(swipeRefreshLayout, "Error: " + message, Snackbar.LENGTH_LONG).show();
     }
@@ -377,7 +431,7 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
 
     private void openEventDetail(HomeEvent event) {
         if (event == null || event.getId() == null) {
-            Toast.makeText(this, "Cannot open this event's details", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Cannot open this event's details", Toast.LENGTH_SHORT).show();
             return;
         }
         android.util.Log.d("HomeActivity", "openEventDetail - eventId: " + event.getId() + ", name: " + event.getName());
@@ -396,5 +450,51 @@ public class HomeActivity extends AppCompatActivity implements HomeEventAdapter.
         // Implement search logic
         HomeSearch search = new HomeSearch(homeSearch, allEvents, eventAdapter);
         search.setupSearchListener();
+    }
+
+    /**
+     * Load Artists và News Feed từ Firebase
+     */
+    private void loadArtistsAndNews() {
+        String userId = com.FinalProject.core.firebase.FirebaseAuthHelper.getCurrentUserUid();
+        
+        // Load Artists (top 10)
+        Artist_API.getAllArtists().addOnSuccessListener(querySnapshot -> {
+            allArtists.clear();
+            for (com.google.firebase.firestore.DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                Artist artist = doc.toObject(Artist.class);
+                if (artist != null) {
+                    artist.setArtist_id(doc.getId());
+                    allArtists.add(artist);
+                }
+            }
+            // Chuyển sang HomeArtist format (tạm thời dùng artist_name)
+            List<com.FinalProject.feature_home.model.HomeArtist> homeArtists = new ArrayList<>();
+            for (Artist artist : allArtists) {
+                com.FinalProject.feature_home.model.HomeArtist ha = new com.FinalProject.feature_home.model.HomeArtist(
+                    artist.getArtist_name(),
+                    0 // event count chưa có
+                );
+                homeArtists.add(ha);
+            }
+            artistAdapter.submitList(homeArtists);
+        }).addOnFailureListener(e -> {
+            android.util.Log.e("HomeActivity", "Load artists failed", e);
+        });
+
+        // Load Featured News
+        NewsFeed_API.getFeaturedNews().addOnSuccessListener(querySnapshot -> {
+            allNews.clear();
+            for (com.google.firebase.firestore.DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                NewsFeed news = doc.toObject(NewsFeed.class);
+                if (news != null) {
+                    news.setNews_id(doc.getId());
+                    allNews.add(news);
+                }
+            }
+            newsAdapter.submitList(allNews);
+        }).addOnFailureListener(e -> {
+            android.util.Log.e("HomeActivity", "Load news failed", e);
+        });
     }
 }

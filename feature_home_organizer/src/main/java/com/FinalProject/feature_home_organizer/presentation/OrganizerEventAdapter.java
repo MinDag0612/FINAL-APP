@@ -21,6 +21,8 @@ public class OrganizerEventAdapter extends RecyclerView.Adapter<OrganizerEventAd
         void onEdit(String eventId);
         void onCheckin(String eventId);
         void onAttendeeList(String eventId);
+        void onTicketManager(String eventId, String eventName);
+        void onSalesReport(String eventId, String eventName);
     }
 
     private final List<OrganizerEventRepository.EventItem> items = new ArrayList<>();
@@ -57,7 +59,7 @@ public class OrganizerEventAdapter extends RecyclerView.Adapter<OrganizerEventAd
 
     class EventVH extends RecyclerView.ViewHolder {
         TextView tvTitle, tvTime, tvStatus, tvStats;
-        MaterialButton btnCheckin, btnEdit, btnAttendee;
+        MaterialButton btnCheckin, btnEdit, btnAttendee, btnTicketManager, btnSalesReport;
 
         EventVH(@NonNull View itemView) {
             super(itemView);
@@ -68,6 +70,8 @@ public class OrganizerEventAdapter extends RecyclerView.Adapter<OrganizerEventAd
             btnCheckin = itemView.findViewById(R.id.btn_checkin);
             btnEdit = itemView.findViewById(R.id.btn_edit_event);
             btnAttendee = itemView.findViewById(R.id.btn_attendee_list);
+            btnTicketManager = itemView.findViewById(R.id.btn_ticket_manager);
+            btnSalesReport = itemView.findViewById(R.id.btn_sales_report);
         }
 
         void bind(OrganizerEventRepository.EventItem item) {
@@ -85,6 +89,12 @@ public class OrganizerEventAdapter extends RecyclerView.Adapter<OrganizerEventAd
             });
             btnAttendee.setOnClickListener(v -> {
                 if (listener != null) listener.onAttendeeList(item.id);
+            });
+            btnTicketManager.setOnClickListener(v -> {
+                if (listener != null) listener.onTicketManager(item.id, item.name);
+            });
+            btnSalesReport.setOnClickListener(v -> {
+                if (listener != null) listener.onSalesReport(item.id, item.name);
             });
         }
     }

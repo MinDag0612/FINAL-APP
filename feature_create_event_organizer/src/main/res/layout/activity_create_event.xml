@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/bg_app_base"
     android:orientation="vertical">
-    android:theme="@style/Theme.Finalapp">
 
     <LinearLayout
         android:layout_width="match_parent"

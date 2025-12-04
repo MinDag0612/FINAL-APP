@@ -113,13 +113,13 @@ public class AttendeeListActivity extends AppCompatActivity {
                 String pathMsg = publicPath != null && !publicPath.isEmpty()
                         ? "Đã lưu: " + publicPath
                         : "Đã lưu: " + file.getAbsolutePath();
-                Toast.makeText(AttendeeListActivity.this, pathMsg, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(AttendeeListActivity.this, pathMsg, Toast.LENGTH_SHORT).show();
                 shareFile(file, "text/csv");
             }
 
             @Override
             public void onFailure(String message) {
-                Toast.makeText(AttendeeListActivity.this, message, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(AttendeeListActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -131,13 +131,13 @@ public class AttendeeListActivity extends AppCompatActivity {
                 String pathMsg = publicPath != null && !publicPath.isEmpty()
                         ? "Đã lưu: " + publicPath
                         : "Đã lưu: " + file.getAbsolutePath();
-                Toast.makeText(AttendeeListActivity.this, pathMsg, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(AttendeeListActivity.this, pathMsg, Toast.LENGTH_SHORT).show();
                 shareFile(file, "application/pdf");
             }
 
             @Override
             public void onFailure(String message) {
-                Toast.makeText(AttendeeListActivity.this, message, Toast.LENGTH_SHORT).show();
+                // Toast.makeText(AttendeeListActivity.this, message, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -165,7 +165,7 @@ public class AttendeeListActivity extends AppCompatActivity {
         mock.add(new AttendeeRepository.AttendeeItem("mock2", "Trần Thị B", "mock2@example.com", 2, 800000));
         mock.add(new AttendeeRepository.AttendeeItem("mock3", "Lê C", "mock3@example.com", 1, 400000));
         setAdapterItems(mock);
-        Toast.makeText(this, "Đang hiển thị dữ liệu mẫu (không lưu Firestore)", Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, "Đang hiển thị dữ liệu mẫu (không lưu Firestore)", Toast.LENGTH_SHORT).show();
         if (tvEmpty != null) tvEmpty.setVisibility(android.view.View.GONE);
     }
 
@@ -191,18 +191,18 @@ public class AttendeeListActivity extends AppCompatActivity {
 
     private void sendBroadcast(String title, String content) {
         if (adapterItemsHolder.isEmpty()) {
-            Toast.makeText(this, "Chưa có danh sách khách để gửi", Toast.LENGTH_SHORT).show();
+            // Toast.makeText(this, "Chưa có danh sách khách để gửi", Toast.LENGTH_SHORT).show();
             return;
         }
         sendBroadcastUseCase.execute(eventId, eventName, title, content, adapterItemsHolder, new SendBroadcastUseCase.Callback() {
             @Override
             public void onSuccess() {
-                Toast.makeText(AttendeeListActivity.this, "Đã gửi thông báo", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(AttendeeListActivity.this, "Đã gửi thông báo", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(String message) {
-                Toast.makeText(AttendeeListActivity.this, message != null ? message : "Gửi thông báo thất bại", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(AttendeeListActivity.this, message != null ? message : "Gửi thông báo thất bại", Toast.LENGTH_SHORT).show();
             }
         });
     }

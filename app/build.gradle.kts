@@ -52,6 +52,8 @@ dependencies {
     implementation(project(":core"))
     implementation(project(":feature_home_organizer"))
     implementation(project(":feature_event_detail"))
+    implementation(project(":feature_ticket_manager_organizer"))
+    implementation(project(":feature_sales_report_organizer"))
 
 
     // AndroidX cơ bản (KHÔNG dùng compose ở đây để tránh yêu cầu plugin/feature)

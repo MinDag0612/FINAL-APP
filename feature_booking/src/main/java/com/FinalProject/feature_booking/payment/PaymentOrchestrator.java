@@ -8,6 +8,9 @@ import androidx.fragment.app.Fragment;
 import com.FinalProject.feature_booking.payment.impl.CardPaymentProvider;
 import com.FinalProject.feature_booking.payment.impl.WalletPaymentProvider;
 import com.FinalProject.feature_booking.payment.impl.QrPaymentProvider;
+import com.FinalProject.feature_booking.payment.impl.MomoPaymentProvider;
+import com.FinalProject.feature_booking.payment.impl.ZaloPayPaymentProvider;
+import com.FinalProject.feature_booking.payment.impl.BankTransferPaymentProvider;
 
 
 import java.util.EnumMap;
@@ -26,6 +29,9 @@ public final class PaymentOrchestrator {
         providers.put(PaymentMethod.CARD, new CardPaymentProvider());
         providers.put(PaymentMethod.WALLET, new WalletPaymentProvider());
         providers.put(PaymentMethod.QR, new QrPaymentProvider());
+        providers.put(PaymentMethod.MOMO, new MomoPaymentProvider());
+        providers.put(PaymentMethod.ZALOPAY, new ZaloPayPaymentProvider());
+        providers.put(PaymentMethod.BANK_TRANSFER, new BankTransferPaymentProvider());
     }
 
 

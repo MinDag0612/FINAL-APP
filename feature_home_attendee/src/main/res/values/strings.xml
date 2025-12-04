@@ -23,4 +23,5 @@
     <string name="home_date_pending">Đang cập nhật thời gian</string>
     <string name="home_error_loading">Không thể tải dữ liệu: %1$s</string>
     <string name="home_refresh_success">Đã cập nhật danh sách sự kiện</string>
+    <string name="my_tickets">Vé của tôi</string>
 </resources>

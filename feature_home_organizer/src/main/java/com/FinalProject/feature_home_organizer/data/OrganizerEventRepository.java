@@ -1,5 +1,7 @@
 package com.FinalProject.feature_home_organizer.data;
 
+import android.util.Log;
+
 import com.FinalProject.core.model.Events;
 import com.FinalProject.core.util.Event_API;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -9,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrganizerEventRepository {
+    private static final String TAG = "OrganizerEventRepo";
 
     public interface Callback {
         void onSuccess(List<EventItem> events);
@@ -34,9 +37,38 @@ public class OrganizerEventRepository {
     }
 
     public void loadEvents(String organizerUid, Callback callback) {
+        Log.d(TAG, "loadEvents called with organizerUid: " + organizerUid);
         Event_API.getEventsByOrganizer(organizerUid, 20)
-                .addOnSuccessListener(snapshot -> callback.onSuccess(map(snapshot)))
-                .addOnFailureListener(e -> callback.onFailure(e.getMessage()));
+                .addOnSuccessListener(snapshot -> {
+                    Log.d(TAG, "Primary query success, snapshot size: " + (snapshot != null ? snapshot.size() : "null"));
+                    List<EventItem> primary = map(snapshot);
+                    Log.d(TAG, "Primary mapped events count: " + primary.size());
+                    if (!primary.isEmpty()) {
+                        callback.onSuccess(primary);
+                    } else {
+                        Log.d(TAG, "Primary query empty, trying legacy query");
+                        fetchLegacyEvents(organizerUid, callback);
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Primary query failed: " + e.getMessage(), e);
+                    fetchLegacyEvents(organizerUid, callback);
+                });
+    }
+
+    private void fetchLegacyEvents(String organizerUid, Callback callback) {
+        Log.d(TAG, "Fetching legacy events for organizerUid: " + organizerUid);
+        Event_API.getEventsByLegacyUid(organizerUid, 20)
+                .addOnSuccessListener(snapshot -> {
+                    Log.d(TAG, "Legacy query success, snapshot size: " + (snapshot != null ? snapshot.size() : "null"));
+                    List<EventItem> events = map(snapshot);
+                    Log.d(TAG, "Legacy mapped events count: " + events.size());
+                    callback.onSuccess(events);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Legacy query failed: " + e.getMessage(), e);
+                    callback.onFailure(e.getMessage());
+                });
     }
 
     private List<EventItem> map(QuerySnapshot snapshot) {
