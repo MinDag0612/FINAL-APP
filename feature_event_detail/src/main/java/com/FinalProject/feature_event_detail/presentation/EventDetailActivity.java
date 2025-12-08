@@ -19,13 +19,14 @@ import com.FinalProject.feature_booking.presentation.BookingNavigator;
 import com.FinalProject.feature_event_detail.R;
 import com.FinalProject.feature_event_detail.data.EventDetailRepository;
 import com.FinalProject.feature_event_detail.data.MockEventDetailFactory;
+import com.FinalProject.feature_event_detail.domain.OutdoorWeatherPlanner;
+import com.FinalProject.feature_event_detail.model.WeatherForecast;
 import com.FinalProject.feature_event_detail.domain.GetEventDetailUseCase;
 import com.FinalProject.feature_event_detail.model.EventDetail;
 import com.FinalProject.feature_event_detail.model.ReviewDisplayItem;
 import com.FinalProject.feature_event_detail.model.TicketTier;
 import com.FinalProject.feature_event_detail.model.TimelineItem;
 import com.FinalProject.feature_review_event.presentation.ReviewEventNavigator;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -76,6 +77,14 @@ public class EventDetailActivity extends AppCompatActivity {
     private LinearLayout reviewsContainer;
     private MaterialButton btnChooseSeat;
     private MaterialButton btnWriteReview;
+    private View cardWeather;
+    private TextView tvWeatherSummary;
+    private TextView tvWeatherTime;
+    private TextView tvWeatherTemperature;
+    private TextView tvWeatherRain;
+    private TextView tvWeatherRecommendation;
+    private TextView tvWeatherUnavailable;
+    private ImageView imgWeatherIcon;
 
     private final NumberFormat currencyFormat = NumberFormat.getCurrencyInstance(new Locale("vi", "VN"));
     private GetEventDetailUseCase getEventDetailUseCase;
@@ -84,6 +93,7 @@ public class EventDetailActivity extends AppCompatActivity {
     private boolean hasBoundRemoteData = false;
     private EventDetail currentDetail;
     private EventDetail fallbackDetail;
+    private OutdoorWeatherPlanner weatherPlanner;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,6 +103,7 @@ public class EventDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_event_detail);
 
         getEventDetailUseCase = new GetEventDetailUseCase(new EventDetailRepository());
+        weatherPlanner = new OutdoorWeatherPlanner();
         inflater = LayoutInflater.from(this);
 
         bindViews();
@@ -126,6 +137,14 @@ public class EventDetailActivity extends AppCompatActivity {
         tvReviewsEmpty = findViewById(R.id.tv_reviews_empty);
         btnChooseSeat = findViewById(R.id.btn_choose_seat);
         btnWriteReview = findViewById(R.id.btn_write_review);
+        cardWeather = findViewById(R.id.card_weather);
+        tvWeatherSummary = findViewById(R.id.tv_weather_summary);
+        tvWeatherTime = findViewById(R.id.tv_weather_time);
+        tvWeatherTemperature = findViewById(R.id.tv_weather_temperature);
+        tvWeatherRain = findViewById(R.id.tv_weather_rain_chance);
+        tvWeatherRecommendation = findViewById(R.id.tv_weather_recommendation);
+        tvWeatherUnavailable = findViewById(R.id.tv_weather_unavailable);
+        imgWeatherIcon = findViewById(R.id.img_weather_icon);
 
         // Back button
         View btnBack = findViewById(R.id.btn_back_event_detail);
@@ -258,6 +277,7 @@ public class EventDetailActivity extends AppCompatActivity {
                 fallbackTitle,
                 fallbackDescription,
                 fallbackLocation,
+                fallbackLocation,
                 fallbackEventType,
                 schedule,
                 null,
@@ -372,6 +392,7 @@ public class EventDetailActivity extends AppCompatActivity {
         renderTickets(detail.getTicketTiers());
         renderTimeline(detail.getTimelineItems());
         renderReviews(detail.getReviews());
+        renderWeather(detail);
 
         long startingPrice = detail.getTicketTiers().isEmpty()
                 ? 0
@@ -462,6 +483,70 @@ public class EventDetailActivity extends AppCompatActivity {
             tvRating.setText(getString(R.string.event_detail_rating_value, review.getRating()));
             tvComment.setText(review.getComment());
             reviewsContainer.addView(view);
+        }
+    }
+    private void renderWeather(EventDetail detail) {
+        if (cardWeather == null || tvWeatherSummary == null) {
+            return;
+        }
+        if (!weatherPlanner.isOutdoorEvent(detail)) {
+            cardWeather.setVisibility(View.GONE);
+            tvWeatherUnavailable.setVisibility(View.VISIBLE);
+            tvWeatherUnavailable.setText(R.string.event_detail_weather_indoor_hint);
+            return;
+        }
+        tvWeatherUnavailable.setVisibility(View.VISIBLE);
+        tvWeatherUnavailable.setText(R.string.event_detail_weather_loading);
+        cardWeather.setVisibility(View.GONE);
+
+        weatherPlanner.fetchForecast(detail, new OutdoorWeatherPlanner.ForecastCallback() {
+            @Override
+            public void onSuccess(WeatherForecast forecast) {
+                renderWeatherCard(forecast);
+            }
+
+            @Override
+            public void onError(String message) {
+                cardWeather.setVisibility(View.GONE);
+                tvWeatherUnavailable.setVisibility(View.VISIBLE);
+                tvWeatherUnavailable.setText(!TextUtils.isEmpty(message)
+                        ? message
+                        : getString(R.string.event_detail_weather_missing));
+            }
+        });
+    }
+
+    private void renderWeatherCard(WeatherForecast forecast) {
+        if (forecast == null) {
+            cardWeather.setVisibility(View.GONE);
+            tvWeatherUnavailable.setVisibility(View.VISIBLE);
+            tvWeatherUnavailable.setText(R.string.event_detail_weather_missing);
+            return;
+        }
+        cardWeather.setVisibility(View.VISIBLE);
+        tvWeatherUnavailable.setVisibility(View.GONE);
+
+        tvWeatherSummary.setText(forecast.getSummary());
+        tvWeatherTime.setText(forecast.getTimeWindow());
+        tvWeatherTemperature.setText(getString(R.string.event_detail_weather_temperature,
+                forecast.getTemperatureC()));
+        tvWeatherRain.setText(getString(R.string.event_detail_weather_rain, forecast.getRainChance()));
+        tvWeatherRecommendation.setText(forecast.getRecommendation());
+        imgWeatherIcon.setImageResource(mapWeatherIcon(forecast.getCondition()));
+    }
+
+    private int mapWeatherIcon(WeatherForecast.Condition condition) {
+        switch (condition) {
+            case SUNNY:
+                return R.drawable.ic_weather_sunny;
+            case CLOUDY:
+                return R.drawable.ic_weather_partly_cloudy;
+            case RAINY:
+                return R.drawable.ic_weather_rain;
+            case STORMY:
+                return R.drawable.ic_weather_storm;
+            default:
+                return R.drawable.ic_weather_partly_cloudy;
         }
     }
 

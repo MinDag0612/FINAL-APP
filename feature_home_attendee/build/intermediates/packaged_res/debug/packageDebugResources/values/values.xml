@@ -69,6 +69,7 @@
     <string name="home_search_hint">Tìm kiếm concert, hội thảo, festival...</string>
     <string name="home_subtitle_filtered">Có %1$d sự kiện thuộc chủ đề bạn chọn</string>
     <string name="home_subtitle_generic">Hãy khám phá những sự kiện hot nhất tuần này</string>
+    <string name="my_tickets">Vé của tôi</string>
     <style name="ShapeAppearanceOverlay.Material3.Corner.Full" parent="">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>

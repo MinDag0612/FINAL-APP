@@ -121,11 +121,20 @@ public class EventDetailRepository {
                                      List<ReviewDisplayItem> reviews,
                                      float averageRating,
                                      int totalReview) {
+        String displayLocation = firstNonEmpty(
+                eventSnapshot.getString(StoreField.EventFields.EVENT_LOCATION),
+                eventSnapshot.getString(StoreField.EventFields.LOCATION)
+        );
+        String weatherLocation = firstNonEmpty(
+                eventSnapshot.getString(StoreField.EventFields.LOCATION),
+                eventSnapshot.getString(StoreField.EventFields.EVENT_LOCATION)
+        );
         return new EventDetail(
                 eventSnapshot.getId(),
                 value(eventSnapshot.getString(StoreField.EventFields.EVENT_NAME), "Sự kiện bất kỳ"),
                 eventSnapshot.getString("event_descrip"),
-                eventSnapshot.getString(StoreField.EventFields.EVENT_LOCATION),
+                displayLocation,
+                weatherLocation,
                 eventSnapshot.getString("event_type"),
                 eventSnapshot.getString("event_start"),
                 eventSnapshot.getString("event_end"),
@@ -144,7 +153,10 @@ public class EventDetailRepository {
         List<String> tags = new ArrayList<>();
         String cast = eventSnapshot.getString("cast");
         String eventType = eventSnapshot.getString("event_type");
-        String location = eventSnapshot.getString(StoreField.EventFields.EVENT_LOCATION);
+        String location = firstNonEmpty(
+                eventSnapshot.getString(StoreField.EventFields.EVENT_LOCATION),
+                eventSnapshot.getString(StoreField.EventFields.LOCATION)
+        );
         if (!TextUtils.isEmpty(eventType)) {
             tags.add(eventType);
         }
@@ -176,7 +188,12 @@ public class EventDetailRepository {
         }
         return tiers;
     }
-
+    private String firstNonEmpty(String primary, String fallback) {
+        if (!TextUtils.isEmpty(primary)) {
+            return primary;
+        }
+        return fallback;
+    }
     private Task<Map<String, String>> fetchReviewerNames(QuerySnapshot reviewSnapshot) {
         Set<String> userIds = new HashSet<>();
         for (QueryDocumentSnapshot reviewDoc : reviewSnapshot) {

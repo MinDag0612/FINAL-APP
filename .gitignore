@@ -1,0 +1,11 @@
+# Bỏ qua thư mục build ở tất cả các module
+build/
+**/build/
+.gradle/
+**/build/
+local.properties
+.idea/
+*.iml
+*.DS_Store
+*.dex
+*.class

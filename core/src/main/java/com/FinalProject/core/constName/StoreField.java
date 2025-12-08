@@ -24,6 +24,7 @@ public class StoreField {
         public static final String EVENT_NAME = "event_name";
         public static final String ORGANIZER_UID = "organizer_uid";
         public static final String EVENT_DATE = "event_date";
+        public static final String LOCATION = "location";
         public static final String EVENT_LOCATION = "event_location";
         public static final String EVENT_DESCRIPTION = "event_descrip";
         public static final String EVENT_TYPE = "event_type";

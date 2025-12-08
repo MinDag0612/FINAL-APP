@@ -26,4 +26,10 @@
     <string name="event_detail_retry">Thử tải lại</string>
     <string name="event_detail_cast_format">Khách mời: %1$s</string>
     <string name="event_detail_back">Quay lại</string>
+    <string name="event_detail_weather_title">Dự báo thời tiết (ngoài trời)</string>
+    <string name="event_detail_weather_indoor_hint">Sự kiện diễn ra trong nhà nên không cần dự báo thời tiết.</string>
+    <string name="event_detail_weather_missing">Chưa đủ thông tin để dự báo thời tiết.</string>
+    <string name="event_detail_weather_loading">Đang tải dự báo thời tiết từ WeatherAPI...</string>
+    <string name="event_detail_weather_temperature">%1$d°C</string>
+    <string name="event_detail_weather_rain">Khả năng mưa: %1$d%%</string>
 </resources>

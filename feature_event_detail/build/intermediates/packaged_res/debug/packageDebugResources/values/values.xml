@@ -42,6 +42,7 @@
     <dimen name="text_size_body">14sp</dimen>
     <dimen name="text_size_heading">28sp</dimen>
     <dimen name="text_size_subheading">18sp</dimen>
+    <string name="event_detail_back">Quay lại</string>
     <string name="event_detail_cast_format">Khách mời: %1$s</string>
     <string name="event_detail_cta">Chọn chỗ ngồi</string>
     <string name="event_detail_cta_with_price">Đặt vé từ %1$s</string>
@@ -65,6 +66,12 @@
     <string name="event_detail_ticket_sold_out">Hết vé</string>
     <string name="event_detail_timeline_empty">Lịch trình sẽ được cập nhật sớm.</string>
     <string name="event_detail_timeline_title">Lịch trình</string>
+    <string name="event_detail_weather_indoor_hint">Sự kiện diễn ra trong nhà nên không cần dự báo thời tiết.</string>
+    <string name="event_detail_weather_loading">Đang tải dự báo thời tiết từ WeatherAPI...</string>
+    <string name="event_detail_weather_missing">Chưa đủ thông tin để dự báo thời tiết.</string>
+    <string name="event_detail_weather_rain">Khả năng mưa: %1$d%%</string>
+    <string name="event_detail_weather_temperature">%1$d°C</string>
+    <string name="event_detail_weather_title">Dự báo thời tiết (ngoài trời)</string>
     <string name="event_detail_write_review">Viết đánh giá cho sự kiện</string>
     <string name="feature_event_detail_name">Chi tiết sự kiện</string>
     <style name="Theme.FeatureEventDetail" parent="Theme.Material3.DayNight.NoActionBar">

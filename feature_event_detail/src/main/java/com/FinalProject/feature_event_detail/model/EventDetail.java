@@ -3,6 +3,7 @@ package com.FinalProject.feature_event_detail.model;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import android.text.TextUtils;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,7 @@ public class EventDetail {
     private final String name;
     private final String description;
     private final String location;
+    private final String weatherLocation;
     private final String eventType;
     private final String startTimeIso;
     private final String endTimeIso;
@@ -33,6 +35,7 @@ public class EventDetail {
             @NonNull String name,
             @Nullable String description,
             @Nullable String location,
+            @Nullable String weatherLocation,
             @Nullable String eventType,
             @Nullable String startTimeIso,
             @Nullable String endTimeIso,
@@ -49,6 +52,9 @@ public class EventDetail {
         this.name = name;
         this.description = description != null ? description : "";
         this.location = location != null ? location : "";
+        this.weatherLocation = !TextUtils.isEmpty(weatherLocation)
+                ? weatherLocation
+                : this.location;
         this.eventType = eventType != null ? eventType : "";
         this.startTimeIso = startTimeIso;
         this.endTimeIso = endTimeIso;
@@ -80,6 +86,11 @@ public class EventDetail {
     @NonNull
     public String getLocation() {
         return location;
+    }
+
+    @NonNull
+    public String getWeatherLocation() {
+        return weatherLocation;
     }
 
     @NonNull
