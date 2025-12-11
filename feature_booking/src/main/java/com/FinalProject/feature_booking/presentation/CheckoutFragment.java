@@ -71,10 +71,6 @@ public class CheckoutFragment extends Fragment {
     
     // Lưu e-wallet đang chọn (MoMo, VNPay, ZaloPay)
     private String selectedEWallet = "MoMo"; // Mặc định
-    
-    // Bank Transaction ID input
-    private com.google.android.material.textfield.TextInputLayout tilBankTransactionId;
-    private com.google.android.material.textfield.TextInputEditText etBankTransactionId;
 
     private MaterialButton btnConfirm;
 
@@ -136,9 +132,6 @@ public class CheckoutFragment extends Fragment {
         btnBank   = view.findViewById(R.id.btn_payment_bank);
         paymentButtons = Arrays.asList(btnCard, btnWallet, btnQr, btnBank);
         for (MaterialButton b : paymentButtons) if (b != null) b.setCheckable(true);
-        
-        tilBankTransactionId = view.findViewById(R.id.til_bank_transaction_id);
-        etBankTransactionId  = view.findViewById(R.id.et_bank_transaction_id);
 
         btnConfirm = view.findViewById(R.id.btn_confirm_payment);
         
@@ -220,18 +213,6 @@ public class CheckoutFragment extends Fragment {
                         "Vui lòng xác nhận phương thức thanh toán trước.",
                         Snackbar.LENGTH_SHORT).show();
                 return;
-            }
-
-            // Validate Bank Transaction ID nếu chọn Bank Transfer
-            if (authorizedMethod == PaymentMethod.BANK_TRANSFER) {
-                String transactionId = etBankTransactionId != null && etBankTransactionId.getText() != null
-                    ? etBankTransactionId.getText().toString().trim() : "";
-                if (transactionId.isEmpty()) {
-                    Snackbar.make(requireView(),
-                            "Vui lòng nhập mã giao dịch ngân hàng.",
-                            Snackbar.LENGTH_SHORT).show();
-                    return;
-                }
             }
 
             String userId = FirebaseAuthHelper.getCurrentUserUid();
@@ -867,13 +848,6 @@ public class CheckoutFragment extends Fragment {
         setChecked(btnWallet, method == PaymentMethod.WALLET);
         setChecked(btnQr,     method == PaymentMethod.QR);
         setChecked(btnBank,   method == PaymentMethod.BANK_TRANSFER);
-        
-        // Hiển thị Bank Transaction ID input nếu chọn Bank Transfer
-        if (tilBankTransactionId != null) {
-            tilBankTransactionId.setVisibility(
-                method == PaymentMethod.BANK_TRANSFER ? View.VISIBLE : View.GONE
-            );
-        }
         
         recalcTotalsFor(method);
     }

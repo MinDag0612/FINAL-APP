@@ -19,15 +19,12 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class RegisterActivity extends AppCompatActivity {
-    ChipGroup chip_group_role;
-    Chip chip_role_attendee;
-    Chip chip_role_organizer;
     TextInputEditText full_name;
     TextInputEditText email;
     TextInputEditText phone_number;
     TextInputEditText password;
     Button btn_submit_register;
-    String selectedRole = "";
+    String selectedRole = "attendee"; // Mặc định là attendee
     String fullNameStr;
     String emailStr;
     String phoneNumberStr;
@@ -45,7 +42,6 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         initViews();
-        setChip_group_role();
         setBtn_submit_register();
         setBtn_login();
     }
@@ -61,22 +57,11 @@ public class RegisterActivity extends AppCompatActivity {
 
         repo = new RegisterRepositoryImpl();
         regisreUseCase = new RegisterUserUseCase(repo);
-        chip_group_role = findViewById(R.id.chip_group_role);
 
         if (btn_back != null) {
             btn_back.setOnClickListener(v ->
                     getOnBackPressedDispatcher().onBackPressed());
         }
-    }
-
-    private void setChip_group_role() {
-        chip_group_role.setOnCheckedStateChangeListener((group, checkedIds) -> {
-            if (checkedIds.contains(R.id.chip_role_attendee)) {
-                selectedRole = "attendee";
-            } else if (checkedIds.contains(R.id.chip_role_organizer)) {
-                selectedRole = "organizer";
-            }
-        });
     }
 
 //    private void setBtn_submit_register() {

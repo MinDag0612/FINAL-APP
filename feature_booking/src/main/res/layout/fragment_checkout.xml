@@ -305,27 +305,6 @@
             </LinearLayout>
         </HorizontalScrollView>
 
-        <!-- Bank Transfer Transaction ID Input (ẩn mặc định) -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/til_bank_transaction_id"
-            style="@style/Widget.Material3.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_md"
-            android:hint="Mã giao dịch ngân hàng"
-            android:visibility="gone">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_bank_transaction_id"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLength="50" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_confirm_payment"
             style="@style/Widget.Material3.Button"
